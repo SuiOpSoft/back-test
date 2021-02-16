@@ -22,7 +22,9 @@ def handle_hello():
 def handle_data():
 
     company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland")
+    user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="suiopsoft@gmail.com", password="suiop12345", company_id="1")
     db.session.add(company1)
+    db.session.add(user1)
     db.session.commit()
 
     response_body = {
@@ -30,7 +32,7 @@ def handle_data():
     }
 
     return jsonify(response_body), 200
-
+## Companies resources ##
 # Seleccionar todas las compañias
 @api.route('/companies', methods=['GET'])
 def handle_getCompanies():
@@ -40,17 +42,31 @@ def handle_getCompanies():
     return jsonify(all_companies), 200
 
 # Seleccionar una compañia por id
-@api.route('/companies/<int:company_name>', methods=['GET'])
-def handle_getCompany(company_id):
+@api.route('/companies/<string:company_name>', methods=['GET'])
+def handle_getCompany(company_name):
 
     #  user1 = Company.query.get(company_id)
-    company_query = Company.query.filter_by(name=company_id)
-    all_companies = list(map(lambda x: x.serialize(), companies_query))
-    return jsonify(all_companies), 200
+    company_query = Company.query.filter_by(name=company_name)
+    company = list(map(lambda x: x.serialize(), company_query))
+    return jsonify(company), 200
 
-
-    # companies_query = Company.query.all()
-    # all_companies = list(map(lambda x: x.serialize(), companies_query))
-    # return jsonify(all_companies), 200
+## Users resources ##
 # Seleccionar usuarios
-# Seleccionar un usuario por id
+@api.route('/users', methods=['GET'])
+def handle_getUsers():
+
+    users_query = User.query.all()
+    all_users = list(map(lambda x: x.serialize(), users_query))
+    return jsonify(all_users), 200
+
+# Seleccionar un usuario por email
+@api.route('/users/<string:user_email>', methods=['GET'])
+def handle_getUser(user_email):
+
+    #  user1 = Company.query.get(company_id)
+    user_query = User.query.filter_by(email=user_email)
+    user = list(map(lambda x: x.serialize(), user_query))
+    return jsonify(user), 200
+# Seleccionar separadores por usuario
+# Seleccionar inputs de separadores por usuario
+# Seleccionar outputs de separadores por usuario

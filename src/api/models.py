@@ -241,11 +241,210 @@ class Facility(db.Model):
     #     }
 
 ## separators_outputs_gas_and_liquid_areas
-## separators_outputs_inlet_nozzle_parameters
-## separators_outputs_gas_nozzle_parameters
-## separators_outputs_liquid_nozzle_parameters
-## separators_outputs_vessel_gas_capacity_parameters
-## separators_outputs_vessel_liquid_capacity_parameters
-## separators_outputs_relief_valve_parameters
-## separators_outputs_level_control_valve_parameters
+class SeparatorOutputGasAndLiquidAreas(db.Model):
+    __tablename__ = 'separators_outputs_gas_and_liquid_areas'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    separatorcrosssectionalarearatio = db.Column(db.String(80), nullabe=False)
+    separatorcrosssectionalarea = db.Column(db.String(80), nullabe=False)
+    inletnozzlearea = db.Column(db.String(80), nullabe=False)
+    gasnozzlearea = db.Column(db.String(80), nullabe=False)
+    liquidnozzlearea = db.Column(db.String(80), nullabe=False)
+    highleveltripgasarea = db.Column(db.String(80), nullabe=False)
+    normallevelgasarea = db.Column(db.String(80), nullabe=False)
+    lowlevelgasarea = db.Column(db.String(80), nullabe=False)
+    highleveltripliquidarea = db.Column(db.String(80), nullabe=False)
+    normalleveltriparea = db.Column(db.String(80), nullabe=False)
+    lowleveltripliquidarea = db.Column(db.String(80), nullabe=False)
+    
 
+    def __repr__(self):
+        return '<SeparatorOutputGasAndLiquidAreas {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "separatorcrosssectionalarearatio": self.separatorcrosssectionalarearatio,
+            "separatorcrosssectionalarea": self.separatorcrosssectionalarea,
+            "inletnozzlearea": self.inletnozzlearea,
+            "gasnozzlearea": self.gasnozzlearea,
+            "liquidnozzlearea": self.liquidnozzlearea,
+            "highleveltripgasarea": self.highleveltripgasarea,
+            "normallevelgasarea": self.normallevelgasarea,
+            "lowlevelgasarea": self.lowlevelgasarea,
+            "highleveltripliquidarea": self.highleveltripliquidarea,
+            "normalleveltriparea": self.normalleveltriparea,
+            "lowleveltripliquidarea": self.lowleveltripliquidarea
+        }
+
+
+
+## separators_outputs_inlet_nozzle_parameters
+class SeparatorOutputInletNozzleParameters(db.Model):
+    __tablename__ = 'separators_outputs_inlet_nozzle_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    mixtureinletnozzlevelocity = db.Column(db.String(80), nullabe=False)
+    inletnozzlemomentum = db.Column(db.String(80), nullabe=False)
+    maximummixtureinletnozzlevelocity = db.Column(db.String(80), nullabe=False)
+    maximuminletnozzlemomentum = db.Column(db.String(80), nullabe=False)
+    maximumliquidflowinletnozzle = db.Column(db.String(80), nullabe=False)
+    maximumgasflowinletnozzle = db.Column(db.String(80), nullabe=False)
+    statusinletnozzle = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputInletNozzleParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "mixtureinletnozzlevelocity": self.mixtureinletnozzlevelocity,
+            "inletnozzlemomentum": self.inletnozzlemomentum,
+            "maximummixtureinletnozzlevelocity": self.maximummixtureinletnozzlevelocity,
+            "maximuminletnozzlemomentum": self.maximuminletnozzlemomentum,
+            "maximumliquidflowinletnozzle": self.maximumliquidflowinletnozzle,
+            "maximumgasflowinletnozzle": self.maximumgasflowinletnozzle,
+            "statusinletnozzle": self.statusinletnozzle,
+            
+        }
+
+## separators_outputs_gas_nozzle_parameters
+class SeparatorOutputGasNozzleParameters(db.Model):
+    __tablename__ = 'separators_outputs_inlet_nozzle_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    gasnozzlevelocity = db.Column(db.String(80), nullabe=False)
+    gasnozzlemomentum = db.Column(db.String(80), nullabe=False)
+    maximumgasnozzlevelocity = db.Column(db.String(80), nullabe=False)
+    maximumgasnozzlemomentum = db.Column(db.String(80), nullabe=False)
+    maximumgasnozzleflow = db.Column(db.String(80), nullabe=False) 
+    statusgasnozzle = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputGasNozzleParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "gasnozzlevelocity": self.gasnozzlevelocity,
+            "gasnozzlemomentum": self.gasnozzlemomentum,
+            "maximumgasnozzlevelocity": self.maximumgasnozzlevelocity,
+            "maximumgasnozzlemomentum": self.maximumgasnozzlemomentum,
+            "maximumgasnozzleflow": self.maximumgasnozzleflow,
+            "statusgasnozzle": self.statusgasnozzle
+            
+        }
+
+## separators_outputs_liquid_nozzle_parameters
+class SeparatorOutputLiquidNozzleParameters(db.Model):
+    __tablename__ = 'separators_outputs_liquid_nozzle_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    liquidnozzlevelocity = db.Column(db.String(80), nullabe=False)   
+    maximumliquidnozzlevelocity = db.Column(db.String(80), nullabe=False)   
+    maximumliquidnozzleflow = db.Column(db.String(80), nullabe=False) 
+    statusliquidnozzle = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputLiquidNozzleParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "liquidnozzlevelocity": self.liquidnozzlevelocity,          
+            "maximumliquidnozzlevelocity": self.maximumliquidnozzlevelocity,           
+            "maximumliquidnozzleflow": self.maximumliquidnozzleflow,
+            "statusliquidnozzle": self.statusliquidnozzle
+            
+        }
+
+## separators_outputs_vessel_gas_capacity_parameters
+class SeparatorOutputVesselGasCapacityParameters(db.Model):
+    __tablename__ = 'separators_outputs_vessel_gas_capacity_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    gasloadfactor = db.Column(db.String(80), nullabe=False)   
+    maximumgasflowathhlevel = db.Column(db.String(80), nullabe=False)   
+    maximumgasflowatnormallevel = db.Column(db.String(80), nullabe=False) 
+    statusgascapacityathighlevel = db.Column(db.String(80), nullabe=False)
+    statusgascapacityatnormallevel = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputVesselGasCapacityParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "gasloadfactor": self.gasloadfactor,          
+            "maximumgasflowathhlevel": self.maximumgasflowathhlevel,           
+            "maximumgasflowatnormallevel": self.maximumgasflowatnormallevel,
+            "statusgascapacityathighlevel": self.statusgascapacityathighlevel,
+            "statusgascapacityatnormallevel": self.statusgascapacityatnormallevel
+            
+        }
+
+## separators_outputs_vessel_liquid_capacity_parameters
+class SeparatorOutputVesselLiquidCapacityParameters(db.Model):
+    __tablename__ = 'separators_outputs_vessel_liquid_capacity_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    maximumvesselliquidflowcapacityatnormallevel = db.Column(db.String(80), nullabe=False)   
+    statusvesselliquidcapacity = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputVesselLiquidCapacityParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "maximumvesselliquidflowcapacityatnormallevel": self.maximumvesselliquidflowcapacityatnormallevel,          
+            "statusvesselliquidcapacity": self.statusvesselliquidcapacity
+            
+        }
+
+## separators_outputs_relief_valve_parameters
+class SeparatorOutputReliefValveParameters(db.Model):
+    __tablename__ = 'separators_outputs_relief_valve_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    reliefvalvecapacity = db.Column(db.String(80), nullabe=False)   
+    reliefvalvecapacitystatus = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputReliefValveParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "reliefvalvecapacity": self.reliefvalvecapacity,          
+            "reliefvalvecapacitystatus": self.statusvesselliquidcapacity
+            
+        }
+## separators_outputs_level_control_valve_parameters
+class SeparatorOutputLevelControlValveParameters(db.Model):
+    __tablename__ = 'separators_outputs_level_control_valve_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
+    lcvliquidflowcapacity = db.Column(db.String(80), nullabe=False)   
+    levelvalverequiredcv = db.Column(db.String(80), nullabe=False)
+    levelcontrolvalvestatus = db.Column(db.String(80), nullabe=False)
+
+    def __repr__(self):
+        return '<SeparatorOutputLevelControlValveParameters {self.separator_id}>'
+        
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "lcvliquidflowcapacity": self.lcvliquidflowcapacity,          
+            "levelvalverequiredcv": self.levelvalverequiredcv,
+            "levelcontrolvalvestatus": self.levelcontrolvalvestatus
+            
+        }

@@ -146,6 +146,95 @@ def handle_insert_data_fluids():
 
     return jsonify(response_body), 200
 
+# Insertar datos en  tabla data separators
+@api.route('/dataseparators', methods=['POST'])
+def handle_insert_data_separators():
+    dataseparators = request.get_json()
+
+    id = dataseparators["id"]
+    separator_id = dataseparators["separator_id"]
+    internaldiameter = dataseparators["internaldiameter"]
+    ttlength = dataseparators["ttlength"]
+    highlevelTrip = dataseparators["highlevelTrip"]
+    highlevelalarm = dataseparators["highlevelalarm"]
+    normalliquidlevel = dataseparators["normalliquidlevel"]
+    lowlevelalarm = dataseparators["lowlevelalarm"]
+    inletnozzle = dataseparators["inletnozzle"]
+    gasoutletnozzle = dataseparators["gasoutletnozzle"]
+    liquidoutletnozzle = dataseparators["liquidoutletnozzle"]
+    inletdevicetype = dataseparators["inletdevicetype"]
+    demistertype = dataseparators["demistertype"]
+
+
+    separatorInputSeparators = SeparatorInputDataSeparator(id=id, separator_id=separator_id, internaldiameter=internaldiameter, ttlength=ttlength, 
+                                                    highlevelTrip=highlevelTrip, highlevelalarm=highlevelalarm, normalliquidlevel=normalliquidlevel, lowlevelalarm=lowlevelalarm, inletnozzle=inletnozzle, 
+                                                    gasoutletnozzle=gasoutletnozzle, liquidoutletnozzle=liquidoutletnozzle, inletdevicetype=inletdevicetype, demistertype=demistertype)
+
+    db.session.add(separatorInputSeparators)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Insertar datos en  tabla data relief valve
+@api.route('/datareliefvalve', methods=['POST'])
+def handle_insert_data_relief_valve():
+    datareliefvalve = request.get_json()
+
+    id = datareliefvalve["id"]
+    separator_id = datareliefvalve["separator_id"]
+    rvtag = datareliefvalve["rvtag"]
+    rvsetpressure = datareliefvalve["rvsetpressure"]
+    rvorificearea = datareliefvalve["rvorificearea"]
+
+
+    separatorReliefValve = SeparatorInputDataReliefValve(id=id, separator_id=separator_id, rvtag=rvtag, rvsetpressure=rvsetpressure, 
+                                                    rvorificearea=rvorificearea)
+
+    db.session.add(separatorReliefValve)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Insertar datos en  tabla data level control valve
+@api.route('/datalevelcontrolvalve', methods=['POST'])
+def handle_insert_data_level_control_valve():
+    datalevelcontrolvalve = request.get_json()
+
+    id = datalevelcontrolvalve["id"]
+    separator_id = datalevelcontrolvalve["separator_id"]
+    internaldiameter = datalevelcontrolvalve["lcvtag"]
+    ttlength = datalevelcontrolvalve["lcvcv"]
+    highlevelTrip = datalevelcontrolvalve["lcvdiameter"]
+    highlevelalarm = datalevelcontrolvalve["inletlcvpipingdiameter"]
+    normalliquidlevel = datalevelcontrolvalve["outletlcvpipingdiameter"]
+    lowlevelalarm = datalevelcontrolvalve["lcvfactorfl"]
+    inletnozzle = datalevelcontrolvalve["lcvfactorfi"]
+    gasoutletnozzle = datalevelcontrolvalve["lcvfactorfp"]
+    liquidoutletnozzle = datalevelcontrolvalve["lcvinletpressure"]
+    inletdevicetype = datalevelcontrolvalve["lcvoutletpressure"]
+
+
+    separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
+                                                    lcvdiameter=lcvdiameter, inletlcvpipingdiameter=inletlcvpipingdiameter, outletlcvpipingdiameter=outletlcvpipingdiameter, lcvfactorfl=lcvfactorfl, lcvfactorfi=lcvfactorfi, 
+                                                    lcvfactorfp=lcvfactorfp, lcvinletpressure=lcvinletpressure, lcvoutletpressure=lcvoutletpressure)
+
+    db.session.add(separatorLevelControlValve)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
 
 # Seleccionar separadores por usuario
 # Seleccionar inputs de separadores por usuario

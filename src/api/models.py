@@ -167,7 +167,7 @@ class SeparatorInputDataFluid(db.Model):
 #     separator_id = db.Column(db.Integer, db.ForeignKey("separators_inputs.separator_id"), unique=True, nullable=False)
 #     internaldiameter = db.Column(db.String(80), nullable=False)
 #     ttlength = db.Column(db.String(80), nullable=False)
-#     highlevelTrip = db.Column(db.String(80), nullable=False)
+#     highleveltrip = db.Column(db.String(80), nullable=False)
 #     highlevelalarm = db.Column(db.String(80), nullable=False)
 #     normalliquidlevel = db.Column(db.String(80), nullable=False)
 #     lowlevelalarm = db.Column(db.String(80), nullable=False)
@@ -186,7 +186,7 @@ class SeparatorInputDataFluid(db.Model):
 #             "separator_id": self.separator_id,
 #             "internaldiameter": self.internaldiameter,
 #             "ttlength": self.ttlength,
-#             "highlevelTrip": self.highlevelTrip,
+#             "highleveltrip": self.highleveltrip,
 #             "highlevelalarm": self.highlevelalarm,
 #             "normalliquidlevel": self.normalliquidlevel,
 #             "lowlevelalarm": self.lowlevelalarm,

@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Company, User, Facility, Separator, SeparatorInputDataFluid
+from .models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorOutputGasAndLiquidAreas
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -16,6 +16,7 @@ def setup_admin(app):
     admin.add_view(ModelView(Facility, db.session))
     admin.add_view(ModelView(Separator, db.session))
     admin.add_view(ModelView(SeparatorInputDataFluid, db.session))
-
+    admin.add_view(ModelView(SeparatorInputDataSeparator, db.session))
+    admin.add_view(ModelView(SeparatorOutputGasAndLiquidAreas, db.session))
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))

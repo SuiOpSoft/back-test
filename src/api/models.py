@@ -93,6 +93,8 @@ class Separator(db.Model):
     description = db.Column(db.String(120), nullable=False)
     facility_id = db.Column(db.Integer, db.ForeignKey("facilities.id"), unique=True, nullable=False)
     separators_inputs_data_fluids = db.relationship('SeparatorInputDataFluid') ## separators_inputs_data_fluids
+    separators_inputs_data_separators = db.relationship('SeparatorInputDataSeparator') ## separators_inputs_data_separators
+    separators_outputs_gas_and_liquid_areas = db.relationship('SeparatorOutputGasAndLiquidAreas') ## separators_outputs_gas_and_liquid_areas
 
     def __repr__(self):
         return '<Separator {self.tag}>'
@@ -161,41 +163,41 @@ class SeparatorInputDataFluid(db.Model):
         }
 
 # ## separators_inputs_data_separators
-# class SeparatorInputDataSeparator(db.Model):
-#     __tablename__ = 'separators_inputs_data_separators'
-#     id = db.Column(db.Integer, primary_key=True)
-#     separator_id = db.Column(db.Integer, db.ForeignKey("separators_inputs.separator_id"), unique=True, nullable=False)
-#     internaldiameter = db.Column(db.String(80), nullable=False)
-#     ttlength = db.Column(db.String(80), nullable=False)
-#     highleveltrip = db.Column(db.String(80), nullable=False)
-#     highlevelalarm = db.Column(db.String(80), nullable=False)
-#     normalliquidlevel = db.Column(db.String(80), nullable=False)
-#     lowlevelalarm = db.Column(db.String(80), nullable=False)
-#     inletnozzle = db.Column(db.String(80), nullable=False)
-#     gasoutletnozzle = db.Column(db.String(80), nullable=False)
-#     liquidoutletnozzle = db.Column(db.String(80), nullable=False)
-#     inletdevicetype = db.Column(db.String(80), nullable=False)
-#     demistertype = db.Column(db.String(80), nullable=False)
+class SeparatorInputDataSeparator(db.Model):
+    __tablename__ = 'separators_inputs_data_separators'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    internaldiameter = db.Column(db.String(80), nullable=False)
+    ttlength = db.Column(db.String(80), nullable=False)
+    highleveltrip = db.Column(db.String(80), nullable=False)
+    highlevelalarm = db.Column(db.String(80), nullable=False)
+    normalliquidlevel = db.Column(db.String(80), nullable=False)
+    lowlevelalarm = db.Column(db.String(80), nullable=False)
+    inletnozzle = db.Column(db.String(80), nullable=False)
+    gasoutletnozzle = db.Column(db.String(80), nullable=False)
+    liquidoutletnozzle = db.Column(db.String(80), nullable=False)
+    inletdevicetype = db.Column(db.String(80), nullable=False)
+    demistertype = db.Column(db.String(80), nullable=False)
 
-#     def __repr__(self):
-#         return '<SeparatorInputDataFluid {self.separator_id}>'
+    def __repr__(self):
+        return '<SeparatorInputDataFluid {self.separator_id}>'
         
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "separator_id": self.separator_id,
-#             "internaldiameter": self.internaldiameter,
-#             "ttlength": self.ttlength,
-#             "highleveltrip": self.highleveltrip,
-#             "highlevelalarm": self.highlevelalarm,
-#             "normalliquidlevel": self.normalliquidlevel,
-#             "lowlevelalarm": self.lowlevelalarm,
-#             "inletnozzle": self.inletnozzle,
-#             "gasoutletnozzle": self.gasoutletnozzle,
-#             "liquidoutletnozzle": self.liquidoutletnozzle,
-#             "inletdevicetype": self.inletdevicetype,
-#             "demistertype": self.demistertype
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "internaldiameter": self.internaldiameter,
+            "ttlength": self.ttlength,
+            "highleveltrip": self.highleveltrip,
+            "highlevelalarm": self.highlevelalarm,
+            "normalliquidlevel": self.normalliquidlevel,
+            "lowlevelalarm": self.lowlevelalarm,
+            "inletnozzle": self.inletnozzle,
+            "gasoutletnozzle": self.gasoutletnozzle,
+            "liquidoutletnozzle": self.liquidoutletnozzle,
+            "inletdevicetype": self.inletdevicetype,
+            "demistertype": self.demistertype
+        }
 
 # ## separators_inputs_data_relief_valves
 # class SeparatorInputDataReliefValve(db.Model):
@@ -254,42 +256,42 @@ class SeparatorInputDataFluid(db.Model):
     #     }
 
 # ## separators_outputs_gas_and_liquid_areas
-# class SeparatorOutputGasAndLiquidAreas(db.Model):
-#     __tablename__ = 'separators_outputs_gas_and_liquid_areas'
-#     id = db.Column(db.Integer, primary_key=True)
-#     separator_id = db.Column(db.Integer, db.ForeignKey("separators_outputs.separator_id"), unique=True, nullable=False)
-#     separatorcrosssectionalarearatio = db.Column(db.String(80), nullable=False)
-#     separatorcrosssectionalarea = db.Column(db.String(80), nullable=False)
-#     inletnozzlearea = db.Column(db.String(80), nullable=False)
-#     gasnozzlearea = db.Column(db.String(80), nullable=False)
-#     liquidnozzlearea = db.Column(db.String(80), nullable=False)
-#     highleveltripgasarea = db.Column(db.String(80), nullable=False)
-#     normallevelgasarea = db.Column(db.String(80), nullable=False)
-#     lowlevelgasarea = db.Column(db.String(80), nullable=False)
-#     highleveltripliquidarea = db.Column(db.String(80), nullable=False)
-#     normalleveltriparea = db.Column(db.String(80), nullable=False)
-#     lowleveltripliquidarea = db.Column(db.String(80), nullable=False)
+class SeparatorOutputGasAndLiquidAreas(db.Model):
+    __tablename__ = 'separators_outputs_gas_and_liquid_areas'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separatorcrosssectionalarearatio = db.Column(db.String(80), nullable=False)
+    separatorcrosssectionalarea = db.Column(db.String(80), nullable=False)
+    inletnozzlearea = db.Column(db.String(80), nullable=False)
+    gasnozzlearea = db.Column(db.String(80), nullable=False)
+    liquidnozzlearea = db.Column(db.String(80), nullable=False)
+    highleveltripgasarea = db.Column(db.String(80), nullable=False)
+    normallevelgasarea = db.Column(db.String(80), nullable=False)
+    lowlevelgasarea = db.Column(db.String(80), nullable=False)
+    highleveltripliquidarea = db.Column(db.String(80), nullable=False)
+    normalleveltriparea = db.Column(db.String(80), nullable=False)
+    lowleveltripliquidarea = db.Column(db.String(80), nullable=False)
     
 
-#     def __repr__(self):
-#         return '<SeparatorOutputGasAndLiquidAreas {self.separator_id}>'
+    def __repr__(self):
+        return '<SeparatorOutputGasAndLiquidAreas {self.separator_id}>'
         
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "separator_id": self.separator_id,
-#             "separatorcrosssectionalarearatio": self.separatorcrosssectionalarearatio,
-#             "separatorcrosssectionalarea": self.separatorcrosssectionalarea,
-#             "inletnozzlearea": self.inletnozzlearea,
-#             "gasnozzlearea": self.gasnozzlearea,
-#             "liquidnozzlearea": self.liquidnozzlearea,
-#             "highleveltripgasarea": self.highleveltripgasarea,
-#             "normallevelgasarea": self.normallevelgasarea,
-#             "lowlevelgasarea": self.lowlevelgasarea,
-#             "highleveltripliquidarea": self.highleveltripliquidarea,
-#             "normalleveltriparea": self.normalleveltriparea,
-#             "lowleveltripliquidarea": self.lowleveltripliquidarea
-#         }
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_id": self.separator_id,
+            "separatorcrosssectionalarearatio": self.separatorcrosssectionalarearatio,
+            "separatorcrosssectionalarea": self.separatorcrosssectionalarea,
+            "inletnozzlearea": self.inletnozzlearea,
+            "gasnozzlearea": self.gasnozzlearea,
+            "liquidnozzlearea": self.liquidnozzlearea,
+            "highleveltripgasarea": self.highleveltripgasarea,
+            "normallevelgasarea": self.normallevelgasarea,
+            "lowlevelgasarea": self.lowlevelgasarea,
+            "highleveltripliquidarea": self.highleveltripliquidarea,
+            "normalleveltriparea": self.normalleveltriparea,
+            "lowleveltripliquidarea": self.lowleveltripliquidarea
+        }
 
 # ## separators_outputs_inlet_nozzle_parameters
 # class SeparatorOutputInletNozzleParameters(db.Model):

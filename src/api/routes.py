@@ -2,8 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid
+from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorOutputGasAndLiquidAreas
 from api.utils import generate_sitemap, APIException
+from api.calculations.separators.gasAndLiquidAreas import gas_and_liquid_areas_calc
 
 api = Blueprint('api', __name__)
 
@@ -155,7 +156,7 @@ def handle_insert_data_separators():
     separator_id = dataseparators["separator_id"]
     internaldiameter = dataseparators["internaldiameter"]
     ttlength = dataseparators["ttlength"]
-    highlevelTrip = dataseparators["highlevelTrip"]
+    highleveltrip = dataseparators["highleveltrip"]
     highlevelalarm = dataseparators["highlevelalarm"]
     normalliquidlevel = dataseparators["normalliquidlevel"]
     lowlevelalarm = dataseparators["lowlevelalarm"]
@@ -167,7 +168,7 @@ def handle_insert_data_separators():
 
 
     separatorInputSeparators = SeparatorInputDataSeparator(id=id, separator_id=separator_id, internaldiameter=internaldiameter, ttlength=ttlength, 
-                                                    highlevelTrip=highlevelTrip, highlevelalarm=highlevelalarm, normalliquidlevel=normalliquidlevel, lowlevelalarm=lowlevelalarm, inletnozzle=inletnozzle, 
+                                                    highleveltrip=highleveltrip, highlevelalarm=highlevelalarm, normalliquidlevel=normalliquidlevel, lowlevelalarm=lowlevelalarm, inletnozzle=inletnozzle, 
                                                     gasoutletnozzle=gasoutletnozzle, liquidoutletnozzle=liquidoutletnozzle, inletdevicetype=inletdevicetype, demistertype=demistertype)
 
     db.session.add(separatorInputSeparators)
@@ -212,7 +213,7 @@ def handle_insert_data_level_control_valve():
     separator_id = datalevelcontrolvalve["separator_id"]
     internaldiameter = datalevelcontrolvalve["lcvtag"]
     ttlength = datalevelcontrolvalve["lcvcv"]
-    highlevelTrip = datalevelcontrolvalve["lcvdiameter"]
+    highleveltrip = datalevelcontrolvalve["lcvdiameter"]
     highlevelalarm = datalevelcontrolvalve["inletlcvpipingdiameter"]
     normalliquidlevel = datalevelcontrolvalve["outletlcvpipingdiameter"]
     lowlevelalarm = datalevelcontrolvalve["lcvfactorfl"]
@@ -241,3 +242,14 @@ def handle_insert_data_level_control_valve():
 # Seleccionar outputs de separadores por usuario
 
 ## Outputs resources ##
+## Calcular SeparatorOutputGasAndLiquidAreas
+@api.route('/gasandliquidareascalc', methods=['POST'])
+def handle_calc_gas_liquid_areas():
+
+    gas_and_liquid_areas_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200

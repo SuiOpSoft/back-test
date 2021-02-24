@@ -3,7 +3,7 @@ import math
 
 def gas_and_liquid_areas_calc():
     dataseparator = db.session.query(SeparatorInputDataSeparator).one()
-    print(dataseparator.ttlength)
+    
 
     HHl=dataseparator.highleveltrip
     Nl=dataseparator.normalliquidlevel
@@ -15,7 +15,6 @@ def gas_and_liquid_areas_calc():
     LOn=dataseparator.liquidoutletnozzle
 
     Pi = 3.14159265358979
-    print(Length)
     Area_Sep  = Pi * float(Diam)**2/(4*10**6)
     Radio = float(Diam)/2
     INArea = Pi * float(INd)**2/(4*10**6)

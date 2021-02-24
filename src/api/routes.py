@@ -2,9 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorOutputGasAndLiquidAreas
+from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorInputDataLevelControlValve
 from api.utils import generate_sitemap, APIException
 from api.calculations.separators.gasAndLiquidAreas import gas_and_liquid_areas_calc
+from api.calculations.separators.inletNozzleParameters import inlet_nozzle_parameters_calc
 
 api = Blueprint('api', __name__)
 
@@ -29,6 +30,8 @@ def handle_data():
     separatorDataFluid1 = SeparatorInputDataFluid(id="1", separator_id="1", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
                                                     liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
                                                     liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33")
+
+
     db.session.add(company1)
     db.session.add(user1)
     db.session.add(facility1)
@@ -153,29 +156,28 @@ def handle_update_data_fluids():
     datafluids = request.get_json()
     datafluid = SeparatorInputDataFluid.query.get(datafluids["id"])
 
+    datafluid.id = datafluids["id"]
+    datafluid.separator_id = datafluids["separator_id"]
     datafluid.operatingpressure = datafluids["operatingpressure"]
-    # id = datafluids["id"]
-    # separator_id = datafluids["separator_id"]
-    # operatingpressure = datafluids["operatingpressure"]
-    # operatingtemperature = datafluids["operatingtemperature"]
-    # oildensity = datafluids["oildensity"]
-    # gasdensity = datafluids["gasdensity"]
-    # mixturedensity = datafluids["mixturedensity"]
-    # waterdensity = datafluids["waterdensity"]
-    # feedbsw = datafluids["feedbsw"]
-    # liquidviscosity = datafluids["liquidviscosity"]
-    # gasviscosity = datafluids["gasviscosity"]
-    # gasmw = datafluids["gasmw"]
-    # liqmw = datafluids["liqmw"]
-    # gascomprz = datafluids["gascomprz"]
-    # especificheatratio = datafluids["especificheatratio"]
-    # liquidsurfacetension = datafluids["liquidsurfacetension"]
-    # liquidvaporpressure = datafluids["liquidvaporpressure"]
-    # liquidcriticalpressure = datafluids["liquidcriticalpressure"]
-    # standardgasflow = datafluids["standardgasflow"]
-    # standardliquidflow = datafluids["standardliquidflow"]
-    # actualgasflow = datafluids["actualgasflow"]
-    # actualliquidflow = datafluids["actualliquidflow"]
+    datafluid.operatingtemperature = datafluids["operatingtemperature"]
+    datafluid.oildensity = datafluids["oildensity"]
+    datafluid.gasdensity = datafluids["gasdensity"]
+    datafluid.mixturedensity = datafluids["mixturedensity"]
+    datafluid.waterdensity = datafluids["waterdensity"]
+    datafluid.feedbsw = datafluids["feedbsw"]
+    datafluid.liquidviscosity = datafluids["liquidviscosity"]
+    datafluid.gasviscosity = datafluids["gasviscosity"]
+    datafluid.gasmw = datafluids["gasmw"]
+    datafluid.liqmw = datafluids["liqmw"]
+    datafluid.gascomprz = datafluids["gascomprz"]
+    datafluid.especificheatratio = datafluids["especificheatratio"]
+    datafluid.liquidsurfacetension = datafluids["liquidsurfacetension"]
+    datafluid.liquidvaporpressure = datafluids["liquidvaporpressure"]
+    datafluid.liquidcriticalpressure = datafluids["liquidcriticalpressure"]
+    datafluid.standardgasflow = datafluids["standardgasflow"]
+    datafluid.standardliquidflow = datafluids["standardliquidflow"]
+    datafluid.actualgasflow = datafluids["actualgasflow"]
+    datafluid.actualliquidflow = datafluids["actualliquidflow"]
 
     # separatorDataFluid = SeparatorInputDataFluid(id=id, separator_id=separator_id, operatingpressure=operatingpressure, operatingtemperature=operatingtemperature, 
     #                                                 oildensity=oildensity, gasdensity=gasdensity, mixturedensity=mixturedensity, waterdensity=waterdensity, feedbsw=feedbsw, 
@@ -191,6 +193,14 @@ def handle_update_data_fluids():
     }
 
     return jsonify(response_body), 200
+
+# Seleccionar inputs data fluids
+@api.route('/dataseparators', methods=['GET'])
+def handle_get_data_separators():
+
+    data_separators_query = SeparatorInputDataSeparator.query.all()
+    all_data_separators = list(map(lambda x: x.serialize(), data_separators_query))
+    return jsonify(all_data_separators), 200
 
 # Insertar datos en  tabla data separators
 @api.route('/dataseparators', methods=['POST'])
@@ -225,16 +235,57 @@ def handle_insert_data_separators():
 
     return jsonify(response_body), 200
 
+# Actualizar datos en  tabla data separators
+@api.route('/dataseparators', methods=['PUT'])
+def handle_update_data_separators():
+    dataseparators = request.get_json()
+    dataseparator = SeparatorInputDataSeparator.query.get(dataseparators["id"])
+
+    dataseparator.id = dataseparators["id"]
+    dataseparator.separator_id = dataseparators["separator_id"]
+    dataseparator.internaldiameter = dataseparators["internaldiameter"]
+    dataseparator.ttlength = dataseparators["ttlength"]
+    dataseparator.highleveltrip = dataseparators["highleveltrip"]
+    dataseparator.highlevelalarm = dataseparators["highlevelalarm"]
+    dataseparator.normalliquidlevel = dataseparators["normalliquidlevel"]
+    dataseparator.lowlevelalarm = dataseparators["lowlevelalarm"]
+    dataseparator.inletnozzle = dataseparators["inletnozzle"]
+    dataseparator.gasoutletnozzle = dataseparators["gasoutletnozzle"]
+    dataseparator.liquidoutletnozzle = dataseparators["liquidoutletnozzle"]
+    dataseparator.inletdevicetype = dataseparators["inletdevicetype"]
+    dataseparator.demistertype = dataseparators["demistertype"]
+
+
+    # separatorInputSeparators = SeparatorInputDataSeparator(id=id, separator_id=separator_id, internaldiameter=internaldiameter, ttlength=ttlength, 
+    #                                                 highleveltrip=highleveltrip, highlevelalarm=highlevelalarm, normalliquidlevel=normalliquidlevel, lowlevelalarm=lowlevelalarm, inletnozzle=inletnozzle, 
+    #                                                 gasoutletnozzle=gasoutletnozzle, liquidoutletnozzle=liquidoutletnozzle, inletdevicetype=inletdevicetype, demistertype=demistertype)
+
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar inputs data fluids
+@api.route('/datareliefvalve', methods=['GET'])
+def handle_get_data_relief_valve():
+
+    data_reliefvalve_query = SeparatorInputDataReliefValve.query.all()
+    all_data_reliefvalve = list(map(lambda x: x.serialize(), data_reliefvalve_query))
+    return jsonify(all_data_reliefvalve), 200
+
 # Insertar datos en  tabla data relief valve
 @api.route('/datareliefvalve', methods=['POST'])
 def handle_insert_data_relief_valve():
-    datareliefvalve = request.get_json()
+    datareliefvalves = request.get_json()
 
-    id = datareliefvalve["id"]
-    separator_id = datareliefvalve["separator_id"]
-    rvtag = datareliefvalve["rvtag"]
-    rvsetpressure = datareliefvalve["rvsetpressure"]
-    rvorificearea = datareliefvalve["rvorificearea"]
+    id = datareliefvalves["id"]
+    separator_id = datareliefvalves["separator_id"]
+    rvtag = datareliefvalves["rvtag"]
+    rvsetpressure = datareliefvalves["rvsetpressure"]
+    rvorificearea = datareliefvalves["rvorificearea"]
 
 
     separatorReliefValve = SeparatorInputDataReliefValve(id=id, separator_id=separator_id, rvtag=rvtag, rvsetpressure=rvsetpressure, 
@@ -249,23 +300,55 @@ def handle_insert_data_relief_valve():
 
     return jsonify(response_body), 200
 
+# Actualizar datos en  tabla data relief valve
+@api.route('/datareliefvalve', methods=['PUT'])
+def handle_update_data_relief_valve():
+    datareliefvalves = request.get_json()
+    datareliefvalve = SeparatorInputDataReliefValve.query.get(datareliefvalves["id"])
+
+    datareliefvalve.id = datareliefvalves["id"]
+    datareliefvalve.separator_id = datareliefvalves["separator_id"]
+    datareliefvalve.rvtag = datareliefvalves["rvtag"]
+    datareliefvalve.rvsetpressure = datareliefvalves["rvsetpressure"]
+    datareliefvalve.rvorificearea = datareliefvalves["rvorificearea"]
+
+
+    # separatorReliefValve = SeparatorInputDataReliefValve(id=id, separator_id=separator_id, rvtag=rvtag, rvsetpressure=rvsetpressure, 
+    #                                                 rvorificearea=rvorificearea)
+
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar inputs data fluids
+@api.route('/datalevelcontrolvalve', methods=['GET'])
+def handle_get_data_level_control_valve():
+
+    data_levelcontrolvalve_query = SeparatorInputDataLevelControlValve.query.all()
+    all_data_levelcontrolvalve = list(map(lambda x: x.serialize(), data_levelcontrolvalve_query))
+    return jsonify(all_data_levelcontrolvalve), 200
+
 # Insertar datos en  tabla data level control valve
 @api.route('/datalevelcontrolvalve', methods=['POST'])
 def handle_insert_data_level_control_valve():
-    datalevelcontrolvalve = request.get_json()
+    datalevelcontrolvalves = request.get_json()
 
-    id = datalevelcontrolvalve["id"]
-    separator_id = datalevelcontrolvalve["separator_id"]
-    internaldiameter = datalevelcontrolvalve["lcvtag"]
-    ttlength = datalevelcontrolvalve["lcvcv"]
-    highleveltrip = datalevelcontrolvalve["lcvdiameter"]
-    highlevelalarm = datalevelcontrolvalve["inletlcvpipingdiameter"]
-    normalliquidlevel = datalevelcontrolvalve["outletlcvpipingdiameter"]
-    lowlevelalarm = datalevelcontrolvalve["lcvfactorfl"]
-    inletnozzle = datalevelcontrolvalve["lcvfactorfi"]
-    gasoutletnozzle = datalevelcontrolvalve["lcvfactorfp"]
-    liquidoutletnozzle = datalevelcontrolvalve["lcvinletpressure"]
-    inletdevicetype = datalevelcontrolvalve["lcvoutletpressure"]
+    id = datalevelcontrolvalves["id"]
+    separator_id = datalevelcontrolvalves["separator_id"]
+    internaldiameter = datalevelcontrolvalves["lcvtag"]
+    ttlength = datalevelcontrolvalves["lcvcv"]
+    highleveltrip = datalevelcontrolvalves["lcvdiameter"]
+    highlevelalarm = datalevelcontrolvalves["inletlcvpipingdiameter"]
+    normalliquidlevel = datalevelcontrolvalves["outletlcvpipingdiameter"]
+    lowlevelalarm = datalevelcontrolvalves["lcvfactorfl"]
+    inletnozzle = datalevelcontrolvalves["lcvfactorfi"]
+    gasoutletnozzle = datalevelcontrolvalves["lcvfactorfp"]
+    liquidoutletnozzle = datalevelcontrolvalves["lcvinletpressure"]
+    inletdevicetype = datalevelcontrolvalves["lcvoutletpressure"]
 
 
     separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
@@ -273,6 +356,38 @@ def handle_insert_data_level_control_valve():
                                                     lcvfactorfp=lcvfactorfp, lcvinletpressure=lcvinletpressure, lcvoutletpressure=lcvoutletpressure)
 
     db.session.add(separatorLevelControlValve)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Insertar datos en  tabla data level control valve
+@api.route('/datalevelcontrolvalve', methods=['PUT'])
+def handle_update_data_level_control_valve():
+    datalevelcontrolvalves = request.get_json()
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.get(dataseparators["id"])
+
+    datalevelcontrolvalve.id = datalevelcontrolvalves["id"]
+    datalevelcontrolvalve.separator_id = datalevelcontrolvalves["separator_id"]
+    datalevelcontrolvalve.internaldiameter = datalevelcontrolvalves["lcvtag"]
+    datalevelcontrolvalve.ttlength = datalevelcontrolvalves["lcvcv"]
+    datalevelcontrolvalve.highleveltrip = datalevelcontrolvalves["lcvdiameter"]
+    datalevelcontrolvalve.highlevelalarm = datalevelcontrolvalves["inletlcvpipingdiameter"]
+    datalevelcontrolvalve.normalliquidlevel = datalevelcontrolvalves["outletlcvpipingdiameter"]
+    datalevelcontrolvalve.lowlevelalarm = datalevelcontrolvalves["lcvfactorfl"]
+    datalevelcontrolvalve.inletnozzle = datalevelcontrolvalves["lcvfactorfi"]
+    datalevelcontrolvalve.gasoutletnozzle = datalevelcontrolvalves["lcvfactorfp"]
+    datalevelcontrolvalve.liquidoutletnozzle = datalevelcontrolvalves["lcvinletpressure"]
+    datalevelcontrolvalve.inletdevicetype = datalevelcontrolvalves["lcvoutletpressure"]
+
+
+    # separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
+    #                                                 lcvdiameter=lcvdiameter, inletlcvpipingdiameter=inletlcvpipingdiameter, outletlcvpipingdiameter=outletlcvpipingdiameter, lcvfactorfl=lcvfactorfl, lcvfactorfi=lcvfactorfi, 
+    #                                                 lcvfactorfp=lcvfactorfp, lcvinletpressure=lcvinletpressure, lcvoutletpressure=lcvoutletpressure)
+
     db.session.commit()
 
     response_body = {
@@ -299,6 +414,7 @@ def handle_calc_gas_liquid_areas():
 
     return jsonify(response_body), 200
 
+
 # Seleccionar SeparatorOutputGasAndLiquidAreas
 @api.route('/gasandliquidareascalc', methods=['GET'])
 def handle_get_gas_liquid_areas():
@@ -306,3 +422,25 @@ def handle_get_gas_liquid_areas():
     gas_liquid_query = SeparatorOutputGasAndLiquidAreas.query.all()
     all_gas_liquid = list(map(lambda x: x.serialize(), gas_liquid_query))
     return jsonify(all_gas_liquid), 200
+
+
+## Calcular SeparatorOutputInletNozzleParameters
+@api.route('/inletnozzleparameterscalc', methods=['POST'])
+def handle_calc_inlet_nozzle_parameters():
+
+    inlet_nozzle_parameters_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputInletNozzleParameters
+@api.route('/inletnozzleparameterscalc', methods=['GET'])
+def handle_get_inlet_nozzle_parameters():
+
+    inlet_nozzle_query = SeparatorOutputInletNozzleParameters.query.all()
+    all_inlet_nozzle = list(map(lambda x: x.serialize(), inlet_nozzle_query))
+    return jsonify(all_inlet_nozzle), 200
+

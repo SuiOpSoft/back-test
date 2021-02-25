@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import safe_str_cmp
 
 db = SQLAlchemy()
 
@@ -58,6 +59,9 @@ class User(db.Model):
             "email": self.email,
             "company_id": self.company_id
         }
+
+    def check_password(self, password_param):
+        return safe_str_cmp(self.password.encode('utf-8'), password_param.encode('utf-8'))
 
 # ## Facilities table
 class Facility(db.Model):

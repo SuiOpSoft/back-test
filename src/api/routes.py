@@ -6,18 +6,25 @@ from api.models import db, Company, User, Facility, Separator, SeparatorInputDat
 from api.utils import generate_sitemap, APIException
 from api.calculations.separators.gasAndLiquidAreas import gas_and_liquid_areas_calc
 from api.calculations.separators.inletNozzleParameters import inlet_nozzle_parameters_calc
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+# Creación de token
+@api.route("/signIn", methods=["POST"])
+def sign_in():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+    user = User.query.filter_by(email=email).one_or_none()
+    if not user or not user.check_password(password):
+        return jsonify("Wrong email or password"), 401
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend"
-    }
-
-    return jsonify(response_body), 200
+    # Notice that we are passing in the actual sqlalchemy user object here
+    access_token = create_access_token(identity=user.serialize())
+    return jsonify(access_token=access_token)
 
 # Rellenar tabla de companies
 @api.route('/seedData', methods=['GET'])

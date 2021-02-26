@@ -118,7 +118,7 @@ class Separator(db.Model):
 class SeparatorInputDataFluid(db.Model):
     __tablename__ = 'separators_inputs_data_fluids'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     operatingpressure = db.Column(db.String(80), nullable=False)
     operatingtemperature = db.Column(db.String(80), nullable=False)
     oildensity = db.Column(db.String(80), nullable=False)

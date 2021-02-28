@@ -94,8 +94,8 @@ class Separator(db.Model):
     __tablename__ = 'separators'
     id = db.Column(db.Integer, primary_key=True)
     tag = db.Column(db.String(120), unique=True, nullable=False)
-    description = db.Column(db.String(120), nullable=False)
-    facility_id = db.Column(db.Integer, db.ForeignKey("facilities.id"), unique=True, nullable=False)
+    description = db.Column(db.String(120), nullable=True)
+    facility_id = db.Column(db.Integer, db.ForeignKey("facilities.id"), nullable=True)
     separators_inputs_data_fluids = db.relationship('SeparatorInputDataFluid') ## separators_inputs_data_fluids
     separators_inputs_data_separators = db.relationship('SeparatorInputDataSeparator') ## separators_inputs_data_separators
     separators_inputs_data_relief_valves = db.relationship('SeparatorInputDataReliefValve') ## separators_inputs_data_relief_valves
@@ -118,7 +118,7 @@ class Separator(db.Model):
 class SeparatorInputDataFluid(db.Model):
     __tablename__ = 'separators_inputs_data_fluids'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
+    separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
     operatingpressure = db.Column(db.String(80), nullable=False)
     operatingtemperature = db.Column(db.String(80), nullable=False)
     oildensity = db.Column(db.String(80), nullable=False)
@@ -141,12 +141,11 @@ class SeparatorInputDataFluid(db.Model):
     actualliquidflow = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return '<SeparatorInputDataFluid {self.separator_id}>'
+        return '<SeparatorInputDataFluid {self.separator_tag}>'
         
     def serialize(self):
         return {
-            "id": self.id,
-            "separator_id": self.separator_id,
+            "separator_tag": self.separator_tag,
             "operatingpressure": self.operatingpressure,
             "operatingtemperature": self.operatingtemperature,
             "oildensity": self.oildensity,
@@ -173,7 +172,7 @@ class SeparatorInputDataFluid(db.Model):
 class SeparatorInputDataSeparator(db.Model):
     __tablename__ = 'separators_inputs_data_separators'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     internaldiameter = db.Column(db.String(80), nullable=False)
     ttlength = db.Column(db.String(80), nullable=False)
     highleveltrip = db.Column(db.String(80), nullable=False)
@@ -210,7 +209,7 @@ class SeparatorInputDataSeparator(db.Model):
 class SeparatorInputDataReliefValve(db.Model):
     __tablename__ = 'separators_inputs_data_relief_valves'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     rvtag = db.Column(db.String(80), nullable=False)
     rvsetpressure = db.Column(db.String(80), nullable=False)
     rvorificearea = db.Column(db.String(80), nullable=False)
@@ -231,7 +230,7 @@ class SeparatorInputDataReliefValve(db.Model):
 class SeparatorInputDataLevelControlValve(db.Model):
     __tablename__ = 'separators_inputs_data_level_control_valves'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     lcvtag = db.Column(db.String(80), nullable=False)
     lcvcv = db.Column(db.String(80), nullable=False)
     lcvdiameter = db.Column(db.String(80), nullable=False)
@@ -266,7 +265,7 @@ class SeparatorInputDataLevelControlValve(db.Model):
 class SeparatorOutputGasAndLiquidAreas(db.Model):
     __tablename__ = 'separators_outputs_gas_and_liquid_areas'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     separatorcrosssectionalarearatio = db.Column(db.String(80), nullable=False)
     separatorcrosssectionalarea = db.Column(db.String(80), nullable=False)
     inletnozzlearea = db.Column(db.String(80), nullable=False)
@@ -304,7 +303,7 @@ class SeparatorOutputGasAndLiquidAreas(db.Model):
 class SeparatorOutputInletNozzleParameters(db.Model):
     __tablename__ = 'separators_outputs_inlet_nozzle_parameters'
     id = db.Column(db.Integer, primary_key=True)
-    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), unique=True, nullable=False)
+    separator_id = db.Column(db.Integer, db.ForeignKey("separators.id"), nullable=False)
     mixtureinletnozzlevelocity = db.Column(db.String(80), nullable=False)
     inletnozzlemomentum = db.Column(db.String(80), nullable=False)
     maximummixtureinletnozzlevelocity = db.Column(db.String(80), nullable=False)

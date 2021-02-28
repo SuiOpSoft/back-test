@@ -33,8 +33,8 @@ def handle_data():
     company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland")
     user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
     facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", user_id="1")
-    separator1 = Separator(id="1", tag="v-3108", description="Separator V", facility_id="1")
-    separatorDataFluid1 = SeparatorInputDataFluid(id="1", separator_id="1", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
+    separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")
+    separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
                                                     liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
                                                     liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33")
 
@@ -105,6 +105,37 @@ def handle_get_separators():
     all_separators = list(map(lambda x: x.serialize(), separator_query))
     return jsonify(all_separators), 200
 
+# Insertar separador
+@api.route('/separators', methods=['POST'])
+def handle_insert_separator():
+    separator = request.get_json()
+    print(separator)
+
+    ## Separator params
+    separator_tag = separator["tag"]
+    facility_id = separator["facility_id"] ## Falta coger la facility del front (Escogerla en la pantalla del usuario)
+
+    ## Cración del separador en la tabla separators
+    separator = Separator(tag=separator_tag, facility_id=facility_id)
+
+    ## Inputs 
+    separatorDataFluid = SeparatorInputDataFluid(separator_tag=separator_tag, operatingpressure="-", operatingtemperature="-", 
+                                                    oildensity="-", gasdensity="-", mixturedensity="-", waterdensity="-", feedbsw="-", 
+                                                    liquidviscosity="-", gasviscosity="-", gasmw="-", liqmw="-", gascomprz="-", especificheatratio="-", 
+                                                    liquidsurfacetension="-", liquidvaporpressure="-", liquidcriticalpressure="-", standardgasflow="-", 
+                                                    standardliquidflow="-", actualgasflow="-", actualliquidflow="-")
+
+    db.session.add(separator)
+    db.session.add(separatorDataFluid)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+
 ## Inputs resources ##
 # Seleccionar inputs data fluids
 @api.route('/datafluids', methods=['GET'])
@@ -161,10 +192,9 @@ def handle_insert_data_fluids():
 @api.route('/datafluids', methods=['PUT'])
 def handle_update_data_fluids():
     datafluids = request.get_json()
-    datafluid = SeparatorInputDataFluid.query.get(datafluids["id"])
+    datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
 
-    datafluid.id = datafluids["id"]
-    datafluid.separator_id = datafluids["separator_id"]
+    datafluid.separator_tag = datafluids["separator_tag"]
     datafluid.operatingpressure = datafluids["operatingpressure"]
     datafluid.operatingtemperature = datafluids["operatingtemperature"]
     datafluid.oildensity = datafluids["oildensity"]
@@ -186,13 +216,7 @@ def handle_update_data_fluids():
     datafluid.actualgasflow = datafluids["actualgasflow"]
     datafluid.actualliquidflow = datafluids["actualliquidflow"]
 
-    # separatorDataFluid = SeparatorInputDataFluid(id=id, separator_id=separator_id, operatingpressure=operatingpressure, operatingtemperature=operatingtemperature, 
-    #                                                 oildensity=oildensity, gasdensity=gasdensity, mixturedensity=mixturedensity, waterdensity=waterdensity, feedbsw=feedbsw, 
-    #                                                 liquidviscosity=liquidviscosity, gasviscosity=gasviscosity, gasmw=gasmw, liqmw=liqmw, gascomprz=gascomprz, especificheatratio=especificheatratio, 
-    #                                                 liquidsurfacetension=liquidsurfacetension, liquidvaporpressure=liquidvaporpressure, liquidcriticalpressure=liquidcriticalpressure, standardgasflow=standardgasflow, 
-    #                                                 standardliquidflow=standardliquidflow, actualgasflow=actualgasflow, actualliquidflow=actualliquidflow)
-
-    # db.session.add(separatorDataFluid)
+    db.session.add(datafluid)
     db.session.commit()
 
     response_body = {

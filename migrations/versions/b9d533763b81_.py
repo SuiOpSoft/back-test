@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6ed6deccde9d
+Revision ID: b9d533763b81
 Revises: 
-Create Date: 2021-02-26 17:43:39.610439
+Create Date: 2021-02-28 17:49:25.562903
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6ed6deccde9d'
+revision = 'b9d533763b81'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -52,11 +52,10 @@ def upgrade():
     op.create_table('separators',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('tag', sa.String(length=120), nullable=False),
-    sa.Column('description', sa.String(length=120), nullable=False),
-    sa.Column('facility_id', sa.Integer(), nullable=False),
+    sa.Column('description', sa.String(length=120), nullable=True),
+    sa.Column('facility_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['facility_id'], ['facilities.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('facility_id'),
     sa.UniqueConstraint('tag')
     )
     op.create_table('user_facilities',
@@ -67,7 +66,7 @@ def upgrade():
     )
     op.create_table('separators_inputs_data_fluids',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('separator_id', sa.Integer(), nullable=False),
+    sa.Column('separator_tag', sa.String(), nullable=False),
     sa.Column('operatingpressure', sa.String(length=80), nullable=False),
     sa.Column('operatingtemperature', sa.String(length=80), nullable=False),
     sa.Column('oildensity', sa.String(length=80), nullable=False),
@@ -88,9 +87,8 @@ def upgrade():
     sa.Column('standardliquidflow', sa.String(length=80), nullable=False),
     sa.Column('actualgasflow', sa.String(length=80), nullable=False),
     sa.Column('actualliquidflow', sa.String(length=80), nullable=False),
-    sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_inputs_data_level_control_valves',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -106,8 +104,7 @@ def upgrade():
     sa.Column('lcvinletpressure', sa.String(length=80), nullable=False),
     sa.Column('lcvoutletpressure', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_inputs_data_relief_valves',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -116,8 +113,7 @@ def upgrade():
     sa.Column('rvsetpressure', sa.String(length=80), nullable=False),
     sa.Column('rvorificearea', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_inputs_data_separators',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -134,8 +130,7 @@ def upgrade():
     sa.Column('inletdevicetype', sa.String(length=80), nullable=False),
     sa.Column('demistertype', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_outputs_gas_and_liquid_areas',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -152,8 +147,7 @@ def upgrade():
     sa.Column('normalleveltriparea', sa.String(length=80), nullable=False),
     sa.Column('lowleveltripliquidarea', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_outputs_inlet_nozzle_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -166,8 +160,7 @@ def upgrade():
     sa.Column('maximumgasflowinletnozzle', sa.String(length=80), nullable=False),
     sa.Column('statusinletnozzle', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_id'], ['separators.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('separator_id')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

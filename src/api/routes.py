@@ -252,11 +252,13 @@ def handle_update_data_fluids():
 def handle_delete_data_fluids():
     datafluids = request.get_json()
     datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
+    separator = Separator.query.filter_by(tag = datafluids["separator_tag"]).first()
 
     datafluid.separator_tag = datafluids["separator_tag"]
-    
+    separator.tag = datafluids["separator_tag"]
 
     db.session.delete(datafluid)
+    db.session.delete(separator)
     db.session.commit()
 
     response_body = {

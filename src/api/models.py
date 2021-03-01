@@ -145,6 +145,7 @@ class SeparatorInputDataFluid(db.Model):
         
     def serialize(self):
         return {
+            "id": self.id,
             "separator_tag": self.separator_tag,
             "operatingpressure": self.operatingpressure,
             "operatingtemperature": self.operatingtemperature,

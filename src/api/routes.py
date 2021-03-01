@@ -135,6 +135,28 @@ def handle_insert_separator():
 
     return jsonify(response_body), 200
 
+# Borrar separador
+# @api.route('/separators', methods=['DELETE'])
+# def handle_delete_separator():
+#     separator = request.get_json()
+#     separators = Separator.query.filter_by(tag = separator["tag"]).first()
+#     print(separator)
+
+#     ## Separator params
+#     tag = separator["tag"]
+#     facility_id = separator["facility_id"] ## Falta coger la facility del front (Escogerla en la pantalla del usuario)
+
+#     separator = Separator(tag=separator["tag"], facility_id=facility_id)
+
+#     db.session.delete(separator)
+#     db.session.commit()
+
+#     response_body = {
+#         "message": "Success"
+#     }
+
+#     return jsonify(response_body), 200
+
 
 ## Inputs resources ##
 # Seleccionar inputs data fluids
@@ -217,6 +239,24 @@ def handle_update_data_fluids():
     datafluid.actualliquidflow = datafluids["actualliquidflow"]
 
     db.session.add(datafluid)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Eliminar datos en tabla datafluids
+@api.route('/datafluids', methods=['DELETE'])
+def handle_delete_data_fluids():
+    datafluids = request.get_json()
+    datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
+
+    datafluid.separator_tag = datafluids["separator_tag"]
+    
+
+    db.session.delete(datafluid)
     db.session.commit()
 
     response_body = {

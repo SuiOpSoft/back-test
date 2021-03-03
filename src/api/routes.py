@@ -37,13 +37,26 @@ def handle_data():
     separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
                                                     liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
                                                     liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33")
+    
+    separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="5536.33", lcvcv="5536.33", 
+                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="5536.33", lcvfactorfi="5536.33", 
+                                                    lcvfactorfp="5536.33", lcvinletpressure="5536.33", lcvoutletpressure="5536.33")
 
+    separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="5536.33", rvsetpressure="5536.33", 
+                                                    rvorificearea="5536.33")
+
+    separatorInputSeparators1 = SeparatorInputDataSeparator(separator_tag="v-3108", internaldiameter="5536.33", ttlength="5536.33", 
+                                                    highleveltrip="5536.33", highlevelalarm="5536.33", normalliquidlevel="5536.33", lowlevelalarm="5536.33", inletnozzle="5536.33", 
+                                                    gasoutletnozzle="5536.33", liquidoutletnozzle="5536.33", inletdevicetype="5536.33", demistertype="5536.33")
 
     db.session.add(company1)
     db.session.add(user1)
     db.session.add(facility1)
     db.session.add(separator1)
-    db.session.add(separatorDataFluid1)
+    db.session.add(separatorDataFluid1)          
+    db.session.add(separatorLevelControlValve1)
+    db.session.add(separatorDataReliefValve1)
+    db.session.add(separatorInputSeparators1)
     db.session.commit()
 
     response_body = {
@@ -125,8 +138,23 @@ def handle_insert_separator():
                                                     liquidsurfacetension="-", liquidvaporpressure="-", liquidcriticalpressure="-", standardgasflow="-", 
                                                     standardliquidflow="-", actualgasflow="-", actualliquidflow="-")
 
+    separatorLevelControlValve = SeparatorInputDataLevelControlValve(separator_tag=separator_tag, lcvtag="-", lcvcv="-", 
+                                                    lcvdiameter="-", inletlcvpipingdiameter="-", outletlcvpipingdiameter="-", lcvfactorfl="-", lcvfactorfi="-", 
+                                                    lcvfactorfp="-", lcvinletpressure="-", lcvoutletpressure="-")
+
+    separatorDataReliefValve = SeparatorInputDataReliefValve(separator_tag=separator_tag, rvtag="-", rvsetpressure="-", 
+                                                    rvorificearea="-")
+    
+    separatorInputSeparators = SeparatorInputDataSeparator(separator_tag=separator_tag, internaldiameter="-", ttlength="-", 
+                                                    highleveltrip="-", highlevelalarm="-", normalliquidlevel="-", lowlevelalarm="-", inletnozzle="-", 
+                                                    gasoutletnozzle="-", liquidoutletnozzle="-", inletdevicetype="-", demistertype="-")
+
+
     db.session.add(separator)
     db.session.add(separatorDataFluid)
+    db.session.add(separatorLevelControlValve)
+    db.session.add(separatorDataReliefValve)
+    db.session.add(separatorInputSeparators)
     db.session.commit()
 
     response_body = {
@@ -253,11 +281,20 @@ def handle_delete_data_fluids():
     datafluids = request.get_json()
     datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
     separator = Separator.query.filter_by(tag = datafluids["separator_tag"]).first()
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
+    datareliefvalve = SeparatorInputDataReliefValve.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
+    dataseparator = SeparatorInputDataSeparator.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
 
     datafluid.separator_tag = datafluids["separator_tag"]
+    dataseparator.separator_tag = datafluids["separator_tag"]
+    datalevelcontrolvalve.separator_tag = datafluids["separator_tag"]
+    datareliefvalve.separator_tag = datafluids["separator_tag"]
     separator.tag = datafluids["separator_tag"]
 
     db.session.delete(datafluid)
+    db.session.delete(dataseparator)
+    db.session.delete(datalevelcontrolvalve)
+    db.session.delete(datareliefvalve)
     db.session.delete(separator)
     db.session.commit()
 
@@ -301,6 +338,7 @@ def handle_insert_data_separators():
 
     db.session.add(separatorInputSeparators)
     db.session.commit()
+    
 
     response_body = {
         "message": "Success"
@@ -312,10 +350,9 @@ def handle_insert_data_separators():
 @api.route('/dataseparators', methods=['PUT'])
 def handle_update_data_separators():
     dataseparators = request.get_json()
-    dataseparator = SeparatorInputDataSeparator.query.get(dataseparators["id"])
+    dataseparator = SeparatorInputDataSeparator.query.filter_by(separator_tag = dataseparators["separator_tag"]).first()
 
-    dataseparator.id = dataseparators["id"]
-    dataseparator.separator_id = dataseparators["separator_id"]
+    dataseparator.separator_tag = dataseparators["separator_tag"]
     dataseparator.internaldiameter = dataseparators["internaldiameter"]
     dataseparator.ttlength = dataseparators["ttlength"]
     dataseparator.highleveltrip = dataseparators["highleveltrip"]
@@ -333,6 +370,7 @@ def handle_update_data_separators():
     #                                                 highleveltrip=highleveltrip, highlevelalarm=highlevelalarm, normalliquidlevel=normalliquidlevel, lowlevelalarm=lowlevelalarm, inletnozzle=inletnozzle, 
     #                                                 gasoutletnozzle=gasoutletnozzle, liquidoutletnozzle=liquidoutletnozzle, inletdevicetype=inletdevicetype, demistertype=demistertype)
 
+    db.session.add(dataseparator)
     db.session.commit()
 
     response_body = {
@@ -340,6 +378,35 @@ def handle_update_data_separators():
     }
 
     return jsonify(response_body), 200
+
+# Eliminar datos en tabla datafluids
+@api.route('/dataseparators', methods=['DELETE'])
+def handle_delete_data_separators():
+    dataseparators = request.get_json()
+    dataseparator = SeparatorInputDataSeparator.query.filter_by(separator_tag = dataseparators["separator_tag"]).first()
+    separator = Separator.query.filter_by(tag = dataseparators["separator_tag"]).first()
+    datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = dataseparators["separator_tag"]).first()
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.filter_by(separator_tag = dataseparators["separator_tag"]).first()
+    datareliefvalve = SeparatorInputDataReliefValve.query.filter_by(separator_tag = dataseparators["separator_tag"]).first()
+
+    dataseparator.separator_tag = dataseparators["separator_tag"]
+    datafluid.separator_tag = dataseparators["separator_tag"]
+    datalevelcontrolvalve.separator_tag = dataseparators["separator_tag"]
+    datareliefvalve.separator_tag = dataseparators["separator_tag"]
+    separator.tag = dataseparators["separator_tag"]
+
+    db.session.delete(dataseparator)
+    db.session.delete(datafluid)
+    db.session.delete(datalevelcontrolvalve)
+    db.session.delete(datareliefvalve)
+    db.session.delete(separator)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200    
 
 # Seleccionar inputs data fluids
 @api.route('/datareliefvalve', methods=['GET'])
@@ -377,10 +444,9 @@ def handle_insert_data_relief_valve():
 @api.route('/datareliefvalve', methods=['PUT'])
 def handle_update_data_relief_valve():
     datareliefvalves = request.get_json()
-    datareliefvalve = SeparatorInputDataReliefValve.query.get(datareliefvalves["id"])
+    datareliefvalve = SeparatorInputDataReliefValve.query.filter_by(separator_tag = datareliefvalves["separator_tag"]).first()
 
-    datareliefvalve.id = datareliefvalves["id"]
-    datareliefvalve.separator_id = datareliefvalves["separator_id"]
+    datareliefvalve.separator_tag = datareliefvalves["separator_tag"]
     datareliefvalve.rvtag = datareliefvalves["rvtag"]
     datareliefvalve.rvsetpressure = datareliefvalves["rvsetpressure"]
     datareliefvalve.rvorificearea = datareliefvalves["rvorificearea"]
@@ -388,7 +454,36 @@ def handle_update_data_relief_valve():
 
     # separatorReliefValve = SeparatorInputDataReliefValve(id=id, separator_id=separator_id, rvtag=rvtag, rvsetpressure=rvsetpressure, 
     #                                                 rvorificearea=rvorificearea)
+    db.session.add(datareliefvalve)
+    db.session.commit()
 
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/datareliefvalve', methods=['DELETE'])
+def handle_delete_data_relief_valve():
+    datareliefvalves = request.get_json()
+    datareliefvalve = SeparatorInputDataReliefValve.query.filter_by(separator_tag = datareliefvalves["separator_tag"]).first()
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.filter_by(separator_tag = datareliefvalves["separator_tag"]).first()
+    separator = Separator.query.filter_by(tag = datareliefvalves["separator_tag"]).first()
+    datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datareliefvalves["separator_tag"]).first()
+    dataseparator = SeparatorInputDataSeparator.query.filter_by(separator_tag = datareliefvalves["separator_tag"]).first()
+
+    separator.tag = datareliefvalves["separator_tag"]
+    datareliefvalve.separator_tag = datareliefvalves["separator_tag"]
+    datalevelcontrolvalve.separator_tag = datareliefvalves["separator_tag"]
+    datafluid.separator_tag = datareliefvalves["separator_tag"]
+    dataseparator.separator_tag = datareliefvalves["separator_tag"]
+    
+
+    db.session.delete(datareliefvalve)
+    db.session.delete(datafluid)
+    db.session.delete(datalevelcontrolvalve)
+    db.session.delete(dataseparator)
+    db.session.delete(separator)
     db.session.commit()
 
     response_body = {
@@ -412,16 +507,16 @@ def handle_insert_data_level_control_valve():
 
     id = datalevelcontrolvalves["id"]
     separator_id = datalevelcontrolvalves["separator_id"]
-    internaldiameter = datalevelcontrolvalves["lcvtag"]
-    ttlength = datalevelcontrolvalves["lcvcv"]
-    highleveltrip = datalevelcontrolvalves["lcvdiameter"]
-    highlevelalarm = datalevelcontrolvalves["inletlcvpipingdiameter"]
-    normalliquidlevel = datalevelcontrolvalves["outletlcvpipingdiameter"]
-    lowlevelalarm = datalevelcontrolvalves["lcvfactorfl"]
-    inletnozzle = datalevelcontrolvalves["lcvfactorfi"]
-    gasoutletnozzle = datalevelcontrolvalves["lcvfactorfp"]
-    liquidoutletnozzle = datalevelcontrolvalves["lcvinletpressure"]
-    inletdevicetype = datalevelcontrolvalves["lcvoutletpressure"]
+    lcvtag = datalevelcontrolvalves["lcvtag"]
+    lcvcv = datalevelcontrolvalves["lcvcv"]
+    lcvdiameter = datalevelcontrolvalves["lcvdiameter"]
+    inletlcvpipingdiameter = datalevelcontrolvalves["inletlcvpipingdiameter"]
+    outletlcvpipingdiameter = datalevelcontrolvalves["outletlcvpipingdiameter"]
+    lcvfactorfl = datalevelcontrolvalves["lcvfactorfl"]
+    lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
+    lcvfactorfp = datalevelcontrolvalves["lcvfactorfp"]
+    lcvinletpressure = datalevelcontrolvalves["lcvinletpressure"]
+    lcvoutletpressure = datalevelcontrolvalves["lcvoutletpressure"]
 
 
     separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
@@ -441,26 +536,51 @@ def handle_insert_data_level_control_valve():
 @api.route('/datalevelcontrolvalve', methods=['PUT'])
 def handle_update_data_level_control_valve():
     datalevelcontrolvalves = request.get_json()
-    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.get(dataseparators["id"])
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.filter_by(separator_tag = datalevelcontrolvalves["separator_tag"]).first()
+    
+    datalevelcontrolvalve.separator_tag = datalevelcontrolvalves["separator_tag"]
+    datalevelcontrolvalve.lcvtag = datalevelcontrolvalves["lcvtag"]
+    datalevelcontrolvalve.lcvcv = datalevelcontrolvalves["lcvcv"]
+    #datalevelcontrolvalve.lcvdiameter = datalevelcontrolvalves["lcvdiameter"]
+    #datalevelcontrolvalve.inletlcvpipingdiameter = datalevelcontrolvalves["inletlcvpipingdiameter"]
+    #datalevelcontrolvalve.outletlcvpipingdiameter = datalevelcontrolvalves["outletlcvpipingdiameter"]
+    datalevelcontrolvalve.lcvfactorfl = datalevelcontrolvalves["lcvfactorfl"]
+    datalevelcontrolvalve.lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
+    datalevelcontrolvalve.lcvfactorfp = datalevelcontrolvalves["lcvfactorfp"]
+    datalevelcontrolvalve.lcvinletpressure = datalevelcontrolvalves["lcvinletpressure"]
+    datalevelcontrolvalve.lcvoutletpressure = datalevelcontrolvalves["lcvoutletpressure"]
 
-    datalevelcontrolvalve.id = datalevelcontrolvalves["id"]
-    datalevelcontrolvalve.separator_id = datalevelcontrolvalves["separator_id"]
-    datalevelcontrolvalve.internaldiameter = datalevelcontrolvalves["lcvtag"]
-    datalevelcontrolvalve.ttlength = datalevelcontrolvalves["lcvcv"]
-    datalevelcontrolvalve.highleveltrip = datalevelcontrolvalves["lcvdiameter"]
-    datalevelcontrolvalve.highlevelalarm = datalevelcontrolvalves["inletlcvpipingdiameter"]
-    datalevelcontrolvalve.normalliquidlevel = datalevelcontrolvalves["outletlcvpipingdiameter"]
-    datalevelcontrolvalve.lowlevelalarm = datalevelcontrolvalves["lcvfactorfl"]
-    datalevelcontrolvalve.inletnozzle = datalevelcontrolvalves["lcvfactorfi"]
-    datalevelcontrolvalve.gasoutletnozzle = datalevelcontrolvalves["lcvfactorfp"]
-    datalevelcontrolvalve.liquidoutletnozzle = datalevelcontrolvalves["lcvinletpressure"]
-    datalevelcontrolvalve.inletdevicetype = datalevelcontrolvalves["lcvoutletpressure"]
+    db.session.add(datalevelcontrolvalve)
+    db.session.commit()
 
+    response_body = {
+        "message": "Success"
+    }
 
-    # separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
-    #                                                 lcvdiameter=lcvdiameter, inletlcvpipingdiameter=inletlcvpipingdiameter, outletlcvpipingdiameter=outletlcvpipingdiameter, lcvfactorfl=lcvfactorfl, lcvfactorfi=lcvfactorfi, 
-    #                                                 lcvfactorfp=lcvfactorfp, lcvinletpressure=lcvinletpressure, lcvoutletpressure=lcvoutletpressure)
+    return jsonify(response_body), 200
 
+# Eliminar datos en tabla datafluids
+@api.route('/datalevelcontrolvalve', methods=['DELETE'])
+def handle_delete_data_level_control_valve():
+    datalevelcontrolvalves = request.get_json()
+    datalevelcontrolvalve = SeparatorInputDataLevelControlValve.query.filter_by(separator_tag = datalevelcontrolvalves["separator_tag"]).first()
+    separator = Separator.query.filter_by(tag = datalevelcontrolvalves["separator_tag"]).first()
+    datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datalevelcontrolvalves["separator_tag"]).first()
+    datareliefvalve = SeparatorInputDataReliefValve.query.filter_by(separator_tag = datalevelcontrolvalves["separator_tag"]).first()
+    dataseparator = SeparatorInputDataSeparator.query.filter_by(separator_tag = datalevelcontrolvalves["separator_tag"]).first()
+
+    separator.tag = datalevelcontrolvalves["separator_tag"]
+    datalevelcontrolvalve.separator_tag = datalevelcontrolvalves["separator_tag"]
+    datafluid.separator_tag = datalevelcontrolvalves["separator_tag"]
+    datareliefvalve.separator_tag = datalevelcontrolvalves["separator_tag"]
+    dataseparator.separator_tag = datalevelcontrolvalves["separator_tag"]
+    
+
+    db.session.delete(datafluid)
+    db.session.delete(dataseparator)
+    db.session.delete(datalevelcontrolvalve)
+    db.session.delete(datareliefvalve)
+    db.session.delete(separator)
     db.session.commit()
 
     response_body = {

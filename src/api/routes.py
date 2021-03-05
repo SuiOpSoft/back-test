@@ -2,10 +2,13 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorInputDataLevelControlValve
+from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve,SeparatorInputDataLevelControlValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorOutputGasNozzleParameters, SeparatorOutputLiquidNozzleParameters, SeparatorOutputVesselGasCapacityParameters
 from api.utils import generate_sitemap, APIException
 from api.calculations.separators.gasAndLiquidAreas import gas_and_liquid_areas_calc
 from api.calculations.separators.inletNozzleParameters import inlet_nozzle_parameters_calc
+from api.calculations.separators.gasNozzle import gas_nozzle_calc
+from api.calculations.separators.liquidNozzle import liquid_nozzle_calc
+from api.calculations.separators.vesselGasCapacity import vessel_gas_capacity_calc
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -636,4 +639,65 @@ def handle_get_inlet_nozzle_parameters():
     inlet_nozzle_query = SeparatorOutputInletNozzleParameters.query.all()
     all_inlet_nozzle = list(map(lambda x: x.serialize(), inlet_nozzle_query))
     return jsonify(all_inlet_nozzle), 200
+
+## Calcular SeparatorOutputGasNozzleParameters
+@api.route('/gasnozzleparameterscalc', methods=['POST'])
+def handle_calc_gas_nozzle_parameters():
+
+    gas_nozzle_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputGasNozzleParameters
+@api.route('/gasnozzleparameterscalc', methods=['GET'])
+def handle_get_gas_nozzle_parameters():
+
+    gas_nozzle_query = SeparatorOutputGasNozzleParameters.query.all()
+    all_gas_nozzle = list(map(lambda x: x.serialize(), gas_nozzle_query))
+    return jsonify(all_gas_nozzle), 200
+
+## Calcular SeparatorOutputLiquidNozzleParameters
+@api.route('/liquidnozzleparameterscalc', methods=['POST'])
+def handle_calc_liquid_nozzle_parameters():
+
+    liquid_nozzle_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputLiquidNozzleParameters
+@api.route('/liquidnozzleparameterscalc', methods=['GET'])
+def handle_get_liquid_nozzle_parameters():
+
+    liquid_nozzle_query = SeparatorOutputLiquidNozzleParameters.query.all()
+    all_liquid_nozzle = list(map(lambda x: x.serialize(), liquid_nozzle_query))
+    return jsonify(all_liquid_nozzle), 200
+
+## Calcular SeparatorOutputVesselGasCapacityParameters
+@api.route('/vesselgascapacitycalc', methods=['POST'])
+def handle_calc_vessel_gas_parameters():
+
+    vessel_gas_capacity_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputVesselGasCapacityParameters
+@api.route('/vesselgascapacitycalc', methods=['GET'])
+def handle_get_vessel_gas_parameters():
+
+    vessel_gas_query = SeparatorOutputVesselGasCapacityParameters.query.all()
+    all_vessel_gas = list(map(lambda x: x.serialize(), vessel_gas_query))
+    return jsonify(all_vessel_gas), 200
+
 

@@ -6,6 +6,7 @@ def gas_and_liquid_areas_calc():
 
     for dataseparator in dataseparators:
         SeparatorOutputGasAndLiquidAreas.query.filter(SeparatorOutputGasAndLiquidAreas.separator_tag == dataseparator.separator_tag).delete()
+        
         HHl=dataseparator.highleveltrip
         Nl=dataseparator.normalliquidlevel
         Ll=dataseparator.lowlevelalarm

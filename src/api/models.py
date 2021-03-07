@@ -106,6 +106,8 @@ class Separator(db.Model):
     separators_outputs_liquid_nozzle_parameters = db.relationship('SeparatorOutputLiquidNozzleParameters') ## separators_outputs_liquid_nozzle_parameters
     separators_outputs_vessel_gas_capacity_parameters = db.relationship('SeparatorOutputVesselGasCapacityParameters') ## separators_outputs_vessel_gas_capacity_parameters
     separators_outputs_vessel_liquid_capacity_parameters = db.relationship('SeparatorOutputVesselLiquidCapacityParameters') ## separators_outputs_vessel_liquid_capacity_parameters
+    separators_outputs_relief_valve_parameters = db.relationship('SeparatorOutputReliefValveParameters') ## separators_outputs_relief_valve_parameters
+    separators_outputs_level_control_valve_parameters = db.relationship('SeparatorOutputLevelControlValveParameters') ## separators_outputs_level_control_valve_parameters
 
     def __repr__(self):
         return '<Separator {self.tag}>'
@@ -171,7 +173,7 @@ class SeparatorInputDataFluid(db.Model):
             "standardgasflow": self.standardgasflow,
             "standardliquidflow": self.standardliquidflow,
             "actualgasflow": self.actualgasflow,
-            "actualliquidflow": self.actualliquidflow
+            "actualliquidflow": self.actualliquidflow,
             "kcp": self.kcp
         }
 
@@ -450,7 +452,7 @@ class SeparatorOutputReliefValveParameters(db.Model):
             "id": self.id,
             "separator_tag": self.separator_tag,
             "reliefvalvecapacity": self.reliefvalvecapacity,          
-            "reliefvalvecapacitystatus": self.statusvesselliquidcapacity
+            "reliefvalvecapacitystatus": self.reliefvalvecapacitystatus
             
         }
 

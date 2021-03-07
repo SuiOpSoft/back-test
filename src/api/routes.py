@@ -42,7 +42,7 @@ def handle_data():
     separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")
     separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
                                                     liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
-                                                    liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33")
+                                                    liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33", kcp="1.49")
     
     separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="5536.33", lcvcv="5536.33", 
                                                     lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="5536.33", lcvfactorfi="5536.33", 
@@ -727,7 +727,7 @@ def handle_get_vessel_liquid_parameters():
 @api.route('/reliefvalvecalc', methods=['POST'])
 def handle_calc_relief_valve_parameters():
 
-    vessel_liquid_capacity_calc()
+    relief_valve_calc()
 
     response_body = {
         "message": "Success"

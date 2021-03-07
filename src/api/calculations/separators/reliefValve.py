@@ -7,6 +7,7 @@ def relief_valve_calc():
 
     for datafluid in datafluids:
         for datavalve in datavalves:
+            SeparatorOutputReliefValveParameters.query.filter(SeparatorOutputReliefValveParameters.separator_tag == datafluid.separator_tag).delete()
 
             #RELIEF VALVE DATA - PARAMETERS
             RVOrifice = datavalve.rvorificearea

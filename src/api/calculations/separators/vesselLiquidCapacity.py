@@ -31,7 +31,7 @@ def vessel_liquid_capacity_calc():
                   VLiqCap = "OK"
 
                 separatoroutputvesselliquid = SeparatorOutputVesselLiquidCapacityParameters(separator_tag=datafluid.separator_tag, maximumvesselliquidflowcapacityatnormallevel=str(format(MLf, ".2f")), 
-                                                                                              statusvesselliquidcapacity=str(format(VLiqCap, ".2f")))
+                                                                                              statusvesselliquidcapacity=VLiqCap)
 
                 db.session.add(separatoroutputvesselliquid)
                 db.session.commit()

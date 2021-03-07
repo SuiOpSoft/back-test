@@ -11,6 +11,8 @@ def vessel_gas_capacity_calc():
             for gasliquid in gasliquids:
                 SeparatorOutputVesselGasCapacityParameters.query.filter(SeparatorOutputVesselGasCapacityParameters.separator_tag == datafluid.separator_tag).delete()
 
+                Param1 = 0
+                Param2 = 0
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 AGf = datafluid.actualgasflow
                 Ld = datafluid.oildensity
@@ -38,7 +40,7 @@ def vessel_gas_capacity_calc():
                   Param2 = 0.08
                 if (Demister == "HVD"):
                   Param2 = 0.1
-                GasLoadFactor = Param1 * Param2
+                GasLoadFactor = float(Param1) * float(Param2)
                 AreaHh1 = GasLoadFactor * float(GA_Hh)
                 AreaNl2 = GasLoadFactor * float(GA_Nl)
                 MaxAGfV1 = (AreaHh1 / math.sqrt(float(Gd) / (float(Ld) - float(Gd)))) * 3600

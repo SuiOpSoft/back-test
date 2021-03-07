@@ -2,8 +2,13 @@ from api.models import db, SeparatorInputDataSeparator, SeparatorInputDataFluid,
 import math
 
 def inlet_nozzle_parameters_calc():
-    datafluid = db.session.query(SeparatorInputDataFluid).one()
-    dataseparator = db.session.query(SeparatorInputDataSeparator).one()
+    datafluids = SeparatorInputDataFluid.query.all()
+    dataseparators = SeparatorInputDataSeparator.query.all()
+
+
+    for datafluid in datafluids:
+        for dataseparator in dataseparators:
+            SeparatorOutputInletNozzleParameters.query.filter(SeparatorOutputInletNozzleParameters.separator_tag == datafluid.separator_tag).delete()
 
     AGf = datafluid.actualgasflow
     ALf = datafluid.actualliquidflow
@@ -34,7 +39,7 @@ def inlet_nozzle_parameters_calc():
     else: INCap = "OK"
 
 
-    separatorgasandliquidareas = SeparatorOutputInletNozzleParameters(id="1", separator_id="1", mixtureinletnozzlevelocity = float(format(MIv, ".2f")), inletnozzlemomentum = float(format(Im, ".2f")), maximummixtureinletnozzlevelocity = float(format(MaxMIv, ".2f")),
+    separatorgasandliquidareas = SeparatorOutputInletNozzleParameters(separator_tag=datafluid.separator_tag, mixtureinletnozzlevelocity = float(format(MIv, ".2f")), inletnozzlemomentum = float(format(Im, ".2f")), maximummixtureinletnozzlevelocity = float(format(MaxMIv, ".2f")),
                                                                     maximuminletnozzlemomentum = float(MaxIm), maximumliquidflowinletnozzle = float(format(MaxALf, ".2f")), maximumgasflowinletnozzle = float(format(MaxAGf, ".2f")), statusinletnozzle = INCap)
 
     db.session.add(separatorgasandliquidareas)

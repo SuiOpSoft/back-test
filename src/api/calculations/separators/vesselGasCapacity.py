@@ -9,6 +9,7 @@ def vessel_gas_capacity_calc():
     for datafluid in datafluids:
         for dataseparator in dataseparators:
             for gasliquid in gasliquids:
+                SeparatorOutputVesselGasCapacityParameters.query.filter(SeparatorOutputVesselGasCapacityParameters.separator_tag == datafluid.separator_tag).delete()
 
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 AGf = datafluid.actualgasflow

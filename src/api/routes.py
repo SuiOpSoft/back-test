@@ -2,13 +2,16 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve,SeparatorInputDataLevelControlValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorOutputGasNozzleParameters, SeparatorOutputLiquidNozzleParameters, SeparatorOutputVesselGasCapacityParameters
+from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve,SeparatorInputDataLevelControlValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorOutputGasNozzleParameters, SeparatorOutputLiquidNozzleParameters, SeparatorOutputVesselGasCapacityParameters, SeparatorOutputVesselLiquidCapacityParameters, SeparatorOutputReliefValveParameters, SeparatorOutputLevelControlValveParameters
 from api.utils import generate_sitemap, APIException
 from api.calculations.separators.gasAndLiquidAreas import gas_and_liquid_areas_calc
 from api.calculations.separators.inletNozzleParameters import inlet_nozzle_parameters_calc
 from api.calculations.separators.gasNozzle import gas_nozzle_calc
 from api.calculations.separators.liquidNozzle import liquid_nozzle_calc
 from api.calculations.separators.vesselGasCapacity import vessel_gas_capacity_calc
+from api.calculations.separators.vesselLiquidCapacity import vessel_liquid_capacity_calc
+from api.calculations.separators.reliefValve import relief_valve_calc
+from api.calculations.separators.levelControlValve import level_control_calc
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -699,5 +702,65 @@ def handle_get_vessel_gas_parameters():
     vessel_gas_query = SeparatorOutputVesselGasCapacityParameters.query.all()
     all_vessel_gas = list(map(lambda x: x.serialize(), vessel_gas_query))
     return jsonify(all_vessel_gas), 200
+
+## Calcular SeparatorOutputVesselLiquidCapacityParameters
+@api.route('/vesselliquidcapacitycalc', methods=['POST'])
+def handle_calc_vessel_liquid_parameters():
+
+    vessel_liquid_capacity_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputVesselLiquidCapacityParameters
+@api.route('/vesselliquidcapacitycalc', methods=['GET'])
+def handle_get_vessel_liquid_parameters():
+
+    vessel_liquid_query = SeparatorOutputVesselLiquidCapacityParameters.query.all()
+    all_vessel_liquid = list(map(lambda x: x.serialize(), vessel_liquid_query))
+    return jsonify(all_vessel_liquid), 200
+
+## Calcular SeparatorOutputReliefValveParameters
+@api.route('/reliefvalvecalc', methods=['POST'])
+def handle_calc_relief_valve_parameters():
+
+    vessel_liquid_capacity_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputReliefValveParameters
+@api.route('/reliefvalvecalc', methods=['GET'])
+def handle_get_relief_valve_parameters():
+
+    relief_valve_query = SeparatorOutputReliefValveParameters.query.all()
+    all_relief_valves = list(map(lambda x: x.serialize(), relief_valve_query))
+    return jsonify(all_relief_valves), 200
+
+## Calcular SeparatorOutputReliefValveParameters
+@api.route('/levelcontrolcalc', methods=['POST'])
+def handle_calc_level_control_valve_parameters():
+
+    level_control_calc()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Seleccionar SeparatorOutputReliefValveParameters
+@api.route('/levelcontrolcalc', methods=['GET'])
+def handle_get_level_control_valve_parameters():
+
+    level_control_valve_query = SeparatorOutputLevelControlValveParameters.query.all()
+    all_level_control_valves = list(map(lambda x: x.serialize(), level_control_valve_query))
+    return jsonify(all_level_control_valves), 200
 
 

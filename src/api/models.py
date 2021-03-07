@@ -104,6 +104,8 @@ class Separator(db.Model):
     separators_outputs_inlet_nozzle_parameters = db.relationship('SeparatorOutputInletNozzleParameters') ## separators_outputs_inlet_nozzle_parameters
     separators_outputs_gas_nozzle_parameters = db.relationship('SeparatorOutputGasNozzleParameters') ## separators_outputs_gas_nozzle_parameters
     separators_outputs_liquid_nozzle_parameters = db.relationship('SeparatorOutputLiquidNozzleParameters') ## separators_outputs_liquid_nozzle_parameters
+    separators_outputs_vessel_gas_capacity_parameters = db.relationship('SeparatorOutputVesselGasCapacityParameters') ## separators_outputs_vessel_gas_capacity_parameters
+    separators_outputs_vessel_liquid_capacity_parameters = db.relationship('SeparatorOutputVesselLiquidCapacityParameters') ## separators_outputs_vessel_liquid_capacity_parameters
 
     def __repr__(self):
         return '<Separator {self.tag}>'
@@ -141,6 +143,7 @@ class SeparatorInputDataFluid(db.Model):
     standardliquidflow = db.Column(db.String(80), nullable=False)
     actualgasflow = db.Column(db.String(80), nullable=False)
     actualliquidflow = db.Column(db.String(80), nullable=False)
+    kcp = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
         return '<SeparatorInputDataFluid {self.separator_tag}>'
@@ -169,6 +172,7 @@ class SeparatorInputDataFluid(db.Model):
             "standardliquidflow": self.standardliquidflow,
             "actualgasflow": self.actualgasflow,
             "actualliquidflow": self.actualliquidflow
+            "kcp": self.kcp
         }
 
 # ## separators_inputs_data_separators
@@ -411,62 +415,63 @@ class SeparatorOutputVesselGasCapacityParameters(db.Model):
         }
 
 # ## separators_outputs_vessel_liquid_capacity_parameters
-# class SeparatorOutputVesselLiquidCapacityParameters(db.Model):
-#     __tablename__ = 'separators_outputs_vessel_liquid_capacity_parameters'
-#     id = db.Column(db.Integer, primary_key=True)
-#     separator_tag = db.Column(db.String, db.ForeignKey("separator.tag"), unique=True, nullable=False)
-#     maximumvesselliquidflowcapacityatnormallevel = db.Column(db.String(80), nullable=False)   
-#     statusvesselliquidcapacity = db.Column(db.String(80), nullable=False)
+class SeparatorOutputVesselLiquidCapacityParameters(db.Model):
+    __tablename__ = 'separators_outputs_vessel_liquid_capacity_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
+    maximumvesselliquidflowcapacityatnormallevel = db.Column(db.String(80), nullable=False)   
+    statusvesselliquidcapacity = db.Column(db.String(80), nullable=False)
 
-#     def __repr__(self):
-#         return '<SeparatorOutputVesselLiquidCapacityParameters {self.separator_tag}>'
+    def __repr__(self):
+        return '<SeparatorOutputVesselLiquidCapacityParameters {self.separator_tag}>'
         
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "separator_tag": self.separator_tag,
-#             "maximumvesselliquidflowcapacityatnormallevel": self.maximumvesselliquidflowcapacityatnormallevel,          
-#             "statusvesselliquidcapacity": self.statusvesselliquidcapacity
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_tag": self.separator_tag,
+            "maximumvesselliquidflowcapacityatnormallevel": self.maximumvesselliquidflowcapacityatnormallevel,          
+            "statusvesselliquidcapacity": self.statusvesselliquidcapacity
             
-#         }
+        }
 
 # ## separators_outputs_relief_valve_parameters
-# class SeparatorOutputReliefValveParameters(db.Model):
-#     __tablename__ = 'separators_outputs_relief_valve_parameters'
-#     id = db.Column(db.Integer, primary_key=True)
-#     separator_tag = db.Column(db.String, db.ForeignKey("separator.tag"), unique=True, nullable=False)
-#     reliefvalvecapacity = db.Column(db.String(80), nullable=False)   
-#     reliefvalvecapacitystatus = db.Column(db.String(80), nullable=False)
+class SeparatorOutputReliefValveParameters(db.Model):
+    __tablename__ = 'separators_outputs_relief_valve_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
+    reliefvalvecapacity = db.Column(db.String(80), nullable=False)   
+    reliefvalvecapacitystatus = db.Column(db.String(80), nullable=False)
 
-#     def __repr__(self):
-#         return '<SeparatorOutputReliefValveParameters {self.separator_tag}>'
+    def __repr__(self):
+        return '<SeparatorOutputReliefValveParameters {self.separator_tag}>'
         
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "separator_tag": self.separator_tag,
-#             "reliefvalvecapacity": self.reliefvalvecapacity,          
-#             "reliefvalvecapacitystatus": self.statusvesselliquidcapacity
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_tag": self.separator_tag,
+            "reliefvalvecapacity": self.reliefvalvecapacity,          
+            "reliefvalvecapacitystatus": self.statusvesselliquidcapacity
             
-#         }
+        }
+
 # ## separators_outputs_level_control_valve_parameters
-# class SeparatorOutputLevelControlValveParameters(db.Model):
-#     __tablename__ = 'separators_outputs_level_control_valve_parameters'
-#     id = db.Column(db.Integer, primary_key=True)
-#     separator_tag = db.Column(db.String, db.ForeignKey("separator.tag"), unique=True, nullable=False)
-#     lcvliquidflowcapacity = db.Column(db.String(80), nullable=False)   
-#     levelvalverequiredcv = db.Column(db.String(80), nullable=False)
-#     levelcontrolvalvestatus = db.Column(db.String(80), nullable=False)
+class SeparatorOutputLevelControlValveParameters(db.Model):
+    __tablename__ = 'separators_outputs_level_control_valve_parameters'
+    id = db.Column(db.Integer, primary_key=True)
+    separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
+    lcvliquidflowcapacity = db.Column(db.String(80), nullable=False)   
+    levelvalverequiredcv = db.Column(db.String(80), nullable=False)
+    levelcontrolvalvestatus = db.Column(db.String(80), nullable=False)
 
-#     def __repr__(self):
-#         return '<SeparatorOutputLevelControlValveParameters {self.separator_tag}>'
+    def __repr__(self):
+        return '<SeparatorOutputLevelControlValveParameters {self.separator_tag}>'
         
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "separator_tag": self.separator_tag,
-#             "lcvliquidflowcapacity": self.lcvliquidflowcapacity,          
-#             "levelvalverequiredcv": self.levelvalverequiredcv,
-#             "levelcontrolvalvestatus": self.levelcontrolvalvestatus
+    def serialize(self):
+        return {
+            "id": self.id,
+            "separator_tag": self.separator_tag,
+            "lcvliquidflowcapacity": self.lcvliquidflowcapacity,          
+            "levelvalverequiredcv": self.levelvalverequiredcv,
+            "levelcontrolvalvestatus": self.levelcontrolvalvestatus
             
-#         }
+        }

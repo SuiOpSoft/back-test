@@ -142,7 +142,7 @@ def handle_insert_separator():
                                                     oildensity="-", gasdensity="-", mixturedensity="-", waterdensity="-", feedbsw="-", 
                                                     liquidviscosity="-", gasviscosity="-", gasmw="-", liqmw="-", gascomprz="-", especificheatratio="-", 
                                                     liquidsurfacetension="-", liquidvaporpressure="-", liquidcriticalpressure="-", standardgasflow="-", 
-                                                    standardliquidflow="-", actualgasflow="-", actualliquidflow="-")
+                                                    standardliquidflow="-", actualgasflow="-", actualliquidflow="-", kcp="-")
 
     separatorLevelControlValve = SeparatorInputDataLevelControlValve(separator_tag=separator_tag, lcvtag="-", lcvcv="-", 
                                                     lcvdiameter="-", inletlcvpipingdiameter="-", outletlcvpipingdiameter="-", lcvfactorfl="-", lcvfactorfi="-", 

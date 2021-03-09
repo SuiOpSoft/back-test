@@ -1,5 +1,7 @@
 from api.models import db, SeparatorInputDataFluid, SeparatorInputDataLevelControlValve, SeparatorOutputLevelControlValveParameters
 import math
+import sys
+from decimal import Decimal
 
 def level_control_calc():
     datafluids = SeparatorInputDataFluid.query.all()
@@ -16,8 +18,8 @@ def level_control_calc():
             Ld = datafluid.oildensity
             #LEVEL CONTROL VALVE DATA - PARAMETERS
             LCV_Cv = datalevel.lcvcv
-            LCV_Pi = datalevel.inletlcvpipingdiameter
-            LCV_Po = datalevel.outletlcvpipingdiameter
+            LCV_Pi = datalevel.lcvinletpressure
+            LCV_Po = datalevel.lcvoutletpressure
             LCV_Fl = datalevel.lcvfactorfl
             LCV_Fp = datalevel.lcvfactorfp
             #LEVEL CONTROL VALVE CAPACITY CALCULATIONS
@@ -26,13 +28,14 @@ def level_control_calc():
             P2p = float(LCV_Po) * 0.145033
             Pvp = float(LVp) * 0.145033
             Pcp = float(LCp) * 0.145033
-            Ff = 0.96 - 0.28 * math.sqrt(Pvp / Pcp)
-            DPchoke = float(LCV_Fl) ^ (2 * (P1p - Ff * Pvp))
+            Ff = 0.96 - 0.28 * math.sqrt(Pvp / Pcp) 
+            DPchoke = Decimal(LCV_Fl) ** Decimal(2 * (P1p - Ff * Pvp))
             DPv = P1p - P2p
-            if (DPv <= DPchoke):
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(float(Ld) / 1000 / DPv)
+            if DPv <= DPchoke:
+                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(Decimal(Ld) / 1000 / DPv)
             else:
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(float(Ld) / 1000 / DPchoke)
+                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(Decimal(Ld) / 1000 / DPchoke)
+
             LCV_MaxAlf = (float(ALf) * float(LCV_Cv)) / LCV_Cvreq
             if (LCV_Cvreq > float(LCV_Cv)):
                 LCV_Status = "Exceeded"
@@ -42,4 +45,3 @@ def level_control_calc():
                                                                                                   levelvalverequiredcv=str(format(LCV_Cvreq, ".2f")), levelcontrolvalvestatus=LCV_Status)
             db.session.add(separatoroutputlevelcontrolvalve)
             db.session.commit()
-        

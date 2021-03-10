@@ -32,6 +32,7 @@ def sign_in():
     access_token = create_access_token(identity=user.serialize())
     return jsonify(access_token=access_token)
 
+
 # Rellenar tabla de companies
 @api.route('/seedData', methods=['GET'])
 def handle_data():
@@ -207,12 +208,15 @@ def handle_insert_data_fluids():
     actualgasflow = datafluids["actualgasflow"]
     actualliquidflow = datafluids["actualliquidflow"]
 
+    
+
     separatorDataFluid = SeparatorInputDataFluid(id=id, separator_id=separator_id, operatingpressure=operatingpressure, operatingtemperature=operatingtemperature, 
                                                     oildensity=oildensity, gasdensity=gasdensity, mixturedensity=mixturedensity, waterdensity=waterdensity, feedbsw=feedbsw, 
                                                     liquidviscosity=liquidviscosity, gasviscosity=gasviscosity, gasmw=gasmw, liqmw=liqmw, gascomprz=gascomprz, especificheatratio=especificheatratio, 
                                                     liquidsurfacetension=liquidsurfacetension, liquidvaporpressure=liquidvaporpressure, liquidcriticalpressure=liquidcriticalpressure, standardgasflow=standardgasflow, 
                                                     standardliquidflow=standardliquidflow, actualgasflow=actualgasflow, actualliquidflow=actualliquidflow)
 
+ 
     db.session.add(separatorDataFluid)
     db.session.commit()
 
@@ -230,25 +234,69 @@ def handle_update_data_fluids():
 
     datafluid.separator_tag = datafluids["separator_tag"]
     datafluid.operatingpressure = datafluids["operatingpressure"]
+    if datafluid.operatingpressure == '' or datafluid.operatingpressure == '-':
+       return jsonify("Error. Empty Operating Pressure param"), 401
     datafluid.operatingtemperature = datafluids["operatingtemperature"]
+    if datafluid.operatingtemperature == '' or datafluid.operatingtemperature =='-':
+        return jsonify("Error. Empty Operating Temperature param"), 401
     datafluid.oildensity = datafluids["oildensity"]
+    if datafluid.oildensity == '' or '-':
+        return jsonify("Error. Empty Oil Density param"), 401
     datafluid.gasdensity = datafluids["gasdensity"]
+    if datafluid.gasdensity == '' or '-':
+        return jsonify("Error. Empty Gas Density param"), 401
     datafluid.mixturedensity = datafluids["mixturedensity"]
+    if datafluid.mixturedensity == '' or '-':
+        return jsonify("Error. Empty Mixture Density param"), 401
     datafluid.waterdensity = datafluids["waterdensity"]
+    if datafluid.waterdensity == '' or '-':
+        return jsonify("Error. Empty Water Density params"), 401
     datafluid.feedbsw = datafluids["feedbsw"]
+    if datafluid.feedbsw == '' or '-':
+        return jsonify("Error. Empty Feed BSW params"), 401
     datafluid.liquidviscosity = datafluids["liquidviscosity"]
+    if datafluid.liquidviscosity == '' or '-':
+        return jsonify("Error. Empty Liquid Viscosity params"), 401
     datafluid.gasviscosity = datafluids["gasviscosity"]
+    if datafluid.gasviscosity == '' or '-':
+        return jsonify("Error. Empty Gas Viscosity params"), 401
     datafluid.gasmw = datafluids["gasmw"]
+    if datafluid.gasmw == '' or '-':
+        return jsonify("Error. Empty Gas Mw params"), 401
     datafluid.liqmw = datafluids["liqmw"]
+    if datafluid.liqmw == '' or '-':
+        return jsonify("Error. Empty Liq MW params"), 401
     datafluid.gascomprz = datafluids["gascomprz"]
+    if datafluid.gascomprz == '' or '-':
+        return jsonify("Error. Empty Gas Compressor (Z) params"), 401
     datafluid.especificheatratio = datafluids["especificheatratio"]
+    if datafluid.especificheatratio == '' or '-':
+        return jsonify("Error. Empty Specific Heat Ratio params"), 401
     datafluid.liquidsurfacetension = datafluids["liquidsurfacetension"]
+    if datafluid.liquidsurfacetension == '' or '-':
+        return jsonify("Error. Empty Liquid Surface Tension params"), 401
     datafluid.liquidvaporpressure = datafluids["liquidvaporpressure"]
+    if datafluid.liquidvaporpressure == '' or '-':
+        return jsonify("Error. Empty Liquid Vapor Pressure params"), 401
     datafluid.liquidcriticalpressure = datafluids["liquidcriticalpressure"]
+    if datafluid.liquidcriticalpressure == '' or '-':
+        return jsonify("Error. Empty Liquid Critical Pressure params"), 401
     datafluid.standardgasflow = datafluids["standardgasflow"]
+    if datafluid.standardgasflow == '' or '-':
+        return jsonify("Error. Empty Standard Gas Flow params"), 401
     datafluid.standardliquidflow = datafluids["standardliquidflow"]
+    if datafluid.standardliquidflow == '' or '-':
+        return jsonify("Error. Empty Standard Liquid Flow params"), 401
     datafluid.actualgasflow = datafluids["actualgasflow"]
+    if datafluid.actualgasflow == '' or '-':
+        return jsonify("Error. Empty Actual Gas Flow params"), 401
     datafluid.actualliquidflow = datafluids["actualliquidflow"]
+    if datafluid.actualliquidflow == '' or '-':
+        return jsonify("Error. Empty Actual Liquid Flow params"), 401
+
+    
+    
+
 
     db.session.add(datafluid)
     db.session.commit()
@@ -258,6 +306,7 @@ def handle_update_data_fluids():
     }
 
     return jsonify(response_body), 200
+    
 
 # Eliminar datos en tabla datafluids
 @api.route('/datafluids', methods=['DELETE'])

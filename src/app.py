@@ -8,6 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db, Company, User, Facility, Separator, SeparatorInputDataFluid, SeparatorInputDataSeparator, SeparatorInputDataReliefValve, SeparatorInputDataLevelControlValve, SeparatorOutputGasAndLiquidAreas, SeparatorOutputInletNozzleParameters, SeparatorOutputGasNozzleParameters, SeparatorOutputLiquidNozzleParameters, SeparatorOutputVesselGasCapacityParameters, SeparatorOutputVesselLiquidCapacityParameters, SeparatorOutputReliefValveParameters, SeparatorOutputLevelControlValveParameters
+from api.apiroutes.inputs.separators.datafluid import api_datafluid
 from api.routes import api
 from api.admin import setup_admin
 from flask_jwt_extended import JWTManager
@@ -16,6 +17,7 @@ from flask_jwt_extended import JWTManager
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
+app.register_blueprint(api_datafluid, url_prefix='/api')
 app.url_map.strict_slashes = False
 
 # database condiguration

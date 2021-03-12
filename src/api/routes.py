@@ -89,6 +89,15 @@ def handle_get_company(company_name):
     company = list(map(lambda x: x.serialize(), company_query))
     return jsonify(company), 200
 
+# Seleccionar una compañia por id
+@api.route('/companies/<int:company_id>', methods=['GET'])
+def handle_get_company_by_id(company_id):
+
+    #  user1 = Company.query.get(company_id)
+    company_query = Company.query.filter_by(id=company_id)
+    company = list(map(lambda x: x.serialize(), company_query))
+    return jsonify(company), 200
+
 ## Users resources ##
 # Seleccionar usuarios
 @api.route('/users', methods=['GET'])

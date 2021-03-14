@@ -31,52 +31,52 @@ def handle_update_data_fluids():
     if datafluid.gasdensity == '' or datafluid.gasdensity == '-':
         return jsonify("Error. Empty Gas Density param"), 401
     datafluid.mixturedensity = datafluids["mixturedensity"]
-    if datafluid.mixturedensity == '' or '-':
+    if datafluid.mixturedensity == '' or datafluid.mixturedensity == '-':
         return jsonify("Error. Empty Mixture Density param"), 401
     datafluid.waterdensity = datafluids["waterdensity"]
-    if datafluid.waterdensity == '' or '-':
+    if datafluid.waterdensity == '' or datafluid.waterdensity == '-':
         return jsonify("Error. Empty Water Density params"), 401
     datafluid.feedbsw = datafluids["feedbsw"]
-    if datafluid.feedbsw == '' or '-':
+    if datafluid.feedbsw == '' or datafluid.feedbsw == '-':
         return jsonify("Error. Empty Feed BSW params"), 401
     datafluid.liquidviscosity = datafluids["liquidviscosity"]
-    if datafluid.liquidviscosity == '' or '-':
+    if datafluid.liquidviscosity == '' or datafluid.liquidviscosity == '-':
         return jsonify("Error. Empty Liquid Viscosity params"), 401
     datafluid.gasviscosity = datafluids["gasviscosity"]
-    if datafluid.gasviscosity == '' or '-':
+    if datafluid.gasviscosity == '' or datafluid.gasviscosity == '-':
         return jsonify("Error. Empty Gas Viscosity params"), 401
     datafluid.gasmw = datafluids["gasmw"]
-    if datafluid.gasmw == '' or '-':
+    if datafluid.gasmw == '' or datafluid.gasmw == '-':
         return jsonify("Error. Empty Gas Mw params"), 401
     datafluid.liqmw = datafluids["liqmw"]
-    if datafluid.liqmw == '' or '-':
+    if datafluid.liqmw == '' or datafluid.liqmw == '-':
         return jsonify("Error. Empty Liq MW params"), 401
     datafluid.gascomprz = datafluids["gascomprz"]
-    if datafluid.gascomprz == '' or '-':
+    if datafluid.gascomprz == '' or datafluid.gascomprz == '-':
         return jsonify("Error. Empty Gas Compressor (Z) params"), 401
     datafluid.especificheatratio = datafluids["especificheatratio"]
-    if datafluid.especificheatratio == '' or '-':
+    if datafluid.especificheatratio == '' or datafluid.especificheatratio == '-':
         return jsonify("Error. Empty Specific Heat Ratio params"), 401
     datafluid.liquidsurfacetension = datafluids["liquidsurfacetension"]
-    if datafluid.liquidsurfacetension == '' or '-':
+    if datafluid.liquidsurfacetension == '' or datafluid.liquidsurfacetension == '-':
         return jsonify("Error. Empty Liquid Surface Tension params"), 401
     datafluid.liquidvaporpressure = datafluids["liquidvaporpressure"]
-    if datafluid.liquidvaporpressure == '' or '-':
+    if datafluid.liquidvaporpressure == '' or datafluid.liquidvaporpressure == '-':
         return jsonify("Error. Empty Liquid Vapor Pressure params"), 401
     datafluid.liquidcriticalpressure = datafluids["liquidcriticalpressure"]
-    if datafluid.liquidcriticalpressure == '' or '-':
+    if datafluid.liquidcriticalpressure == '' or datafluid.liquidcriticalpressure == '-':
         return jsonify("Error. Empty Liquid Critical Pressure params"), 401
     datafluid.standardgasflow = datafluids["standardgasflow"]
-    if datafluid.standardgasflow == '' or '-':
+    if datafluid.standardgasflow == '' or datafluid.standardgasflow == '-':
         return jsonify("Error. Empty Standard Gas Flow params"), 401
     datafluid.standardliquidflow = datafluids["standardliquidflow"]
-    if datafluid.standardliquidflow == '' or '-':
+    if datafluid.standardliquidflow == '' or datafluid.standardliquidflow == '-':
         return jsonify("Error. Empty Standard Liquid Flow params"), 401
     datafluid.actualgasflow = datafluids["actualgasflow"]
-    if datafluid.actualgasflow == '' or '-':
+    if datafluid.actualgasflow == '' or datafluid.actualgasflow == '-':
         return jsonify("Error. Empty Actual Gas Flow params"), 401
     datafluid.actualliquidflow = datafluids["actualliquidflow"]
-    if datafluid.actualliquidflow == '' or '-':
+    if datafluid.actualliquidflow == '' or datafluid.actualliquidflow == '-':
         return jsonify("Error. Empty Actual Liquid Flow params"), 401
 
     db.session.add(datafluid)

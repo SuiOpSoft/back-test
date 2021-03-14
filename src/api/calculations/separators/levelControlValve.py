@@ -18,10 +18,15 @@ def level_control_calc():
             Ld = datafluid.oildensity
             #LEVEL CONTROL VALVE DATA - PARAMETERS
             LCV_Cv = datalevel.lcvcv
+            print(LCV_Cv)
             LCV_Pi = datalevel.lcvinletpressure
+            print(LCV_Pi)
             LCV_Po = datalevel.lcvoutletpressure
+            print(LCV_Po)
             LCV_Fl = datalevel.lcvfactorfl
+            print(LCV_Fl)
             LCV_Fp = datalevel.lcvfactorfp
+            print(LCV_Fp)
             #LEVEL CONTROL VALVE CAPACITY CALCULATIONS
             Alf1 = (float(ALf) * 264.172) / 60.0
             P1p = float(LCV_Pi) * 0.145033
@@ -29,12 +34,20 @@ def level_control_calc():
             Pvp = float(LVp) * 0.145033
             Pcp = float(LCp) * 0.145033
             Ff = 0.96 - 0.28 * math.sqrt(Pvp / Pcp) 
-            DPchoke = Decimal(LCV_Fl) ** Decimal(2 * (P1p - Ff * Pvp))
+            # DPchoke=LCV_Fl^2*(P1p-Ff*Pvp)
+            DPchoke = (float(LCV_Fl) ** 2) * (P1p - Ff * Pvp)
+            print("DPSHoke", DPchoke)
             DPv = P1p - P2p
             if DPv <= DPchoke:
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(Decimal(Ld) / 1000 / DPv)
+                print("ENTRA 1")
+                # LCV_Cvreq=Alf1/LCV_Fp*Math.sqrt((Ld/1000)/DPv)
+                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt((float(Ld) / 1000) / DPv)
+                print(LCV_Cvreq)
             else:
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt(Decimal(Ld) / 1000 / DPchoke)
+                print("ENTRA 2")
+                # {LCV_Cvreq=Alf1/LCV_Fp*Math.sqrt((Ld/1000)/DPchoke)}
+                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt((float(Ld) / 1000) / DPchoke)
+                print(LCV_Cvreq)
 
             LCV_MaxAlf = (float(ALf) * float(LCV_Cv)) / LCV_Cvreq
             if (LCV_Cvreq > float(LCV_Cv)):

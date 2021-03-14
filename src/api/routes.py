@@ -45,16 +45,16 @@ def handle_data():
                                                     liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
                                                     liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33", kcp="1.49")
     
-    separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="5536.33", lcvcv="5536.33", 
-                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="5536.33", lcvfactorfi="5536.33", 
-                                                    lcvfactorfp="5536.33", lcvinletpressure="5536.33", lcvoutletpressure="5536.33")
+    separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="lcv-2021", lcvcv="47", 
+                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="0.9", lcvfactorfi="5536.33", 
+                                                    lcvfactorfp="0.92", lcvinletpressure="5336.325", lcvoutletpressure="2286.325")
 
-    separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="5536.33", rvsetpressure="5536.33", 
-                                                    rvorificearea="5536.33")
+    separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="rv-450", rvsetpressure="7900", 
+                                                    rvorificearea="0.785")
 
-    separatorInputSeparators1 = SeparatorInputDataSeparator(separator_tag="v-3108", internaldiameter="5536.33", ttlength="5536.33", 
-                                                    highleveltrip="5536.33", highlevelalarm="5536.33", normalliquidlevel="5536.33", lowlevelalarm="5536.33", inletnozzle="5536.33", 
-                                                    gasoutletnozzle="5536.33", liquidoutletnozzle="5536.33", inletdevicetype="5536.33", demistertype="5536.33")
+    separatorInputSeparators1 = SeparatorInputDataSeparator(separator_tag="v-3108", internaldiameter="1800", ttlength="6300", 
+                                                    highleveltrip="1080", highlevelalarm="900", normalliquidlevel="650", lowlevelalarm="390", inletnozzle="203.2", 
+                                                    gasoutletnozzle="152.4", liquidoutletnozzle="203.2", inletdevicetype="SP", demistertype="VD")
 
     db.session.add(company1)
     db.session.add(user1)

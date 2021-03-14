@@ -48,9 +48,9 @@ def gas_and_liquid_areas_calc():
         GA_Nl=Area_Sep-LA_Nl
         GA_Ll=Area_Sep-LA_Ll
 
-        separatorgasandliquidareas = SeparatorOutputGasAndLiquidAreas(separator_tag=dataseparator.separator_tag, separatorcrosssectionalarearatio=str(format(Radio, ".2f")), separatorcrosssectionalarea=str(format(Area_Sep, ".2f")), inletnozzlearea=str(format(INArea, ".2f")),
-                                                                        gasnozzlearea=str(format(GONArea, ".2f")), liquidnozzlearea=str(format(LONArea, ".2f")), highleveltripgasarea=str(format(GA_Hh,".2f")), normallevelgasarea=str(format(GA_Nl, ".2f")), lowlevelgasarea=str(format(GA_Ll, ".2f")),
-                                                                        highleveltripliquidarea=str(format(LA_Hh, ".2f")), normalleveltriparea=str(format(LA_Nl, ".2f")), lowleveltripliquidarea=str(format(LA_Ll, ".2f")))
+        separatorgasandliquidareas = SeparatorOutputGasAndLiquidAreas(separator_tag=dataseparator.separator_tag, separatorcrosssectionalarearatio=str(format(Radio, ".2f")), separatorcrosssectionalarea=str(format(Area_Sep, ".4f")), inletnozzlearea=str(format(INArea, ".4f")),
+                                                                        gasnozzlearea=str(format(GONArea, ".4f")), liquidnozzlearea=str(format(LONArea, ".4f")), highleveltripgasarea=str(format(GA_Hh,".4f")), normallevelgasarea=str(format(GA_Nl, ".4f")), lowlevelgasarea=str(format(GA_Ll, ".4f")),
+                                                                        highleveltripliquidarea=str(format(LA_Hh, ".4f")), normalleveltriparea=str(format(LA_Nl, ".4f")), lowleveltripliquidarea=str(format(LA_Ll, ".4f")))
 
         db.session.add(separatorgasandliquidareas)
         db.session.commit()

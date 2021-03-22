@@ -18,26 +18,40 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
-# Creación de token
-@api.route("/signIn", methods=["POST"])
+# Creación de token User
+@api.route("/signInUser", methods=["POST"])
 def sign_in():
     email = request.json.get("email", None)
-    password = request.json.get("password", None)
+    passwordUser = request.json.get("passwordUser", None)
 
     user = User.query.filter_by(email=email).one_or_none()
-    if not user or not user.check_password(password):
+    if not user or not user.check_password(passwordUser):
         return jsonify("Wrong email or password"), 401
 
     # Notice that we are passing in the actual sqlalchemy user object here
     access_token = create_access_token(identity=user.serialize())
     return jsonify(access_token=access_token)
 
+# Creación de token Company
+@api.route("/signInCompany", methods=["POST"])
+def sign_in_company():
+    companyUser = request.json.get("companyUser", None)
+    passwordCompany = request.json.get("passwordCompany", None)
+
+    company = Company.query.filter_by(companyuser=companyUser).one_or_none()
+    if not company or not company.check_password(passwordCompany):
+        return jsonify("Wrong company user or password"), 401
+
+    # Notice that we are passing in the actual sqlalchemy user object here
+    access_token = create_access_token(identity=company.serialize())
+    return jsonify(access_token_company=access_token)
+
 
 # Rellenar tabla de companies
 @api.route('/seedData', methods=['GET'])
 def handle_data():
 
-    company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland")
+    company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland", companyuser="ShellUx", password="123456")
     user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
     facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", user_id="1")
     separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")

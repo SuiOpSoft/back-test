@@ -95,11 +95,11 @@ def handle_get_companies():
     return jsonify(all_companies), 200
 
 # Seleccionar una compañia por name
-@api.route('/companies/<string:company_name>', methods=['GET'])
-def handle_get_company(company_name):
+@api.route('/companies/<string:company_user>', methods=['GET'])
+def handle_get_company(company_user):
 
     #  user1 = Company.query.get(company_id)
-    company_query = Company.query.filter_by(name=company_name)
+    company_query = Company.query.filter_by(companyuser=company_user)
     company = list(map(lambda x: x.serialize(), company_query))
     return jsonify(company), 200
 
@@ -138,6 +138,28 @@ def handle_get_user_by_company_id(company_id):
     user_query = User.query.filter_by(company_id=company_id)
     user = list(map(lambda x: x.serialize(), user_query))
     return jsonify(user), 200
+
+# Insertar usuario
+@api.route('/users', methods=['POST'])
+def handle_insert_user():
+    user = request.get_json()
+    print(user)
+
+    ## User params
+    company_id = user["company_id"]
+    email = user["email"]
+
+    ## Cración del usario en la tabla users
+    user = User(firstname="-", lastname="-", email=email, password="-", company_id=company_id)
+
+    db.session.add(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
 
 ## Separators resources ##
 # Seleccionar separadores

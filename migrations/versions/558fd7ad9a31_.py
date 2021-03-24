@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d91944b00f88
+Revision ID: 558fd7ad9a31
 Revises: 
-Create Date: 2021-03-24 14:45:56.307619
+Create Date: 2021-03-24 18:28:25.817823
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd91944b00f88'
+revision = '558fd7ad9a31'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -81,6 +81,7 @@ def upgrade():
     sa.Column('gasmw', sa.Float(), nullable=False),
     sa.Column('liqmw', sa.Float(), nullable=False),
     sa.Column('gascomprz', sa.Float(), nullable=False),
+    sa.Column('kcp', sa.Float(), nullable=False),
     sa.Column('especificheatratio', sa.Float(), nullable=False),
     sa.Column('liquidsurfacetension', sa.Float(), nullable=False),
     sa.Column('liquidvaporpressure', sa.Float(), nullable=False),
@@ -89,7 +90,6 @@ def upgrade():
     sa.Column('standardliquidflow', sa.Float(), nullable=False),
     sa.Column('actualgasflow', sa.Float(), nullable=False),
     sa.Column('actualliquidflow', sa.Float(), nullable=False),
-    sa.Column('kcp', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
     )

@@ -13,20 +13,33 @@ def level_control_calc():
             
             #REQUIRED DATA FROM FLUID DATA PARAMETERS
             ALf = datafluid.actualliquidflow
+            if ALf == '' or ALf == '-':
+                return "Empty Fluids param."
             LVp = datafluid.liquidvaporpressure
+            if LVp == '' or LVp == '-':
+                return "Empty Fluids param."
             LCp = datafluid.liquidcriticalpressure
+            if LCp == '' or LCp == '-':
+                return "Empty Fluids param."
             Ld = datafluid.oildensity
+            if Ld == '' or Ld == '-':
+                return "Empty Fluids param."
             #LEVEL CONTROL VALVE DATA - PARAMETERS
             LCV_Cv = datalevel.lcvcv
-            print(LCV_Cv)
+            if LCV_Cv == '' or LCV_Cv == '-':
+                return "Empty Level Control Valve param."
             LCV_Pi = datalevel.lcvinletpressure
-            print(LCV_Pi)
+            if LCV_Pi == '' or LCV_Pi == '-':
+                return "Empty Level Control Valve param."
             LCV_Po = datalevel.lcvoutletpressure
-            print(LCV_Po)
+            if LCV_Po == '' or LCV_Po == '-':
+                return "Empty Level Control Valve param."    
             LCV_Fl = datalevel.lcvfactorfl
-            print(LCV_Fl)
+            if LCV_Fl == '' or LCV_Fl == '-':
+                return "Empty Level Control Valve param."
             LCV_Fp = datalevel.lcvfactorfp
-            print(LCV_Fp)
+            if LCV_Fp == '' or LCV_Fp == '-':
+                return "Empty Level Control Valve param."
             #LEVEL CONTROL VALVE CAPACITY CALCULATIONS
             Alf1 = (float(ALf) * 264.172) / 60.0
             P1p = float(LCV_Pi) * 0.145033

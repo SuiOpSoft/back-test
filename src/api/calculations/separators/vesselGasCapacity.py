@@ -15,12 +15,22 @@ def vessel_gas_capacity_calc():
                 Param2 = 0
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 AGf = datafluid.actualgasflow
+                if AGf == '' or AGf == '-':
+                    return "Empty Fluids param."
                 Ld = datafluid.oildensity
+                if Ld == '' or Ld == '-':
+                    return "Empty Fluids param."
                 Gd = datafluid.gasdensity
+                if Gd == '' or Gd == '-':
+                    return "Empty Fluids param."
 
                 #REQUIRED DATA FROM SEPARATOR DATA PARAMETERS
                 InletDevice = dataseparator.inletdevicetype
+                if InletDevice == '' or InletDevice == '-':
+                    return "Empty Separator param."
                 Demister = dataseparator.demistertype
+                if Demister == '' or Demister == '-':
+                    return "Empty Separator param."
 
                 #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
                 GA_Hh = gasliquid.highleveltripgasarea

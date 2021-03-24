@@ -11,10 +11,16 @@ def gas_nozzle_calc():
             
             #REQUIRED DATA FROM FLUID DATA PARAMETERS
             AGf = datafluid.actualgasflow
+            if AGf == '' or AGf == '-':
+                return "Empty Fluids param."
             Gd = datafluid.gasdensity
+            if Gd == '' or Gd == '-':
+                return "Empty Fluids param."
 
             #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
             GONArea = gasliquid.gasnozzlearea
+            if GONArea == '' or GONArea == '-':
+                return "Empty Gas Nozzle param."
 
             GOv = float(AGf) / (3600 * float(GONArea))
             Gm = float(Gd) * GOv ** 2

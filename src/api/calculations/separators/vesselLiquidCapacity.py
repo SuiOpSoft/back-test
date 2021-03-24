@@ -13,9 +13,13 @@ def vessel_liquid_capacity_calc():
 
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 ALf = datafluid.actualliquidflow
+                if ALf == '' or ALf == '-':
+                    return "Empty Fluids param."
 
                 #REQUIRED DATA FROM SEPARATOR DATA PARAMETERS
                 Lenght = dataseparator.ttlength
+                if Lenght == '' or Lenght == '-':
+                    return "Empty Separator param."
 
                 #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
                 LA_Nl = gasliquid.normalleveltriparea

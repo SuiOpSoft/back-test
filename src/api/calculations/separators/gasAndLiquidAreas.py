@@ -1,4 +1,5 @@
 from api.models import db, SeparatorInputDataSeparator, SeparatorOutputGasAndLiquidAreas
+from flask import Flask,jsonify
 import math
 
 def gas_and_liquid_areas_calc():
@@ -8,13 +9,29 @@ def gas_and_liquid_areas_calc():
         SeparatorOutputGasAndLiquidAreas.query.filter(SeparatorOutputGasAndLiquidAreas.separator_tag == dataseparator.separator_tag).delete()
         
         HHl=dataseparator.highleveltrip
+        if HHl == '' or HHl == '-':
+            return "Empty Separator param."
         Nl=dataseparator.normalliquidlevel
+        if Nl == '' or Nl == '-':
+            return "Empty Separator param."
         Ll=dataseparator.lowlevelalarm
+        if Ll == '' or Ll == '-':
+            return "Empty Separator param."
         Diam=dataseparator.internaldiameter
+        if Diam == '' or Diam == '-':
+            return "Empty Separator param."
         Length=dataseparator.ttlength
+        if Length == '' or Length == '-':
+            return "Empty Separator param."
         INd=dataseparator.inletnozzle
+        if INd == '' or INd == '-':
+            return "Empty Separator param."
         GOn=dataseparator.gasoutletnozzle
+        if GOn == '' or GOn == '-':
+            return "Empty Separator param."
         LOn=dataseparator.liquidoutletnozzle
+        if LOn == '' or LOn == '-':
+            return "Empty Separator param."
 
         Pi = 3.14159265358979
         Area_Sep  = Pi * float(Diam)**2/(4*10**6)

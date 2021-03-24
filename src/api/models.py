@@ -246,7 +246,7 @@ class SeparatorInputDataLevelControlValve(db.Model):
     inletlcvpipingdiameter = db.Column(db.String(80), nullable=False)
     outletlcvpipingdiameter = db.Column(db.String(80), nullable=False)
     lcvfactorfl = db.Column(db.String(80), nullable=False)
-    lcvfactorfi = db.Column(db.String(80), nullable=False)
+    #lcvfactorfi = db.Column(db.String(80), nullable=False)
     lcvfactorfp = db.Column(db.String(80), nullable=False)
     lcvinletpressure = db.Column(db.String(80), nullable=False)
     lcvoutletpressure = db.Column(db.String(80), nullable=False)
@@ -264,7 +264,7 @@ class SeparatorInputDataLevelControlValve(db.Model):
             "inletlcvpipingdiameter": self.inletlcvpipingdiameter,
             "outletlcvpipingdiameter": self.outletlcvpipingdiameter,
             "lcvfactorfl": self.lcvfactorfl,
-            "lcvfactorfi": self.lcvfactorfi,
+            #"lcvfactorfi": self.lcvfactorfi,
             "lcvfactorfp": self.lcvfactorfp,
             "lcvinletpressure": self.lcvinletpressure,
             "lcvoutletpressure": self.lcvoutletpressure

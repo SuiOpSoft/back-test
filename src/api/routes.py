@@ -46,7 +46,7 @@ def handle_data():
                                                     liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33", kcp="1.49")
     
     separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="lcv-2021", lcvcv="47", 
-                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="0.9", lcvfactorfi="5536.33", 
+                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="0.9", 
                                                     lcvfactorfp="0.92", lcvinletpressure="5336.325", lcvoutletpressure="2286.325")
 
     separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="rv-450", rvsetpressure="7900", 
@@ -155,7 +155,7 @@ def handle_insert_separator():
                                                     standardliquidflow="-", actualgasflow="-", actualliquidflow="-", kcp="-")
 
     separatorLevelControlValve = SeparatorInputDataLevelControlValve(separator_tag=separator_tag, lcvtag="-", lcvcv="-", 
-                                                    lcvdiameter="-", inletlcvpipingdiameter="-", outletlcvpipingdiameter="-", lcvfactorfl="-", lcvfactorfi="-", 
+                                                    lcvdiameter="-", inletlcvpipingdiameter="-", outletlcvpipingdiameter="-", lcvfactorfl="-", 
                                                     lcvfactorfp="-", lcvinletpressure="-", lcvoutletpressure="-")
 
     separatorDataReliefValve = SeparatorInputDataReliefValve(separator_tag=separator_tag, rvtag="-", rvsetpressure="-", 
@@ -508,13 +508,13 @@ def handle_update_data_relief_valve():
 
     datareliefvalve.separator_tag = datareliefvalves["separator_tag"]
     datareliefvalve.rvtag = datareliefvalves["rvtag"]
-    if dataseparator.rvtag == '' or dataseparator.rvtag == '-':
+    if datareliefvalve.rvtag == '' or datareliefvalve.rvtag == '-':
         return jsonify("Empty RV Tag param."), 401
     datareliefvalve.rvsetpressure = datareliefvalves["rvsetpressure"]
-    if dataseparator.rvsetpressure == '' or dataseparator.rvsetpressure == '-':
+    if datareliefvalve.rvsetpressure == '' or datareliefvalve.rvsetpressure == '-':
         return jsonify("Empty RV Set Pressure param."), 401
     datareliefvalve.rvorificearea = datareliefvalves["rvorificearea"]
-    if dataseparator.rvorificearea == '' or dataseparator.rvorificearea == '-':
+    if datareliefvalve.rvorificearea == '' or datareliefvalve.rvorificearea == '-':
         return jsonify("Empty RV Orifice Area param."), 401
 
 
@@ -577,14 +577,14 @@ def handle_insert_data_level_control_valve():
     inletlcvpipingdiameter = datalevelcontrolvalves["inletlcvpipingdiameter"]
     outletlcvpipingdiameter = datalevelcontrolvalves["outletlcvpipingdiameter"]
     lcvfactorfl = datalevelcontrolvalves["lcvfactorfl"]
-    lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
+    #lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
     lcvfactorfp = datalevelcontrolvalves["lcvfactorfp"]
     lcvinletpressure = datalevelcontrolvalves["lcvinletpressure"]
     lcvoutletpressure = datalevelcontrolvalves["lcvoutletpressure"]
 
 
     separatorLevelControlValve = SeparatorInputDataLevelControlValve(id=id, separator_id=separator_id, lcvtag=lcvtag, lcvcv=lcvcv, 
-                                                    lcvdiameter=lcvdiameter, inletlcvpipingdiameter=inletlcvpipingdiameter, outletlcvpipingdiameter=outletlcvpipingdiameter, lcvfactorfl=lcvfactorfl, lcvfactorfi=lcvfactorfi, 
+                                                    lcvdiameter=lcvdiameter, inletlcvpipingdiameter=inletlcvpipingdiameter, outletlcvpipingdiameter=outletlcvpipingdiameter, lcvfactorfl=lcvfactorfl, 
                                                     lcvfactorfp=lcvfactorfp, lcvinletpressure=lcvinletpressure, lcvoutletpressure=lcvoutletpressure)
 
     db.session.add(separatorLevelControlValve)
@@ -604,28 +604,28 @@ def handle_update_data_level_control_valve():
     
     datalevelcontrolvalve.separator_tag = datalevelcontrolvalves["separator_tag"]
     datalevelcontrolvalve.lcvtag = datalevelcontrolvalves["lcvtag"]
-    if dataseparator.lcvtag == '' or dataseparator.lcvtag == '-':
+    if datalevelcontrolvalve.lcvtag == '' or datalevelcontrolvalve.lcvtag == '-':
         return jsonify("Empty LCV Tag param."), 401
     datalevelcontrolvalve.lcvcv = datalevelcontrolvalves["lcvcv"]
-    if dataseparator.lcvcv == '' or dataseparator.lcvcv == '-':
+    if datalevelcontrolvalve.lcvcv == '' or datalevelcontrolvalve.lcvcv == '-':
         return jsonify("Empty LCV CV param."), 401
     #datalevelcontrolvalve.lcvdiameter = datalevelcontrolvalves["lcvdiameter"]
     #datalevelcontrolvalve.inletlcvpipingdiameter = datalevelcontrolvalves["inletlcvpipingdiameter"]
     #datalevelcontrolvalve.outletlcvpipingdiameter = datalevelcontrolvalves["outletlcvpipingdiameter"]
     datalevelcontrolvalve.lcvfactorfl = datalevelcontrolvalves["lcvfactorfl"]
-    if dataseparator.lcvfactorfl == '' or dataseparator.lcvfactorfl == '-':
+    if datalevelcontrolvalve.lcvfactorfl == '' or datalevelcontrolvalve.lcvfactorfl == '-':
         return jsonify("Empty LCV Factor Fl param."), 401
-    datalevelcontrolvalve.lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
-    if dataseparator.lcvfactorfi == '' or dataseparator.lcvfactorfi == '-':
-        return jsonify("Empty LCV Factor Fi param."), 401
+    # datalevelcontrolvalve.lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
+    # if datalevelcontrolvalve.lcvfactorfi == '' or datalevelcontrolvalve.lcvfactorfi == '-':
+    #     return jsonify("Empty LCV Factor Fi param."), 401
     datalevelcontrolvalve.lcvfactorfp = datalevelcontrolvalves["lcvfactorfp"]
-    if dataseparator.lcvfactorfp == '' or dataseparator.lcvfactorfp == '-':
+    if datalevelcontrolvalve.lcvfactorfp == '' or datalevelcontrolvalve.lcvfactorfp == '-':
         return jsonify("Empty LCV Factor Fp param."), 401
     datalevelcontrolvalve.lcvinletpressure = datalevelcontrolvalves["lcvinletpressure"]
-    if dataseparator.lcvinletpressure == '' or dataseparator.lcvinletpressure == '-':
+    if datalevelcontrolvalve.lcvinletpressure == '' or datalevelcontrolvalve.lcvinletpressure == '-':
         return jsonify("Empty LCV Inlet Pressure param."), 401
     datalevelcontrolvalve.lcvoutletpressure = datalevelcontrolvalves["lcvoutletpressure"]
-    if dataseparator.lcvoutletpressure == '' or dataseparator.lcvoutletpressure == '-':
+    if datalevelcontrolvalve.lcvoutletpressure == '' or datalevelcontrolvalve.lcvoutletpressure == '-':
         return jsonify("Empty LCV Outlet Pressure param."), 401
 
     db.session.add(datalevelcontrolvalve)
@@ -677,13 +677,20 @@ def handle_delete_data_level_control_valve():
 @api.route('/gasandliquidareascalc', methods=['POST'])
 def handle_calc_gas_liquid_areas():
 
-    gas_and_liquid_areas_calc()
 
-    response_body = {
-        "message": "Success"
-    }
+    res = gas_and_liquid_areas_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    return jsonify(response_body), 200
+    return jsonify(response_body), code
 
 
 # Seleccionar SeparatorOutputGasAndLiquidAreas
@@ -699,13 +706,20 @@ def handle_get_gas_liquid_areas():
 @api.route('/inletnozzleparameterscalc', methods=['POST'])
 def handle_calc_inlet_nozzle_parameters():
 
-    inlet_nozzle_parameters_calc()
+    res = inlet_nozzle_parameters_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
+    return jsonify(response_body), code
 
-    return jsonify(response_body), 200
 
 # Seleccionar SeparatorOutputInletNozzleParameters
 @api.route('/inletnozzleparameterscalc', methods=['GET'])
@@ -719,13 +733,20 @@ def handle_get_inlet_nozzle_parameters():
 @api.route('/gasnozzleparameterscalc', methods=['POST'])
 def handle_calc_gas_nozzle_parameters():
 
-    gas_nozzle_calc()
+    res = gas_nozzle_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
+    return jsonify(response_body), code
 
-    return jsonify(response_body), 200
 
 # Seleccionar SeparatorOutputGasNozzleParameters
 @api.route('/gasnozzleparameterscalc', methods=['GET'])
@@ -739,13 +760,20 @@ def handle_get_gas_nozzle_parameters():
 @api.route('/liquidnozzleparameterscalc', methods=['POST'])
 def handle_calc_liquid_nozzle_parameters():
 
-    liquid_nozzle_calc()
+    res = liquid_nozzle_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
+    return jsonify(response_body), code
 
-    return jsonify(response_body), 200
 
 # Seleccionar SeparatorOutputLiquidNozzleParameters
 @api.route('/liquidnozzleparameterscalc', methods=['GET'])
@@ -759,13 +787,20 @@ def handle_get_liquid_nozzle_parameters():
 @api.route('/vesselgascapacitycalc', methods=['POST'])
 def handle_calc_vessel_gas_parameters():
 
-    vessel_gas_capacity_calc()
+    res = vessel_gas_capacity_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
-
-    return jsonify(response_body), 200
+    return jsonify(response_body), code
+    
 
 # Seleccionar SeparatorOutputVesselGasCapacityParameters
 @api.route('/vesselgascapacitycalc', methods=['GET'])
@@ -779,13 +814,20 @@ def handle_get_vessel_gas_parameters():
 @api.route('/vesselliquidcapacitycalc', methods=['POST'])
 def handle_calc_vessel_liquid_parameters():
 
-    vessel_liquid_capacity_calc()
+    res = vessel_liquid_capacity_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
+    return jsonify(response_body), code
 
-    return jsonify(response_body), 200
 
 # Seleccionar SeparatorOutputVesselLiquidCapacityParameters
 @api.route('/vesselliquidcapacitycalc', methods=['GET'])
@@ -799,13 +841,20 @@ def handle_get_vessel_liquid_parameters():
 @api.route('/reliefvalvecalc', methods=['POST'])
 def handle_calc_relief_valve_parameters():
 
-    relief_valve_calc()
+    res = relief_valve_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
-
-    return jsonify(response_body), 200
+    return jsonify(response_body), code
+    
 
 # Seleccionar SeparatorOutputReliefValveParameters
 @api.route('/reliefvalvecalc', methods=['GET'])
@@ -819,13 +868,20 @@ def handle_get_relief_valve_parameters():
 @api.route('/levelcontrolcalc', methods=['POST'])
 def handle_calc_level_control_valve_parameters():
 
-    level_control_calc()
+    res = level_control_calc()
+    if res == None:
+        response_body = {
+            "message": "Success"
+        }
+        code = 200
+    else:
+        response_body = {
+            "message": res
+        }
+        code = 401
 
-    response_body = {
-        "message": "Success"
-    }
-
-    return jsonify(response_body), 200
+    return jsonify(response_body), code
+    
 
 # Seleccionar SeparatorOutputReliefValveParameters
 @api.route('/levelcontrolcalc', methods=['GET'])

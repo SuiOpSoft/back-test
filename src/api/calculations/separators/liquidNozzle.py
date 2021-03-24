@@ -11,9 +11,13 @@ def liquid_nozzle_calc():
 
             #REQUIRED DATA FROM FLUID DATA PARAMETERS
             ALf = datafluid.actualliquidflow
+            if ALf == '' or ALf == '-':
+                return "Empty Fluids param."
 
             #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
             LONArea = gasliquid.liquidnozzlearea
+            if LONArea == '' or LONArea == '-':
+                return "Empty Liquid Nozzle param."
 
             MaxLOv = 1
             LOv = float(ALf) / (3600 * float(LONArea))

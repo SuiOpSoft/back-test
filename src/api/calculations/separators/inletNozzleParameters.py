@@ -1,5 +1,6 @@
 from api.models import db, SeparatorInputDataSeparator, SeparatorInputDataFluid, SeparatorOutputInletNozzleParameters
 import math
+from flask import Flask,jsonify
 
 def inlet_nozzle_parameters_calc():
     datafluids = SeparatorInputDataFluid.query.all()
@@ -11,12 +12,22 @@ def inlet_nozzle_parameters_calc():
             SeparatorOutputInletNozzleParameters.query.filter(SeparatorOutputInletNozzleParameters.separator_tag == datafluid.separator_tag).delete()
 
             AGf = datafluid.actualgasflow
+            if AGf == '' or AGf == '-':
+                return "Empty Fluids param."
             ALf = datafluid.actualliquidflow
+            if ALf == '' or ALf == '-':
+                return "Empty Fluids param."
             Md = datafluid.mixturedensity
+            if Md == '' or Md == '-':
+                return "Empty Fluids param."
         
             ##REQUIRED DATA FROM SEPARATOR DATA PARAMETERS
             INd=dataseparator.inletnozzle
+            if INd == '' or INd == '-':
+                return "Empty Separator param."
             InletDevice = dataseparator.inletdevicetype
+            if InletDevice == '' or InletDevice == '-':
+                return "Empty Separator param."
         
             MaxIm=0
             INCap=""

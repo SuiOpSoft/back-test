@@ -8,6 +8,8 @@ class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
+    companyuser = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(80), nullable=False)
     dateofstablish = db.Column(db.Integer, nullable=True)
     description = db.Column(db.String(120), nullable=True)
     address = db.Column(db.String(120), nullable=True)
@@ -26,6 +28,9 @@ class Company(db.Model):
             "address": self.address
         }
 
+    def check_password(self, password_param):
+        return safe_str_cmp(self.password.encode('utf-8'), password_param.encode('utf-8'))
+
 ## Many to Many association between User and Facilities
 association_table = db.Table('user_facilities', db.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
@@ -41,7 +46,6 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False)
-    # facilities = db.relationship('Facility') ## many to many to facilities table
     facilities = db.relationship(
         "Facility",
         secondary=association_table,

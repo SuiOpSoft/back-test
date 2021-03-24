@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:migrations/versions/be401003c1a9_.py
-Revision ID: be401003c1a9
+Revision ID: d91944b00f88
 Revises: 
-Create Date: 2021-03-22 17:41:01.939368
-=======
-Revision ID: c612faaaac79
-Revises: 
-Create Date: 2021-03-22 18:39:31.153891
->>>>>>> 0713fff699e361c19312d47065ae69a43bc9e11a:migrations/versions/c612faaaac79_.py
+Create Date: 2021-03-24 14:45:56.307619
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:migrations/versions/be401003c1a9_.py
-revision = 'be401003c1a9'
-=======
-revision = 'c612faaaac79'
->>>>>>> 0713fff699e361c19312d47065ae69a43bc9e11a:migrations/versions/c612faaaac79_.py
+revision = 'd91944b00f88'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -79,27 +69,27 @@ def upgrade():
     op.create_table('separators_inputs_data_fluids',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('operatingpressure', sa.String(length=80), nullable=False),
-    sa.Column('operatingtemperature', sa.String(length=80), nullable=False),
-    sa.Column('oildensity', sa.String(length=80), nullable=False),
-    sa.Column('gasdensity', sa.String(length=80), nullable=False),
-    sa.Column('mixturedensity', sa.String(length=80), nullable=False),
-    sa.Column('waterdensity', sa.String(length=80), nullable=False),
-    sa.Column('feedbsw', sa.String(length=80), nullable=False),
-    sa.Column('liquidviscosity', sa.String(length=80), nullable=False),
-    sa.Column('gasviscosity', sa.String(length=80), nullable=False),
-    sa.Column('gasmw', sa.String(length=80), nullable=False),
-    sa.Column('liqmw', sa.String(length=80), nullable=False),
-    sa.Column('gascomprz', sa.String(length=80), nullable=False),
-    sa.Column('especificheatratio', sa.String(length=80), nullable=False),
-    sa.Column('liquidsurfacetension', sa.String(length=80), nullable=False),
-    sa.Column('liquidvaporpressure', sa.String(length=80), nullable=False),
-    sa.Column('liquidcriticalpressure', sa.String(length=80), nullable=False),
-    sa.Column('standardgasflow', sa.String(length=80), nullable=False),
-    sa.Column('standardliquidflow', sa.String(length=80), nullable=False),
-    sa.Column('actualgasflow', sa.String(length=80), nullable=False),
-    sa.Column('actualliquidflow', sa.String(length=80), nullable=False),
-    sa.Column('kcp', sa.String(length=80), nullable=False),
+    sa.Column('operatingpressure', sa.Float(), nullable=False),
+    sa.Column('operatingtemperature', sa.Float(), nullable=False),
+    sa.Column('oildensity', sa.Float(), nullable=False),
+    sa.Column('gasdensity', sa.Float(), nullable=False),
+    sa.Column('mixturedensity', sa.Float(), nullable=False),
+    sa.Column('waterdensity', sa.Float(), nullable=False),
+    sa.Column('feedbsw', sa.Float(), nullable=False),
+    sa.Column('liquidviscosity', sa.Float(), nullable=False),
+    sa.Column('gasviscosity', sa.Float(), nullable=False),
+    sa.Column('gasmw', sa.Float(), nullable=False),
+    sa.Column('liqmw', sa.Float(), nullable=False),
+    sa.Column('gascomprz', sa.Float(), nullable=False),
+    sa.Column('especificheatratio', sa.Float(), nullable=False),
+    sa.Column('liquidsurfacetension', sa.Float(), nullable=False),
+    sa.Column('liquidvaporpressure', sa.Float(), nullable=False),
+    sa.Column('liquidcriticalpressure', sa.Float(), nullable=False),
+    sa.Column('standardgasflow', sa.Float(), nullable=False),
+    sa.Column('standardliquidflow', sa.Float(), nullable=False),
+    sa.Column('actualgasflow', sa.Float(), nullable=False),
+    sa.Column('actualliquidflow', sa.Float(), nullable=False),
+    sa.Column('kcp', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -107,14 +97,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
     sa.Column('lcvtag', sa.String(length=80), nullable=False),
-    sa.Column('lcvcv', sa.String(length=80), nullable=False),
-    sa.Column('lcvdiameter', sa.String(length=80), nullable=False),
-    sa.Column('inletlcvpipingdiameter', sa.String(length=80), nullable=False),
-    sa.Column('outletlcvpipingdiameter', sa.String(length=80), nullable=False),
-    sa.Column('lcvfactorfl', sa.String(length=80), nullable=False),
-    sa.Column('lcvfactorfp', sa.String(length=80), nullable=False),
-    sa.Column('lcvinletpressure', sa.String(length=80), nullable=False),
-    sa.Column('lcvoutletpressure', sa.String(length=80), nullable=False),
+    sa.Column('lcvcv', sa.Float(), nullable=False),
+    sa.Column('lcvdiameter', sa.Float(), nullable=False),
+    sa.Column('inletlcvpipingdiameter', sa.Float(), nullable=False),
+    sa.Column('outletlcvpipingdiameter', sa.Float(), nullable=False),
+    sa.Column('lcvfactorfl', sa.Float(), nullable=False),
+    sa.Column('lcvfactorfp', sa.Float(), nullable=False),
+    sa.Column('lcvinletpressure', sa.Float(), nullable=False),
+    sa.Column('lcvoutletpressure', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -122,23 +112,23 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
     sa.Column('rvtag', sa.String(length=80), nullable=False),
-    sa.Column('rvsetpressure', sa.String(length=80), nullable=False),
-    sa.Column('rvorificearea', sa.String(length=80), nullable=False),
+    sa.Column('rvsetpressure', sa.Float(), nullable=False),
+    sa.Column('rvorificearea', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_inputs_data_separators',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('internaldiameter', sa.String(length=80), nullable=False),
-    sa.Column('ttlength', sa.String(length=80), nullable=False),
-    sa.Column('highleveltrip', sa.String(length=80), nullable=False),
-    sa.Column('highlevelalarm', sa.String(length=80), nullable=False),
-    sa.Column('normalliquidlevel', sa.String(length=80), nullable=False),
-    sa.Column('lowlevelalarm', sa.String(length=80), nullable=False),
-    sa.Column('inletnozzle', sa.String(length=80), nullable=False),
-    sa.Column('gasoutletnozzle', sa.String(length=80), nullable=False),
-    sa.Column('liquidoutletnozzle', sa.String(length=80), nullable=False),
+    sa.Column('internaldiameter', sa.Float(), nullable=False),
+    sa.Column('ttlength', sa.Float(), nullable=False),
+    sa.Column('highleveltrip', sa.Float(), nullable=False),
+    sa.Column('highlevelalarm', sa.Float(), nullable=False),
+    sa.Column('normalliquidlevel', sa.Float(), nullable=False),
+    sa.Column('lowlevelalarm', sa.Float(), nullable=False),
+    sa.Column('inletnozzle', sa.Float(), nullable=False),
+    sa.Column('gasoutletnozzle', sa.Float(), nullable=False),
+    sa.Column('liquidoutletnozzle', sa.Float(), nullable=False),
     sa.Column('inletdevicetype', sa.String(length=80), nullable=False),
     sa.Column('demistertype', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
@@ -147,28 +137,28 @@ def upgrade():
     op.create_table('separators_outputs_gas_and_liquid_areas',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('separatorcrosssectionalarearatio', sa.String(length=80), nullable=False),
-    sa.Column('separatorcrosssectionalarea', sa.String(length=80), nullable=False),
-    sa.Column('inletnozzlearea', sa.String(length=80), nullable=False),
-    sa.Column('gasnozzlearea', sa.String(length=80), nullable=False),
-    sa.Column('liquidnozzlearea', sa.String(length=80), nullable=False),
-    sa.Column('highleveltripgasarea', sa.String(length=80), nullable=False),
-    sa.Column('normallevelgasarea', sa.String(length=80), nullable=False),
-    sa.Column('lowlevelgasarea', sa.String(length=80), nullable=False),
-    sa.Column('highleveltripliquidarea', sa.String(length=80), nullable=False),
-    sa.Column('normalleveltriparea', sa.String(length=80), nullable=False),
-    sa.Column('lowleveltripliquidarea', sa.String(length=80), nullable=False),
+    sa.Column('separatorcrosssectionalarearatio', sa.Float(), nullable=False),
+    sa.Column('separatorcrosssectionalarea', sa.Float(), nullable=False),
+    sa.Column('inletnozzlearea', sa.Float(), nullable=False),
+    sa.Column('gasnozzlearea', sa.Float(), nullable=False),
+    sa.Column('liquidnozzlearea', sa.Float(), nullable=False),
+    sa.Column('highleveltripgasarea', sa.Float(), nullable=False),
+    sa.Column('normallevelgasarea', sa.Float(), nullable=False),
+    sa.Column('lowlevelgasarea', sa.Float(), nullable=False),
+    sa.Column('highleveltripliquidarea', sa.Float(), nullable=False),
+    sa.Column('normalleveltriparea', sa.Float(), nullable=False),
+    sa.Column('lowleveltripliquidarea', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('separators_outputs_gas_nozzle_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('gasnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('gasnozzlemomentum', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasnozzlemomentum', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasnozzleflow', sa.String(length=80), nullable=False),
+    sa.Column('gasnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('gasnozzlemomentum', sa.Float(), nullable=False),
+    sa.Column('maximumgasnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('maximumgasnozzlemomentum', sa.Float(), nullable=False),
+    sa.Column('maximumgasnozzleflow', sa.Float(), nullable=False),
     sa.Column('statusgasnozzle', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
@@ -176,12 +166,12 @@ def upgrade():
     op.create_table('separators_outputs_inlet_nozzle_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('mixtureinletnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('inletnozzlemomentum', sa.String(length=80), nullable=False),
-    sa.Column('maximummixtureinletnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('maximuminletnozzlemomentum', sa.String(length=80), nullable=False),
-    sa.Column('maximumliquidflowinletnozzle', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasflowinletnozzle', sa.String(length=80), nullable=False),
+    sa.Column('mixtureinletnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('inletnozzlemomentum', sa.Float(), nullable=False),
+    sa.Column('maximummixtureinletnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('maximuminletnozzlemomentum', sa.Float(), nullable=False),
+    sa.Column('maximumliquidflowinletnozzle', sa.Float(), nullable=False),
+    sa.Column('maximumgasflowinletnozzle', sa.Float(), nullable=False),
     sa.Column('statusinletnozzle', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
@@ -189,8 +179,8 @@ def upgrade():
     op.create_table('separators_outputs_level_control_valve_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('lcvliquidflowcapacity', sa.String(length=80), nullable=False),
-    sa.Column('levelvalverequiredcv', sa.String(length=80), nullable=False),
+    sa.Column('lcvliquidflowcapacity', sa.Float(), nullable=False),
+    sa.Column('levelvalverequiredcv', sa.Float(), nullable=False),
     sa.Column('levelcontrolvalvestatus', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
@@ -198,9 +188,9 @@ def upgrade():
     op.create_table('separators_outputs_liquid_nozzle_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('liquidnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('maximumliquidnozzlevelocity', sa.String(length=80), nullable=False),
-    sa.Column('maximumliquidnozzleflow', sa.String(length=80), nullable=False),
+    sa.Column('liquidnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('maximumliquidnozzlevelocity', sa.Float(), nullable=False),
+    sa.Column('maximumliquidnozzleflow', sa.Float(), nullable=False),
     sa.Column('statusliquidnozzle', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
@@ -208,7 +198,7 @@ def upgrade():
     op.create_table('separators_outputs_relief_valve_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('reliefvalvecapacity', sa.String(length=80), nullable=False),
+    sa.Column('reliefvalvecapacity', sa.Float(), nullable=False),
     sa.Column('reliefvalvecapacitystatus', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')
@@ -216,9 +206,9 @@ def upgrade():
     op.create_table('separators_outputs_vessel_gas_capacity_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('gasloadfactor', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasflowathhlevel', sa.String(length=80), nullable=False),
-    sa.Column('maximumgasflowatnormallevel', sa.String(length=80), nullable=False),
+    sa.Column('gasloadfactor', sa.Float(), nullable=False),
+    sa.Column('maximumgasflowathhlevel', sa.Float(), nullable=False),
+    sa.Column('maximumgasflowatnormallevel', sa.Float(), nullable=False),
     sa.Column('statusgascapacityathighlevel', sa.String(length=80), nullable=False),
     sa.Column('statusgascapacityatnormallevel', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
@@ -227,7 +217,7 @@ def upgrade():
     op.create_table('separators_outputs_vessel_liquid_capacity_parameters',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('separator_tag', sa.String(), nullable=False),
-    sa.Column('maximumvesselliquidflowcapacityatnormallevel', sa.String(length=80), nullable=False),
+    sa.Column('maximumvesselliquidflowcapacityatnormallevel', sa.Float(), nullable=False),
     sa.Column('statusvesselliquidcapacity', sa.String(length=80), nullable=False),
     sa.ForeignKeyConstraint(['separator_tag'], ['separators.tag'], ),
     sa.PrimaryKeyConstraint('id')

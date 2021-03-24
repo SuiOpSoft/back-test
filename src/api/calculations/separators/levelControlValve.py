@@ -13,61 +13,55 @@ def level_control_calc():
             
             #REQUIRED DATA FROM FLUID DATA PARAMETERS
             ALf = datafluid.actualliquidflow
-            if ALf == '' or ALf == '-':
+            if ALf == '' or ALf == 0:
                 return "Empty Fluids param."
             LVp = datafluid.liquidvaporpressure
-            if LVp == '' or LVp == '-':
+            if LVp == '' or LVp == 0:
                 return "Empty Fluids param."
             LCp = datafluid.liquidcriticalpressure
-            if LCp == '' or LCp == '-':
+            if LCp == '' or LCp == 0:
                 return "Empty Fluids param."
             Ld = datafluid.oildensity
-            if Ld == '' or Ld == '-':
+            if Ld == '' or Ld == 0:
                 return "Empty Fluids param."
             #LEVEL CONTROL VALVE DATA - PARAMETERS
             LCV_Cv = datalevel.lcvcv
-            if LCV_Cv == '' or LCV_Cv == '-':
+            if LCV_Cv == '' or LCV_Cv == 0:
                 return "Empty Level Control Valve param."
             LCV_Pi = datalevel.lcvinletpressure
-            if LCV_Pi == '' or LCV_Pi == '-':
+            if LCV_Pi == '' or LCV_Pi == 0:
                 return "Empty Level Control Valve param."
             LCV_Po = datalevel.lcvoutletpressure
-            if LCV_Po == '' or LCV_Po == '-':
+            if LCV_Po == '' or LCV_Po == 0:
                 return "Empty Level Control Valve param."    
             LCV_Fl = datalevel.lcvfactorfl
-            if LCV_Fl == '' or LCV_Fl == '-':
+            if LCV_Fl == '' or LCV_Fl == 0:
                 return "Empty Level Control Valve param."
             LCV_Fp = datalevel.lcvfactorfp
-            if LCV_Fp == '' or LCV_Fp == '-':
+            if LCV_Fp == '' or LCV_Fp == 0:
                 return "Empty Level Control Valve param."
             #LEVEL CONTROL VALVE CAPACITY CALCULATIONS
-            Alf1 = (float(ALf) * 264.172) / 60.0
-            P1p = float(LCV_Pi) * 0.145033
-            P2p = float(LCV_Po) * 0.145033
-            Pvp = float(LVp) * 0.145033
-            Pcp = float(LCp) * 0.145033
+            Alf1 = (ALf * 264.172) / 60.0
+            P1p = LCV_Pi * 0.145033
+            P2p = LCV_Po * 0.145033
+            Pvp = LVp * 0.145033
+            Pcp = LCp * 0.145033
             Ff = 0.96 - 0.28 * math.sqrt(Pvp / Pcp) 
             # DPchoke=LCV_Fl^2*(P1p-Ff*Pvp)
-            DPchoke = (float(LCV_Fl) ** 2) * (P1p - Ff * Pvp)
-            print("DPSHoke", DPchoke)
+            DPchoke = (LCV_Fl ** 2) * (P1p - Ff * Pvp)
             DPv = P1p - P2p
             if DPv <= DPchoke:
-                print("ENTRA 1")
                 # LCV_Cvreq=Alf1/LCV_Fp*Math.sqrt((Ld/1000)/DPv)
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt((float(Ld) / 1000) / DPv)
-                print(LCV_Cvreq)
+                LCV_Cvreq = (Alf1 / LCV_Fp) * math.sqrt((Ld / 1000) / DPv)
             else:
-                print("ENTRA 2")
                 # {LCV_Cvreq=Alf1/LCV_Fp*Math.sqrt((Ld/1000)/DPchoke)}
-                LCV_Cvreq = (Alf1 / float(LCV_Fp)) * math.sqrt((float(Ld) / 1000) / DPchoke)
-                print(LCV_Cvreq)
-
-            LCV_MaxAlf = (float(ALf) * float(LCV_Cv)) / LCV_Cvreq
-            if (LCV_Cvreq > float(LCV_Cv)):
+                LCV_Cvreq = (Alf1 / LCV_Fp) * math.sqrt((Ld / 1000) / DPchoke)
+            LCV_MaxAlf = (ALf * LCV_Cv) / LCV_Cvreq
+            if (LCV_Cvreq > LCV_Cv):
                 LCV_Status = "Exceeded"
             else:
                 LCV_Status = "OK"
-            separatoroutputlevelcontrolvalve = SeparatorOutputLevelControlValveParameters(separator_tag=datafluid.separator_tag, lcvliquidflowcapacity=str(format(LCV_MaxAlf, ".2f")), 
-                                                                                                  levelvalverequiredcv=str(format(LCV_Cvreq, ".2f")), levelcontrolvalvestatus=LCV_Status)
+            separatoroutputlevelcontrolvalve = SeparatorOutputLevelControlValveParameters(separator_tag=datafluid.separator_tag, lcvliquidflowcapacity=format(LCV_MaxAlf, ".2f"), 
+                                                                                                  levelvalverequiredcv=format(LCV_Cvreq, ".2f"), levelcontrolvalvestatus=LCV_Status)
             db.session.add(separatoroutputlevelcontrolvalve)
             db.session.commit()

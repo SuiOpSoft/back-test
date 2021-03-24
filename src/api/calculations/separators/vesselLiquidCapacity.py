@@ -13,12 +13,12 @@ def vessel_liquid_capacity_calc():
 
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 ALf = datafluid.actualliquidflow
-                if ALf == '' or ALf == '-':
+                if ALf == '' or ALf == 0:
                     return "Empty Fluids param."
 
                 #REQUIRED DATA FROM SEPARATOR DATA PARAMETERS
                 Lenght = dataseparator.ttlength
-                if Lenght == '' or Lenght == '-':
+                if Lenght == '' or Lenght == 0:
                     return "Empty Separator param."
 
                 #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
@@ -26,15 +26,15 @@ def vessel_liquid_capacity_calc():
                 LA_Ll = gasliquid.lowleveltripliquidarea
 
                 Rt = 2
-                SLv = ((float(LA_Nl) - float(LA_Ll)) * float(Lenght)) / 1000
+                SLv = ((LA_Nl - LA_Ll) * Lenght) / 1000
                 MLf = (SLv / Rt) * 60
 
-                if (float(ALf) > MLf):
+                if (ALf > MLf):
                   VLiqCap = "Exceeded"
                 else:
                   VLiqCap = "OK"
 
-                separatoroutputvesselliquid = SeparatorOutputVesselLiquidCapacityParameters(separator_tag=datafluid.separator_tag, maximumvesselliquidflowcapacityatnormallevel=str(format(MLf, ".2f")), 
+                separatoroutputvesselliquid = SeparatorOutputVesselLiquidCapacityParameters(separator_tag=datafluid.separator_tag, maximumvesselliquidflowcapacityatnormallevel=format(MLf, ".2f"), 
                                                                                               statusvesselliquidcapacity=VLiqCap)
 
                 db.session.add(separatoroutputvesselliquid)

@@ -129,27 +129,28 @@ class SeparatorInputDataFluid(db.Model):
     __tablename__ = 'separators_inputs_data_fluids'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    operatingpressure = db.Column(db.String(80), nullable=False)
-    operatingtemperature = db.Column(db.String(80), nullable=False)
-    oildensity = db.Column(db.String(80), nullable=False)
-    gasdensity = db.Column(db.String(80), nullable=False)
-    mixturedensity = db.Column(db.String(80), nullable=False)
-    waterdensity = db.Column(db.String(80), nullable=False)
-    feedbsw = db.Column(db.String(80), nullable=False)
-    liquidviscosity = db.Column(db.String(80), nullable=False)
-    gasviscosity = db.Column(db.String(80), nullable=False)
-    gasmw = db.Column(db.String(80), nullable=False)
-    liqmw = db.Column(db.String(80), nullable=False)
-    gascomprz = db.Column(db.String(80), nullable=False)
-    especificheatratio = db.Column(db.String(80), nullable=False)
-    liquidsurfacetension = db.Column(db.String(80), nullable=False)
-    liquidvaporpressure = db.Column(db.String(80), nullable=False)
-    liquidcriticalpressure = db.Column(db.String(80), nullable=False)
-    standardgasflow = db.Column(db.String(80), nullable=False)
-    standardliquidflow = db.Column(db.String(80), nullable=False)
-    actualgasflow = db.Column(db.String(80), nullable=False)
-    actualliquidflow = db.Column(db.String(80), nullable=False)
-    kcp = db.Column(db.String(80), nullable=False)
+    operatingpressure = db.Column(db.Float, nullable=False)
+    operatingtemperature = db.Column(db.Float, nullable=False)
+    oildensity = db.Column(db.Float, nullable=False)
+    gasdensity = db.Column(db.Float, nullable=False)
+    mixturedensity = db.Column(db.Float, nullable=False)
+    waterdensity = db.Column(db.Float, nullable=False)
+    feedbsw = db.Column(db.Float, nullable=False)
+    liquidviscosity = db.Column(db.Float, nullable=False)
+    gasviscosity = db.Column(db.Float, nullable=False)
+    gasmw = db.Column(db.Float, nullable=False)
+    liqmw = db.Column(db.Float, nullable=False)
+    gascomprz = db.Column(db.Float, nullable=False)
+    kcp = db.Column(db.Float, nullable=False)
+    especificheatratio = db.Column(db.Float, nullable=False)
+    liquidsurfacetension = db.Column(db.Float, nullable=False)
+    liquidvaporpressure = db.Column(db.Float, nullable=False)
+    liquidcriticalpressure = db.Column(db.Float, nullable=False)
+    standardgasflow = db.Column(db.Float, nullable=False)
+    standardliquidflow = db.Column(db.Float, nullable=False)
+    actualgasflow = db.Column(db.Float, nullable=False)
+    actualliquidflow = db.Column(db.Float, nullable=False)
+    
 
     def __repr__(self):
         return '<SeparatorInputDataFluid {self.separator_tag}>'
@@ -186,15 +187,15 @@ class SeparatorInputDataSeparator(db.Model):
     __tablename__ = 'separators_inputs_data_separators'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    internaldiameter = db.Column(db.String(80), nullable=False)
-    ttlength = db.Column(db.String(80), nullable=False)
-    highleveltrip = db.Column(db.String(80), nullable=False)
-    highlevelalarm = db.Column(db.String(80), nullable=False)
-    normalliquidlevel = db.Column(db.String(80), nullable=False)
-    lowlevelalarm = db.Column(db.String(80), nullable=False)
-    inletnozzle = db.Column(db.String(80), nullable=False)
-    gasoutletnozzle = db.Column(db.String(80), nullable=False)
-    liquidoutletnozzle = db.Column(db.String(80), nullable=False)
+    internaldiameter = db.Column(db.Float, nullable=False)
+    ttlength = db.Column(db.Float, nullable=False)
+    highleveltrip = db.Column(db.Float, nullable=False)
+    highlevelalarm = db.Column(db.Float, nullable=False)
+    normalliquidlevel = db.Column(db.Float, nullable=False)
+    lowlevelalarm = db.Column(db.Float, nullable=False)
+    inletnozzle = db.Column(db.Float, nullable=False)
+    gasoutletnozzle = db.Column(db.Float, nullable=False)
+    liquidoutletnozzle = db.Column(db.Float, nullable=False)
     inletdevicetype = db.Column(db.String(80), nullable=False)
     demistertype = db.Column(db.String(80), nullable=False)
 
@@ -224,8 +225,8 @@ class SeparatorInputDataReliefValve(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
     rvtag = db.Column(db.String(80), nullable=False)
-    rvsetpressure = db.Column(db.String(80), nullable=False)
-    rvorificearea = db.Column(db.String(80), nullable=False)
+    rvsetpressure = db.Column(db.Float, nullable=False)
+    rvorificearea = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return '<SeparatorInputDataReliefValve {self.separator_tag}>'
@@ -245,15 +246,15 @@ class SeparatorInputDataLevelControlValve(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
     lcvtag = db.Column(db.String(80), nullable=False)
-    lcvcv = db.Column(db.String(80), nullable=False)
-    lcvdiameter = db.Column(db.String(80), nullable=False)
-    inletlcvpipingdiameter = db.Column(db.String(80), nullable=False)
-    outletlcvpipingdiameter = db.Column(db.String(80), nullable=False)
-    lcvfactorfl = db.Column(db.String(80), nullable=False)
-    #lcvfactorfi = db.Column(db.String(80), nullable=False)
-    lcvfactorfp = db.Column(db.String(80), nullable=False)
-    lcvinletpressure = db.Column(db.String(80), nullable=False)
-    lcvoutletpressure = db.Column(db.String(80), nullable=False)
+    lcvcv = db.Column(db.Float, nullable=False)
+    lcvdiameter = db.Column(db.Float, nullable=False)
+    inletlcvpipingdiameter = db.Column(db.Float, nullable=False)
+    outletlcvpipingdiameter = db.Column(db.Float, nullable=False)
+    lcvfactorfl = db.Column(db.Float, nullable=False)
+    #lcvfactorfi = db.Column(db.Float, nullable=False)
+    lcvfactorfp = db.Column(db.Float, nullable=False)
+    lcvinletpressure = db.Column(db.Float, nullable=False)
+    lcvoutletpressure = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return '<SeparatorInputDataLevelControlValve {self.separator_tag}>'
@@ -279,17 +280,17 @@ class SeparatorOutputGasAndLiquidAreas(db.Model):
     __tablename__ = 'separators_outputs_gas_and_liquid_areas'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    separatorcrosssectionalarearatio = db.Column(db.String(80), nullable=False)
-    separatorcrosssectionalarea = db.Column(db.String(80), nullable=False)
-    inletnozzlearea = db.Column(db.String(80), nullable=False)
-    gasnozzlearea = db.Column(db.String(80), nullable=False)
-    liquidnozzlearea = db.Column(db.String(80), nullable=False)
-    highleveltripgasarea = db.Column(db.String(80), nullable=False)
-    normallevelgasarea = db.Column(db.String(80), nullable=False)
-    lowlevelgasarea = db.Column(db.String(80), nullable=False)
-    highleveltripliquidarea = db.Column(db.String(80), nullable=False)
-    normalleveltriparea = db.Column(db.String(80), nullable=False)
-    lowleveltripliquidarea = db.Column(db.String(80), nullable=False)
+    separatorcrosssectionalarearatio = db.Column(db.Float, nullable=False)
+    separatorcrosssectionalarea = db.Column(db.Float, nullable=False)
+    inletnozzlearea = db.Column(db.Float, nullable=False)
+    gasnozzlearea = db.Column(db.Float, nullable=False)
+    liquidnozzlearea = db.Column(db.Float, nullable=False)
+    highleveltripgasarea = db.Column(db.Float, nullable=False)
+    normallevelgasarea = db.Column(db.Float, nullable=False)
+    lowlevelgasarea = db.Column(db.Float, nullable=False)
+    highleveltripliquidarea = db.Column(db.Float, nullable=False)
+    normalleveltriparea = db.Column(db.Float, nullable=False)
+    lowleveltripliquidarea = db.Column(db.Float, nullable=False)
     
 
     def __repr__(self):
@@ -317,12 +318,12 @@ class SeparatorOutputInletNozzleParameters(db.Model):
     __tablename__ = 'separators_outputs_inlet_nozzle_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    mixtureinletnozzlevelocity = db.Column(db.String(80), nullable=False)
-    inletnozzlemomentum = db.Column(db.String(80), nullable=False)
-    maximummixtureinletnozzlevelocity = db.Column(db.String(80), nullable=False)
-    maximuminletnozzlemomentum = db.Column(db.String(80), nullable=False)
-    maximumliquidflowinletnozzle = db.Column(db.String(80), nullable=False)
-    maximumgasflowinletnozzle = db.Column(db.String(80), nullable=False)
+    mixtureinletnozzlevelocity = db.Column(db.Float, nullable=False)
+    inletnozzlemomentum = db.Column(db.Float, nullable=False)
+    maximummixtureinletnozzlevelocity = db.Column(db.Float, nullable=False)
+    maximuminletnozzlemomentum = db.Column(db.Float, nullable=False)
+    maximumliquidflowinletnozzle = db.Column(db.Float, nullable=False)
+    maximumgasflowinletnozzle = db.Column(db.Float, nullable=False)
     statusinletnozzle = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -347,11 +348,11 @@ class SeparatorOutputGasNozzleParameters(db.Model):
     __tablename__ = 'separators_outputs_gas_nozzle_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    gasnozzlevelocity = db.Column(db.String(80), nullable=False)
-    gasnozzlemomentum = db.Column(db.String(80), nullable=False)
-    maximumgasnozzlevelocity = db.Column(db.String(80), nullable=False)
-    maximumgasnozzlemomentum = db.Column(db.String(80), nullable=False)
-    maximumgasnozzleflow = db.Column(db.String(80), nullable=False) 
+    gasnozzlevelocity = db.Column(db.Float, nullable=False)
+    gasnozzlemomentum = db.Column(db.Float, nullable=False)
+    maximumgasnozzlevelocity = db.Column(db.Float, nullable=False)
+    maximumgasnozzlemomentum = db.Column(db.Float, nullable=False)
+    maximumgasnozzleflow = db.Column(db.Float, nullable=False) 
     statusgasnozzle = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -375,9 +376,9 @@ class SeparatorOutputLiquidNozzleParameters(db.Model):
     __tablename__ = 'separators_outputs_liquid_nozzle_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    liquidnozzlevelocity = db.Column(db.String(80), nullable=False)   
-    maximumliquidnozzlevelocity = db.Column(db.String(80), nullable=False)   
-    maximumliquidnozzleflow = db.Column(db.String(80), nullable=False) 
+    liquidnozzlevelocity = db.Column(db.Float, nullable=False)   
+    maximumliquidnozzlevelocity = db.Column(db.Float, nullable=False)   
+    maximumliquidnozzleflow = db.Column(db.Float, nullable=False) 
     statusliquidnozzle = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -399,9 +400,9 @@ class SeparatorOutputVesselGasCapacityParameters(db.Model):
     __tablename__ = 'separators_outputs_vessel_gas_capacity_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    gasloadfactor = db.Column(db.String(80), nullable=False)   
-    maximumgasflowathhlevel = db.Column(db.String(80), nullable=False)   
-    maximumgasflowatnormallevel = db.Column(db.String(80), nullable=False) 
+    gasloadfactor = db.Column(db.Float, nullable=False)   
+    maximumgasflowathhlevel = db.Column(db.Float, nullable=False)   
+    maximumgasflowatnormallevel = db.Column(db.Float, nullable=False) 
     statusgascapacityathighlevel = db.Column(db.String(80), nullable=False)
     statusgascapacityatnormallevel = db.Column(db.String(80), nullable=False)
 
@@ -425,7 +426,7 @@ class SeparatorOutputVesselLiquidCapacityParameters(db.Model):
     __tablename__ = 'separators_outputs_vessel_liquid_capacity_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    maximumvesselliquidflowcapacityatnormallevel = db.Column(db.String(80), nullable=False)   
+    maximumvesselliquidflowcapacityatnormallevel = db.Column(db.Float, nullable=False)   
     statusvesselliquidcapacity = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -445,7 +446,7 @@ class SeparatorOutputReliefValveParameters(db.Model):
     __tablename__ = 'separators_outputs_relief_valve_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    reliefvalvecapacity = db.Column(db.String(80), nullable=False)   
+    reliefvalvecapacity = db.Column(db.Float, nullable=False)   
     reliefvalvecapacitystatus = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
@@ -465,8 +466,8 @@ class SeparatorOutputLevelControlValveParameters(db.Model):
     __tablename__ = 'separators_outputs_level_control_valve_parameters'
     id = db.Column(db.Integer, primary_key=True)
     separator_tag = db.Column(db.String, db.ForeignKey("separators.tag"), nullable=False)
-    lcvliquidflowcapacity = db.Column(db.String(80), nullable=False)   
-    levelvalverequiredcv = db.Column(db.String(80), nullable=False)
+    lcvliquidflowcapacity = db.Column(db.Float, nullable=False)   
+    levelvalverequiredcv = db.Column(db.Float, nullable=False)
     levelcontrolvalvestatus = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):

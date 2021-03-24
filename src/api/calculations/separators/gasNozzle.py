@@ -11,29 +11,29 @@ def gas_nozzle_calc():
             
             #REQUIRED DATA FROM FLUID DATA PARAMETERS
             AGf = datafluid.actualgasflow
-            if AGf == '' or AGf == '-':
+            if AGf == '' or AGf == 0:
                 return "Empty Fluids param."
             Gd = datafluid.gasdensity
-            if Gd == '' or Gd == '-':
+            if Gd == '' or Gd == 0:
                 return "Empty Fluids param."
 
             #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
             GONArea = gasliquid.gasnozzlearea
-            if GONArea == '' or GONArea == '-':
+            if GONArea == '' or GONArea == 0:
                 return "Empty Gas Nozzle param."
 
-            GOv = float(AGf) / (3600 * float(GONArea))
-            Gm = float(Gd) * GOv ** 2
+            GOv = AGf / (3600 * GONArea)
+            Gm = Gd * GOv ** 2
             MaxGm = 4500
-            MaxGOv = math.sqrt(MaxGm / float(Gd))
-            MaxAGf_GO = (MaxGOv / GOv) * float(AGf)
+            MaxGOv = math.sqrt(MaxGm / Gd)
+            MaxAGf_GO = (MaxGOv / GOv * AGf)
             if (Gm > MaxGm):
               GOCap = "Exceeded"
             else:
               GOCap = "OK"
 
-            separatoroutputgasnozzle = SeparatorOutputGasNozzleParameters(separator_tag=datafluid.separator_tag, gasnozzlevelocity=str(format(GOv, ".2f")), gasnozzlemomentum=str(format(Gm, ".2f")), 
-                                                                            maximumgasnozzlevelocity=str(format(MaxGOv, ".2f")), maximumgasnozzlemomentum=str(format(MaxGm, ".2f")), maximumgasnozzleflow=str(format(MaxAGf_GO, ".2f")), 
+            separatoroutputgasnozzle = SeparatorOutputGasNozzleParameters(separator_tag=datafluid.separator_tag, gasnozzlevelocity=format(GOv, ".2f"), gasnozzlemomentum=format(Gm, ".2f"), 
+                                                                            maximumgasnozzlevelocity=format(MaxGOv, ".2f"), maximumgasnozzlemomentum=format(MaxGm, ".2f"), maximumgasnozzleflow=format(MaxAGf_GO, ".2f"), 
                                                                             statusgasnozzle=GOCap)
 
             db.session.add(separatoroutputgasnozzle)

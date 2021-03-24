@@ -55,20 +55,20 @@ def handle_data():
     user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
     facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", user_id="1")
     separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")
-    separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure="5536.33", operatingtemperature="37", oildensity="794.08", gasdensity="52.18", mixturedensity="197.76", waterdensity="1001", feedbsw="0.1", 
-                                                    liquidviscosity="2.1065", gasviscosity="0.013385", gasmw="20.80", liqmw="155.53", gascomprz="0.8558", especificheatratio="1.4913", liquidsurfacetension="15.49", liquidvaporpressure="5536.3",
-                                                    liquidcriticalpressure="12541.9", standardgasflow="25835.9", standardliquidflow="103.9", actualgasflow="435.5", actualliquidflow="106.33", kcp="1.49")
+    separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure=5536.33, operatingtemperature=37, oildensity=794.08, gasdensity=52.18, mixturedensity=197.76, waterdensity=1001, feedbsw=0.1, 
+                                                    liquidviscosity=2.1065, gasviscosity=0.013385, gasmw=20.80, liqmw=155.53, gascomprz=0.8558, especificheatratio=1.4913, liquidsurfacetension=15.49, liquidvaporpressure=5536.3,
+                                                    liquidcriticalpressure=12541.9, standardgasflow=25835.9, standardliquidflow=103.9, actualgasflow=435.5, actualliquidflow=106.33, kcp=1.49)
     
-    separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="lcv-2021", lcvcv="47", 
-                                                    lcvdiameter="5536.33", inletlcvpipingdiameter="5536.33", outletlcvpipingdiameter="5536.33", lcvfactorfl="0.9", 
-                                                    lcvfactorfp="0.92", lcvinletpressure="5336.325", lcvoutletpressure="2286.325")
+    separatorLevelControlValve1 = SeparatorInputDataLevelControlValve(separator_tag="v-3108", lcvtag="lcv-2021", lcvcv=47, 
+                                                    lcvdiameter=5536.33, inletlcvpipingdiameter=5536.33, outletlcvpipingdiameter=5536.33, lcvfactorfl=0.9, 
+                                                    lcvfactorfp=0.92, lcvinletpressure=5336.325, lcvoutletpressure=2286.325)
 
-    separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="rv-450", rvsetpressure="7900", 
-                                                    rvorificearea="0.785")
+    separatorDataReliefValve1 = SeparatorInputDataReliefValve(separator_tag="v-3108", rvtag="rv-450", rvsetpressure=7900, 
+                                                    rvorificearea=0.785)
 
-    separatorInputSeparators1 = SeparatorInputDataSeparator(separator_tag="v-3108", internaldiameter="1800", ttlength="6300", 
-                                                    highleveltrip="1080", highlevelalarm="900", normalliquidlevel="650", lowlevelalarm="390", inletnozzle="203.2", 
-                                                    gasoutletnozzle="152.4", liquidoutletnozzle="203.2", inletdevicetype="SP", demistertype="VD")
+    separatorInputSeparators1 = SeparatorInputDataSeparator(separator_tag="v-3108", internaldiameter=1800, ttlength=6300, 
+                                                    highleveltrip=1080, highlevelalarm=900, normalliquidlevel=650, lowlevelalarm=390, inletnozzle=203.2, 
+                                                    gasoutletnozzle=152.4, liquidoutletnozzle=203.2, inletdevicetype="SP", demistertype="VD")
 
     db.session.add(company1)
     db.session.add(user1)
@@ -162,22 +162,22 @@ def handle_insert_separator():
     separator = Separator(tag=separator_tag, facility_id=facility_id)
 
     ## Inputs 
-    separatorDataFluid = SeparatorInputDataFluid(separator_tag=separator_tag, operatingpressure="-", operatingtemperature="-", 
-                                                    oildensity="-", gasdensity="-", mixturedensity="-", waterdensity="-", feedbsw="-", 
-                                                    liquidviscosity="-", gasviscosity="-", gasmw="-", liqmw="-", gascomprz="-", especificheatratio="-", 
-                                                    liquidsurfacetension="-", liquidvaporpressure="-", liquidcriticalpressure="-", standardgasflow="-", 
-                                                    standardliquidflow="-", actualgasflow="-", actualliquidflow="-", kcp="-")
+    separatorDataFluid = SeparatorInputDataFluid(separator_tag=separator_tag, operatingpressure=0, operatingtemperature=0, 
+                                                    oildensity=0, gasdensity=0, mixturedensity=0, waterdensity=0, feedbsw=0, 
+                                                    liquidviscosity=0, gasviscosity=0, gasmw=0, liqmw=0, gascomprz=0, especificheatratio=0, 
+                                                    liquidsurfacetension=0, liquidvaporpressure=0, liquidcriticalpressure=0, standardgasflow=0, 
+                                                    standardliquidflow=0, actualgasflow=0, actualliquidflow=0, kcp=0)
 
-    separatorLevelControlValve = SeparatorInputDataLevelControlValve(separator_tag=separator_tag, lcvtag="-", lcvcv="-", 
-                                                    lcvdiameter="-", inletlcvpipingdiameter="-", outletlcvpipingdiameter="-", lcvfactorfl="-", 
-                                                    lcvfactorfp="-", lcvinletpressure="-", lcvoutletpressure="-")
+    separatorLevelControlValve = SeparatorInputDataLevelControlValve(separator_tag=separator_tag, lcvtag='-', lcvcv=0, 
+                                                    lcvdiameter=0, inletlcvpipingdiameter=0, outletlcvpipingdiameter=0, lcvfactorfl=0, 
+                                                    lcvfactorfp=0, lcvinletpressure=0, lcvoutletpressure=0)
 
-    separatorDataReliefValve = SeparatorInputDataReliefValve(separator_tag=separator_tag, rvtag="-", rvsetpressure="-", 
-                                                    rvorificearea="-")
+    separatorDataReliefValve = SeparatorInputDataReliefValve(separator_tag=separator_tag, rvtag=0, rvsetpressure=0, 
+                                                    rvorificearea=0)
     
-    separatorInputSeparators = SeparatorInputDataSeparator(separator_tag=separator_tag, internaldiameter="-", ttlength="-", 
-                                                    highleveltrip="-", highlevelalarm="-", normalliquidlevel="-", lowlevelalarm="-", inletnozzle="-", 
-                                                    gasoutletnozzle="-", liquidoutletnozzle="-", inletdevicetype="-", demistertype="-")
+    separatorInputSeparators = SeparatorInputDataSeparator(separator_tag=separator_tag, internaldiameter=0, ttlength=0, 
+                                                    highleveltrip=0, highlevelalarm=0, normalliquidlevel=0, lowlevelalarm=0, inletnozzle=0, 
+                                                    gasoutletnozzle=0, liquidoutletnozzle=0, inletdevicetype='-', demistertype='-')
 
 
     db.session.add(separator)
@@ -195,142 +195,6 @@ def handle_insert_separator():
 
 
 ## Inputs resources ##
-# Seleccionar inputs data fluids
-# @api.route('/datafluids', methods=['GET'])
-# def handle_get_data_fluids():
-
-#     data_fluids_query = SeparatorInputDataFluid.query.all()
-#     all_data_fluids = list(map(lambda x: x.serialize(), data_fluids_query))
-#     return jsonify(all_data_fluids), 200
-
-# Insertar datos en  tabla data fluids
-# @api.route('/datafluids', methods=['POST'])
-# def handle_insert_data_fluids():
-#     datafluids = request.get_json()
-
-#     id = datafluids["id"]
-#     separator_id = datafluids["separator_id"]
-#     operatingpressure = datafluids["operatingpressure"]
-#     operatingtemperature = datafluids["operatingtemperature"]
-#     oildensity = datafluids["oildensity"]
-#     gasdensity = datafluids["gasdensity"]
-#     mixturedensity = datafluids["mixturedensity"]
-#     waterdensity = datafluids["waterdensity"]
-#     feedbsw = datafluids["feedbsw"]
-#     liquidviscosity = datafluids["liquidviscosity"]
-#     gasviscosity = datafluids["gasviscosity"]
-#     gasmw = datafluids["gasmw"]
-#     liqmw = datafluids["liqmw"]
-#     gascomprz = datafluids["gascomprz"]
-#     especificheatratio = datafluids["especificheatratio"]
-#     liquidsurfacetension = datafluids["liquidsurfacetension"]
-#     liquidvaporpressure = datafluids["liquidvaporpressure"]
-#     liquidcriticalpressure = datafluids["liquidcriticalpressure"]
-#     standardgasflow = datafluids["standardgasflow"]
-#     standardliquidflow = datafluids["standardliquidflow"]
-#     actualgasflow = datafluids["actualgasflow"]
-#     actualliquidflow = datafluids["actualliquidflow"]
-
-    
-
-#     separatorDataFluid = SeparatorInputDataFluid(id=id, separator_id=separator_id, operatingpressure=operatingpressure, operatingtemperature=operatingtemperature, 
-#                                                     oildensity=oildensity, gasdensity=gasdensity, mixturedensity=mixturedensity, waterdensity=waterdensity, feedbsw=feedbsw, 
-#                                                     liquidviscosity=liquidviscosity, gasviscosity=gasviscosity, gasmw=gasmw, liqmw=liqmw, gascomprz=gascomprz, especificheatratio=especificheatratio, 
-#                                                     liquidsurfacetension=liquidsurfacetension, liquidvaporpressure=liquidvaporpressure, liquidcriticalpressure=liquidcriticalpressure, standardgasflow=standardgasflow, 
-#                                                     standardliquidflow=standardliquidflow, actualgasflow=actualgasflow, actualliquidflow=actualliquidflow)
-
- 
-#     db.session.add(separatorDataFluid)
-#     db.session.commit()
-
-#     response_body = {
-#         "message": "Success"
-#     }
-
-#     return jsonify(response_body), 200
-
-# Actualizar datos en tabla datafluids
-# @api.route('/datafluids', methods=['PUT'])
-# def handle_update_data_fluids():
-#     datafluids = request.get_json()
-#     datafluid = SeparatorInputDataFluid.query.filter_by(separator_tag = datafluids["separator_tag"]).first()
-
-#     datafluid.separator_tag = datafluids["separator_tag"]
-#     datafluid.operatingpressure = datafluids["operatingpressure"]
-#     if datafluid.operatingpressure == '' or datafluid.operatingpressure == '-':
-#        return jsonify("Error. Empty Operating Pressure param"), 401
-#     datafluid.operatingtemperature = datafluids["operatingtemperature"]
-#     if datafluid.operatingtemperature == '' or datafluid.operatingtemperature =='-':
-#         return jsonify("Error. Empty Operating Temperature param"), 401
-#     datafluid.oildensity = datafluids["oildensity"]
-#     if datafluid.oildensity == '' or '-':
-#         return jsonify("Error. Empty Oil Density param"), 401
-#     datafluid.gasdensity = datafluids["gasdensity"]
-#     if datafluid.gasdensity == '' or '-':
-#         return jsonify("Error. Empty Gas Density param"), 401
-#     datafluid.mixturedensity = datafluids["mixturedensity"]
-#     if datafluid.mixturedensity == '' or '-':
-#         return jsonify("Error. Empty Mixture Density param"), 401
-#     datafluid.waterdensity = datafluids["waterdensity"]
-#     if datafluid.waterdensity == '' or '-':
-#         return jsonify("Error. Empty Water Density params"), 401
-#     datafluid.feedbsw = datafluids["feedbsw"]
-#     if datafluid.feedbsw == '' or '-':
-#         return jsonify("Error. Empty Feed BSW params"), 401
-#     datafluid.liquidviscosity = datafluids["liquidviscosity"]
-#     if datafluid.liquidviscosity == '' or '-':
-#         return jsonify("Error. Empty Liquid Viscosity params"), 401
-#     datafluid.gasviscosity = datafluids["gasviscosity"]
-#     if datafluid.gasviscosity == '' or '-':
-#         return jsonify("Error. Empty Gas Viscosity params"), 401
-#     datafluid.gasmw = datafluids["gasmw"]
-#     if datafluid.gasmw == '' or '-':
-#         return jsonify("Error. Empty Gas Mw params"), 401
-#     datafluid.liqmw = datafluids["liqmw"]
-#     if datafluid.liqmw == '' or '-':
-#         return jsonify("Error. Empty Liq MW params"), 401
-#     datafluid.gascomprz = datafluids["gascomprz"]
-#     if datafluid.gascomprz == '' or '-':
-#         return jsonify("Error. Empty Gas Compressor (Z) params"), 401
-#     datafluid.especificheatratio = datafluids["especificheatratio"]
-#     if datafluid.especificheatratio == '' or '-':
-#         return jsonify("Error. Empty Specific Heat Ratio params"), 401
-#     datafluid.liquidsurfacetension = datafluids["liquidsurfacetension"]
-#     if datafluid.liquidsurfacetension == '' or '-':
-#         return jsonify("Error. Empty Liquid Surface Tension params"), 401
-#     datafluid.liquidvaporpressure = datafluids["liquidvaporpressure"]
-#     if datafluid.liquidvaporpressure == '' or '-':
-#         return jsonify("Error. Empty Liquid Vapor Pressure params"), 401
-#     datafluid.liquidcriticalpressure = datafluids["liquidcriticalpressure"]
-#     if datafluid.liquidcriticalpressure == '' or '-':
-#         return jsonify("Error. Empty Liquid Critical Pressure params"), 401
-#     datafluid.standardgasflow = datafluids["standardgasflow"]
-#     if datafluid.standardgasflow == '' or '-':
-#         return jsonify("Error. Empty Standard Gas Flow params"), 401
-#     datafluid.standardliquidflow = datafluids["standardliquidflow"]
-#     if datafluid.standardliquidflow == '' or '-':
-#         return jsonify("Error. Empty Standard Liquid Flow params"), 401
-#     datafluid.actualgasflow = datafluids["actualgasflow"]
-#     if datafluid.actualgasflow == '' or '-':
-#         return jsonify("Error. Empty Actual Gas Flow params"), 401
-#     datafluid.actualliquidflow = datafluids["actualliquidflow"]
-#     if datafluid.actualliquidflow == '' or '-':
-#         return jsonify("Error. Empty Actual Liquid Flow params"), 401
-
-    
-    
-
-
-#     db.session.add(datafluid)
-#     db.session.commit()
-
-#     response_body = {
-#         "message": "Success"
-#     }
-
-#     return jsonify(response_body), 200
-    
-
 # Eliminar datos en tabla datafluids
 @api.route('/datafluids', methods=['DELETE'])
 def handle_delete_data_fluids():
@@ -410,38 +274,70 @@ def handle_update_data_separators():
 
     dataseparator.separator_tag = dataseparators["separator_tag"]
     dataseparator.internaldiameter = dataseparators["internaldiameter"]
-    if dataseparator.internaldiameter == '' or dataseparator.internaldiameter == '-':
+    if dataseparator.internaldiameter == '' or float(dataseparator.internaldiameter) == 0:
         return jsonify("Empty Internal Diameter param."), 401
+    if float(dataseparator.internaldiameter) != 0 and float(dataseparator.internaldiameter) < 100 or float(dataseparator.internaldiameter) > 5000:
+        return jsonify("Invalid Internal Diameter param. (Min. 100 - Max. 5000)"), 401
+
     dataseparator.ttlength = dataseparators["ttlength"]
-    if dataseparator.ttlength == '' or dataseparator.ttlength == '-':
+    if dataseparator.ttlength == '' or float(dataseparator.ttlength) == 0:
         return jsonify("Empty T-T Length param."), 401
+    if float(dataseparator.ttlength) != 0 and float(dataseparator.ttlength) < 100 or float(dataseparator.ttlength) > 10000:
+        return jsonify("Invalid T-T Length param. (Min. 100 - Max. 10000)"), 401
+
     dataseparator.highleveltrip = dataseparators["highleveltrip"]
-    if dataseparator.highleveltrip == '' or dataseparator.highleveltrip == '-':
+    if dataseparator.highleveltrip == '' or float(dataseparator.highleveltrip) == 0:
         return jsonify("Empty High Level Trip param."), 401
+    if float(dataseparator.highleveltrip) != 0 and float(dataseparator.highleveltrip) < 100 or float(dataseparator.highleveltrip) > 5000:
+        return jsonify("Invalid High Level Trip param. (Min. 100 - Max. 5000)"), 401
+
     dataseparator.highlevelalarm = dataseparators["highlevelalarm"]
-    if dataseparator.highlevelalarm == '' or dataseparator.highlevelalarm == '-':
+    if dataseparator.highlevelalarm == '' or float(dataseparator.highlevelalarm) == 0:
         return jsonify("Empty High Level Alarm param."), 401
+    if float(dataseparator.highlevelalarm) != 0 and float(dataseparator.highlevelalarm) < 100 or float(dataseparator.highlevelalarm) > 5000:
+        return jsonify("Invalid High Level Alarm param. (Min. 100 - Max. 5000)"), 401
+
     dataseparator.normalliquidlevel = dataseparators["normalliquidlevel"]
-    if dataseparator.normalliquidlevel == '' or dataseparator.normalliquidlevel == '-':
+    if dataseparator.normalliquidlevel == '' or float(dataseparator.normalliquidlevel) == 0:
         return jsonify("Empty Normal Liquid Level param."), 401
+    if float(dataseparator.normalliquidlevel) != 0 and float(dataseparator.normalliquidlevel) < 100 or float(dataseparator.normalliquidlevel) > 5000:
+        return jsonify("Invalid Normal Liquid Level param. (Min. 100 - Max. 5000)"), 401
+
     dataseparator.lowlevelalarm = dataseparators["lowlevelalarm"]
-    if dataseparator.lowlevelalarm == '' or dataseparator.lowlevelalarm == '-':
+    if dataseparator.lowlevelalarm == '' or float(dataseparator.lowlevelalarm) == 0:
         return jsonify("Empty Low Level Alarm param."), 401
+    if float(dataseparator.lowlevelalarm) != 0 and float(dataseparator.lowlevelalarm) < 100 or float(dataseparator.lowlevelalarm) > 5000:
+        return jsonify("Invalid Low Level Alarm param. (Min. 100 - Max. 5000)"), 401
+
     dataseparator.inletnozzle = dataseparators["inletnozzle"]
-    if dataseparator.inletnozzle == '' or dataseparator.inletnozzle == '-':
+    if dataseparator.inletnozzle == '' or float(dataseparator.inletnozzle) == 0:
         return jsonify("Empty Inlet Nozzle param."), 401
+    if float(dataseparator.inletnozzle) != 0 and float(dataseparator.inletnozzle) < 50 or float(dataseparator.inletnozzle) > 1300:
+        return jsonify("Invalid Inlet Nozzle param. (Min. 50 - Max. 1300)"), 401
+
     dataseparator.gasoutletnozzle = dataseparators["gasoutletnozzle"]
-    if dataseparator.gasoutletnozzle == '' or dataseparator.gasoutletnozzle == '-':
+    if dataseparator.gasoutletnozzle == '' or float(dataseparator.gasoutletnozzle) == 0:
         return jsonify("Empty Gas Outlet Nozzle param."), 401
+    if float(dataseparator.gasoutletnozzle) != 0 and float(dataseparator.gasoutletnozzle) < 50 or float(dataseparator.gasoutletnozzle) > 1300:
+        return jsonify("Invalid Gas Outlet Nozzle param. (Min. 50 - Max. 1300)"), 401
+
     dataseparator.liquidoutletnozzle = dataseparators["liquidoutletnozzle"]
-    if dataseparator.liquidoutletnozzle == '' or dataseparator.liquidoutletnozzle == '-':
+    if dataseparator.liquidoutletnozzle == '' or float(dataseparator.liquidoutletnozzle) == 0:
         return jsonify("Empty Liquid Outlet Nozzle param."), 401
+    if float(dataseparator.liquidoutletnozzle) != 0 and float(dataseparator.liquidoutletnozzle) < 50 or float(dataseparator.liquidoutletnozzle) > 1300:
+        return jsonify("invalid Liquid Outlet Nozzle param. (Min. 50 - Max. 1300)"), 401
+
     dataseparator.inletdevicetype = dataseparators["inletdevicetype"]
     if dataseparator.inletdevicetype == '' or dataseparator.inletdevicetype == '-':
         return jsonify("Empty Inlet Device Type param."), 401
+    if dataseparator.inletdevicetype != 'SP' or dataseparator.inletdevicetype != 'NID' or dataseparator.inletdevicetype != 'HOP':
+        return jsonify("Invalid Inlet Device Type param. (SP, NID or HOP)"), 401
+
     dataseparator.demistertype = dataseparators["demistertype"]
     if dataseparator.demistertype == '' or dataseparator.demistertype == '-':
         return jsonify("Empty Demister Type param."), 401
+    if dataseparator.demistertype != 'KO' or dataseparator.demistertype != 'VD' or dataseparator.demistertype != 'HD' or dataseparator.demistertype != 'HVD':
+        return jsonify("Invalid Demister Type param. (KO, VD, HD or HVD)"), 401
 
 
     db.session.add(dataseparator)
@@ -524,12 +420,18 @@ def handle_update_data_relief_valve():
     datareliefvalve.rvtag = datareliefvalves["rvtag"]
     if datareliefvalve.rvtag == '' or datareliefvalve.rvtag == '-':
         return jsonify("Empty RV Tag param."), 401
+
     datareliefvalve.rvsetpressure = datareliefvalves["rvsetpressure"]
-    if datareliefvalve.rvsetpressure == '' or datareliefvalve.rvsetpressure == '-':
+    if datareliefvalve.rvsetpressure == '' or float(datareliefvalve.rvsetpressure) == 0:
         return jsonify("Empty RV Set Pressure param."), 401
+    if float(datareliefvalve.rvsetpressure) != 0 and float(datareliefvalve.rvsetpressure) < 300 or float(datareliefvalve.rvsetpressure) > 80000:
+        return jsonify("Invalid RV Set Pressure param. (Min. 300 - Max. 80000)"), 401
+
     datareliefvalve.rvorificearea = datareliefvalves["rvorificearea"]
-    if datareliefvalve.rvorificearea == '' or datareliefvalve.rvorificearea == '-':
+    if datareliefvalve.rvorificearea == '' or float(datareliefvalve.rvorificearea) == 0:
         return jsonify("Empty RV Orifice Area param."), 401
+    if float(datareliefvalve.rvorificearea) != 0 and float(datareliefvalve.rvorificearea) < 0.1 or float(datareliefvalve.rvorificearea) > 30:
+        return jsonify("Invalid RV Orifice Area param. (Min. 0.1 - Max. 30)"), 401
 
 
     db.session.add(datareliefvalve)
@@ -620,27 +522,42 @@ def handle_update_data_level_control_valve():
     datalevelcontrolvalve.lcvtag = datalevelcontrolvalves["lcvtag"]
     if datalevelcontrolvalve.lcvtag == '' or datalevelcontrolvalve.lcvtag == '-':
         return jsonify("Empty LCV Tag param."), 401
+
     datalevelcontrolvalve.lcvcv = datalevelcontrolvalves["lcvcv"]
-    if datalevelcontrolvalve.lcvcv == '' or datalevelcontrolvalve.lcvcv == '-':
+    if datalevelcontrolvalve.lcvcv == '' or float(datalevelcontrolvalve.lcvcv) == 0:
         return jsonify("Empty LCV CV param."), 401
+    if float(datalevelcontrolvalve.lcvcv) != 0 and float(datalevelcontrolvalve.lcvcv) < 3 or float(datalevelcontrolvalve.lcvcv) > 400:
+        return jsonify("Invalid LCV CV param. (Min. 3 - Max. 400)"), 401
+
     #datalevelcontrolvalve.lcvdiameter = datalevelcontrolvalves["lcvdiameter"]
     #datalevelcontrolvalve.inletlcvpipingdiameter = datalevelcontrolvalves["inletlcvpipingdiameter"]
     #datalevelcontrolvalve.outletlcvpipingdiameter = datalevelcontrolvalves["outletlcvpipingdiameter"]
     datalevelcontrolvalve.lcvfactorfl = datalevelcontrolvalves["lcvfactorfl"]
-    if datalevelcontrolvalve.lcvfactorfl == '' or datalevelcontrolvalve.lcvfactorfl == '-':
+    if datalevelcontrolvalve.lcvfactorfl == '' or float(datalevelcontrolvalve.lcvfactorfl) == 0:
         return jsonify("Empty LCV Factor Fl param."), 401
+    if float(datalevelcontrolvalve.lcvfactorfl) != 0 and float(datalevelcontrolvalve.lcvfactorfl) < 0.75 or float(datalevelcontrolvalve.lcvfactorfl) > 1.1:
+        return jsonify("Invalid LCV Factor Fl param. (Min. 0.75 - Max. 1.1)"), 401
+
     # datalevelcontrolvalve.lcvfactorfi = datalevelcontrolvalves["lcvfactorfi"]
-    # if datalevelcontrolvalve.lcvfactorfi == '' or datalevelcontrolvalve.lcvfactorfi == '-':
+    # if datalevelcontrolvalve.lcvfactorfi == '' or datalevelcontrolvalve.lcvfactorfi == 0:
     #     return jsonify("Empty LCV Factor Fi param."), 401
     datalevelcontrolvalve.lcvfactorfp = datalevelcontrolvalves["lcvfactorfp"]
-    if datalevelcontrolvalve.lcvfactorfp == '' or datalevelcontrolvalve.lcvfactorfp == '-':
+    if datalevelcontrolvalve.lcvfactorfp == '' or float(datalevelcontrolvalve.lcvfactorfp) == 0:
         return jsonify("Empty LCV Factor Fp param."), 401
+    if float(datalevelcontrolvalve.lcvfactorfp) != 0 and float(datalevelcontrolvalve.lcvfactorfp) < 0.75 or float(datalevelcontrolvalve.lcvfactorfp) > 1.1:
+        return jsonify("Invalid LCV Factor Fp param. (Min. 0.75 - Max. 1.1)"), 401
+
     datalevelcontrolvalve.lcvinletpressure = datalevelcontrolvalves["lcvinletpressure"]
-    if datalevelcontrolvalve.lcvinletpressure == '' or datalevelcontrolvalve.lcvinletpressure == '-':
+    if datalevelcontrolvalve.lcvinletpressure == '' or float(datalevelcontrolvalve.lcvinletpressure) == 0:
         return jsonify("Empty LCV Inlet Pressure param."), 401
+    if float(datalevelcontrolvalve.lcvinletpressure) != 0 and float(datalevelcontrolvalve.lcvinletpressure) < 100 or float(datalevelcontrolvalve.lcvinletpressure) > 60000:
+        return jsonify("Invalid LCV Inlet Pressure param. (Min. 100 - Max. 60000)"), 401
+
     datalevelcontrolvalve.lcvoutletpressure = datalevelcontrolvalves["lcvoutletpressure"]
-    if datalevelcontrolvalve.lcvoutletpressure == '' or datalevelcontrolvalve.lcvoutletpressure == '-':
+    if datalevelcontrolvalve.lcvoutletpressure == '' or float(datalevelcontrolvalve.lcvoutletpressure) == 0:
         return jsonify("Empty LCV Outlet Pressure param."), 401
+    if float(datalevelcontrolvalve.lcvoutletpressure) != 0 and float(datalevelcontrolvalve.lcvoutletpressure) < 50 or float(datalevelcontrolvalve.lcvoutletpressure) > 40000:
+        return jsonify("Invalid LCV Outlet Pressure param. (Min. 50 - Max. 40000)"), 401
 
     db.session.add(datalevelcontrolvalve)
     db.session.commit()

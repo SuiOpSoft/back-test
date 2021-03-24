@@ -15,21 +15,21 @@ def vessel_gas_capacity_calc():
                 Param2 = 0
                 #REQUIRED DATA FROM FLUID DATA PARAMETERS
                 AGf = datafluid.actualgasflow
-                if AGf == '' or AGf == '-':
+                if AGf == '' or AGf == 0:
                     return "Empty Fluids param."
                 Ld = datafluid.oildensity
-                if Ld == '' or Ld == '-':
+                if Ld == '' or Ld == 0:
                     return "Empty Fluids param."
                 Gd = datafluid.gasdensity
-                if Gd == '' or Gd == '-':
+                if Gd == '' or Gd == 0:
                     return "Empty Fluids param."
 
                 #REQUIRED DATA FROM SEPARATOR DATA PARAMETERS
                 InletDevice = dataseparator.inletdevicetype
-                if InletDevice == '' or InletDevice == '-':
+                if InletDevice == '' or InletDevice == 0:
                     return "Empty Separator param."
                 Demister = dataseparator.demistertype
-                if Demister == '' or Demister == '-':
+                if Demister == '' or Demister == 0:
                     return "Empty Separator param."
 
                 #REQUIRED DATA FROM OUTPUT SEPARATOR GAS AND LIQUID AREAS INCLUDING NOZZLE AREAS
@@ -50,23 +50,23 @@ def vessel_gas_capacity_calc():
                   Param2 = 0.08
                 if (Demister == "HVD"):
                   Param2 = 0.1
-                GasLoadFactor = float(Param1) * float(Param2)
-                AreaHh1 = GasLoadFactor * float(GA_Hh)
-                AreaNl2 = GasLoadFactor * float(GA_Nl)
-                MaxAGfV1 = (AreaHh1 / math.sqrt(float(Gd) / (float(Ld) - float(Gd)))) * 3600
-                MaxAGfV2 = (AreaNl2 / math.sqrt(float(Gd) / (float(Ld) - float(Gd)))) * 3600
-                if (float(AGf) > MaxAGfV1):
+                GasLoadFactor = Param1 * Param2
+                AreaHh1 = GasLoadFactor * GA_Hh
+                AreaNl2 = GasLoadFactor * GA_Nl
+                MaxAGfV1 = (AreaHh1 / math.sqrt(Gd / (Ld - Gd))) * 3600
+                MaxAGfV2 = (AreaNl2 / math.sqrt(Gd / (Ld - Gd))) * 3600
+                if (AGf > MaxAGfV1):
                   VGasCap1 = "Criterio HH level Exceeded"
                 else:
                   VGasCap1 = "Criterio HH level OK"
-                if (float(AGf) > MaxAGfV2):
+                if (AGf > MaxAGfV2):
                   VGasCap2 = "Criterio Normal level Exceeded"
                 else:
                   VGasCap2 = "Criterio Normal level OK"
 
 
-                separatoroutputvesselgas = SeparatorOutputVesselGasCapacityParameters(separator_tag=datafluid.separator_tag, gasloadfactor=str(format(GasLoadFactor, ".2f")), 
-                                                                                              maximumgasflowathhlevel=str(format(MaxAGfV1, ".2f")), maximumgasflowatnormallevel=str(format(MaxAGfV2, ".2f")), 
+                separatoroutputvesselgas = SeparatorOutputVesselGasCapacityParameters(separator_tag=datafluid.separator_tag, gasloadfactor=format(GasLoadFactor, ".2f"), 
+                                                                                              maximumgasflowathhlevel=format(MaxAGfV1, ".2f"), maximumgasflowatnormallevel=format(MaxAGfV2, ".2f"), 
                                                                                               statusgascapacityathighlevel=VGasCap1, statusgascapacityatnormallevel=VGasCap2)
 
                 db.session.add(separatoroutputvesselgas)

@@ -46,10 +46,11 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False)
-    facilities = db.relationship(
-        "Facility",
-        secondary=association_table,
-        back_populates="users")
+    # facilities = db.relationship('Facility') ## facility
+    # facilities = db.relationship(
+    #     "Facility",
+    #     secondary=association_table,
+    #     back_populates="users")
 
 
     def __repr__(self):
@@ -61,6 +62,7 @@ class User(db.Model):
             "firstname": self.firstname,
             "lastname": self.lastname,
             "email": self.email,
+            "password": self.password,
             "company_id": self.company_id
         }
 
@@ -71,26 +73,27 @@ class User(db.Model):
 class Facility(db.Model):
     __tablename__ = 'facilities'
     id = db.Column(db.Integer, primary_key=True)
+    facilitycode = db.Column(db.String(120), unique=True, nullable=False)
     name = db.Column(db.String(120), nullable=False)
     location = db.Column(db.String(120), nullable=False)
-    company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)##Es necesario?????
+    # user_id = db.Column(db.Integer, db.ForeignKey("user.id"), unique=True, nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey("companies.id"), nullable=False)
     separators = db.relationship('Separator') ## One to many to separators table
-    users = db.relationship(
-        "User",
-        secondary=association_table,
-        back_populates="facilities")
+    # users = db.relationship(
+    #     "User",
+    #     secondary=association_table,
+    #     back_populates="facilities")
 
     def __repr__(self):
-        return '<Facility {self.name}>'
+        return '<Facility {self.facilitycode}>'
         
     def serialize(self):
         return {
             "id": self.id,
+            "facilitycode": self.facilitycode,
             "name": self.name,
             "location": self.location,
-            "company_id": self.company_id,
-            "user_id" : self.user_id      
+            "company_id": self.company_id  
         }
 
 # ## Separators table

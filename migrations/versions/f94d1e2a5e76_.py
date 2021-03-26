@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 558fd7ad9a31
+Revision ID: f94d1e2a5e76
 Revises: 
-Create Date: 2021-03-24 18:28:25.817823
+Create Date: 2021-03-26 17:30:11.819776
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '558fd7ad9a31'
+revision = 'f94d1e2a5e76'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,16 @@ def upgrade():
     sa.Column('address', sa.String(length=120), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('facilities',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('facilitycode', sa.String(length=120), nullable=False),
+    sa.Column('name', sa.String(length=120), nullable=False),
+    sa.Column('location', sa.String(length=120), nullable=False),
+    sa.Column('company_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('company_id')
+    )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('firstname', sa.String(length=80), nullable=False),
@@ -38,18 +48,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
-    )
-    op.create_table('facilities',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=120), nullable=False),
-    sa.Column('location', sa.String(length=120), nullable=False),
-    sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['company_id'], ['companies.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('company_id'),
-    sa.UniqueConstraint('user_id')
     )
     op.create_table('separators',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -241,7 +239,7 @@ def downgrade():
     op.drop_table('separators_inputs_data_fluids')
     op.drop_table('user_facilities')
     op.drop_table('separators')
-    op.drop_table('facilities')
     op.drop_table('users')
+    op.drop_table('facilities')
     op.drop_table('companies')
     # ### end Alembic commands ###

@@ -53,7 +53,7 @@ def handle_data():
 
     company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland", companyuser="ShellUx", password="123456")
     user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
-    facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", user_id="1")
+    facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", facilitycode="ShellLagoon")
     separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")
     separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure=5536.33, operatingtemperature=37, oildensity=794.08, gasdensity=52.18, mixturedensity=197.76, waterdensity=1001, feedbsw=0.1, 
                                                     liquidviscosity=2.1065, gasviscosity=0.013385, gasmw=20.80, liqmw=155.53, gascomprz=0.8558, especificheatratio=1.4913, liquidsurfacetension=15.49, liquidvaporpressure=5536.3,
@@ -153,6 +153,107 @@ def handle_insert_user():
     user = User(firstname="-", lastname="-", email=email, password="-", company_id=company_id)
 
     db.session.add(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Actualizar usuario
+@api.route('/users', methods=['PUT'])
+def handle_update_data_users():
+    users = request.get_json()
+    user = User.query.filter_by(email = users["email"]).first()
+
+    user.email = users["email"]
+    user.firstname = users["firstname"]
+    user.lastname = users["lastname"]
+    user.password = users["password"]
+
+    db.session.add(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+
+# Eliminar Usuarios
+@api.route('/users', methods=['DELETE'])
+def handle_delete_data_users():
+    users = request.get_json()
+    user = User.query.filter_by(email = users["email"]).first()
+    
+    db.session.delete(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+## Facilities resources ##
+# Seleccionar separadores
+@api.route('/facilities/<int:company_id>', methods=['GET'])
+def handle_get_facilities_by_company_id(company_id):
+
+    facility_query = Facility.query.filter_by(company_id=company_id)
+    facility = list(map(lambda x: x.serialize(), facility_query))
+    return jsonify(facility), 200
+
+# Insertar facility
+@api.route('/facilities', methods=['POST'])
+def handle_insert_facility():
+    facility = request.get_json()
+    print(facility)
+
+    ## Facility params
+    company_id = facility["company_id"]
+    facilitycode = facility["facilitycode"]
+
+    ## Cración del usario en la tabla facilities
+    facility = Facility(facilitycode=facilitycode, name="-", location="-", company_id=company_id)
+
+    db.session.add(facility)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+#Delete facility
+@api.route('/facilities', methods=['DELETE'])
+def handle_delete_data_facilities():
+    facilities = request.get_json()
+    facility = Facility.query.filter_by(facilitycode = facilities ["facilitycode"]).first()
+    
+    db.session.delete(facility)
+    db.session.commit()
+
+    response_body = {
+        "message": "Success"
+    }
+
+    return jsonify(response_body), 200
+
+# Actualizar facility
+@api.route('/facilities', methods=['PUT'])
+def handle_update_data_facilities():
+    facilities = request.get_json()
+    facility = Facility.query.filter_by(facilitycode = facilities["facilitycode"]).first()
+
+    facility.facilitycode = facilities["facilitycode"]
+    facility.name = facilities["name"]
+    facility.location = facilities["location"]
+
+    db.session.add(facility)
     db.session.commit()
 
     response_body = {

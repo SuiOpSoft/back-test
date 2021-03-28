@@ -453,13 +453,13 @@ def handle_update_data_separators():
     dataseparator.inletdevicetype = dataseparators["inletdevicetype"]
     if dataseparator.inletdevicetype == '' or dataseparator.inletdevicetype == '-':
         return jsonify("Empty Inlet Device Type param."), 401
-    if dataseparator.inletdevicetype != 'SP' or dataseparator.inletdevicetype != 'NID' or dataseparator.inletdevicetype != 'HOP':
+    if dataseparator.inletdevicetype != 'SP' and dataseparator.inletdevicetype != 'NID' and dataseparator.inletdevicetype != 'HOP':
         return jsonify("Invalid Inlet Device Type param. (SP, NID or HOP)"), 401
 
     dataseparator.demistertype = dataseparators["demistertype"]
     if dataseparator.demistertype == '' or dataseparator.demistertype == '-':
         return jsonify("Empty Demister Type param."), 401
-    if dataseparator.demistertype != 'KO' or dataseparator.demistertype != 'VD' or dataseparator.demistertype != 'HD' or dataseparator.demistertype != 'HVD':
+    if dataseparator.demistertype != 'KO' and dataseparator.demistertype != 'VD' and dataseparator.demistertype != 'HD' and dataseparator.demistertype != 'HVD':
         return jsonify("Invalid Demister Type param. (KO, VD, HD or HVD)"), 401
 
 

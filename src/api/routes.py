@@ -51,9 +51,9 @@ def sign_in_company():
 @api.route('/seedData', methods=['GET'])
 def handle_data():
 
-    company1 = Company(id="1", name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland", companyuser="ShellUx", password="123456")
-    user1 = User(id="1", firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
-    facility1 = Facility(id="1", name="PDO Camp", location="Oman", company_id="1", facilitycode="ShellLagoon")
+    company1 = Company(name="Shell", dateofstablish="1968", description="Petroleum Company", address="Holland", companyuser="ShellUx", password="123456")
+    user1 = User(firstname="SuiOp", lastname="Soft", email="fran@gmail.com", password="suiop12345", company_id="1")
+    facility1 = Facility(name="PDO Camp", location="Oman", company_id="1", facilitycode="ShellLagoon")
     separator1 = Separator(tag="v-3108", description="Separator V", facility_id="1")
     separatorDataFluid1 = SeparatorInputDataFluid(separator_tag="v-3108", operatingpressure=5536.33, operatingtemperature=37, oildensity=794.08, gasdensity=52.18, mixturedensity=197.76, waterdensity=1001, feedbsw=0.1, 
                                                     liquidviscosity=2.1065, gasviscosity=0.013385, gasmw=20.80, liqmw=155.53, gascomprz=0.8558, especificheatratio=1.4913, liquidsurfacetension=15.49, liquidvaporpressure=5536.3,

@@ -2,14 +2,14 @@
 
 Revision ID: 89a6b2ef7470
 Revises: 
-Create Date: 2021-04-28 22:30:14.989018
+Create Date: 2021-04-28 23:11:23.843872
 
 """
 from alembic import op
 import sqlalchemy as sa
 
 
-# revision identifiers, used by Alembic. last revision num 52b2a871e821
+# revision identifiers, used by Alembic.
 revision = '89a6b2ef7470'
 down_revision = None
 branch_labels = None
